@@ -21,13 +21,28 @@ class SuratPraktekSatuController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'penanda_tangan_nama' => 'required|string|max:255',
             'praktikan_nama' => 'required|string|max:255',
+            'alamat_praktek' => 'required|string|max:255',
+            'profesi' => 'nullable|string|max:255',
+            'no_surat' => 'required|string|max:255',
+
+            'hari_praktek' => 'required|string|max:255',
             'jam_efektif_mingguan' => 'nullable|numeric',
+
+            'shift_pagi' => 'nullable|string|max:255',
+            'shift_sore' => 'nullable|string|max:255',
+            'shift_malam' => 'nullable|string|max:255',
+
+            'tempat_dikeluarkan' => 'required|string|max:255',
             'tanggal_dikeluarkan' => 'nullable|date',
+
+            'penanda_tangan_nama' => 'required|string|max:255',
+            'penanda_tangan_nip' => 'nullable|string|max:255',
+            'penanda_tangan_pangkat' => 'nullable|string|max:255',
+            'penanda_tangan_jabatan' => 'nullable|string|max:255',
         ]);
 
-        SuratPraktekSatu::create($validated + $request->only(['penanda_tangan_nip', 'penanda_tangan_pangkat', 'penanda_tangan_jabatan', 'alamat_praktek', 'profesi', 'hari_praktek', 'shift_pagi', 'shift_sore', 'shift_malam', 'tempat_dikeluarkan']));
+        SuratPraktekSatu::create($validated);
 
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil disimpan.');
     }
