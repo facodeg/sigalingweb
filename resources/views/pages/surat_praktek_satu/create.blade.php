@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex justify-content-between align-items-md-center flex-md-row flex-column">
-                    <h4 class="page-title">Tambah Surat Keterangan Praktek</h4>
+                    <h4 class="page-title">Tambah Surat Keterangan Praktek rsud</h4>
                     <ol class="m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Surat Praktek</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
