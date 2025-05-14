@@ -1,0 +1,40 @@
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Laravel 7-11 Storage Ignore
+/storage/app/public
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+
+# Laravel IDE Helper
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+
+# OS / Editor / Dependency Tools
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+.idea
+.vscode
+.env.backup
+.env.example.local
+.env.local
+.env.testing
+.env.development
