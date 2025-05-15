@@ -14,6 +14,7 @@
             font-family: Arial, sans-serif;
             font-size: 12pt;
             margin: 1cm 2.25cm 0.3cm 2.54cm;
+            line-height: 1.15;
         }
 
         .title {
@@ -30,7 +31,7 @@
         }
 
         .isi {
-            line-height: 1.6;
+            line-height: 1.15;
         }
 
         .data-grid {
@@ -89,7 +90,11 @@
         </tr>
     </table>
 
-    <hr style="border: 2px double #000; margin-top: 4px;">
+    <hr style="border: none; border-top: 1px solid black; margin: 0;">
+    <hr style="border: none; border-top: 4px solid black; margin-top: 1px;">
+
+
+
 
     <!-- Judul Surat -->
     <div class="title">SURAT KETERANGAN HARI DAN JAM PRAKTEK</div>
