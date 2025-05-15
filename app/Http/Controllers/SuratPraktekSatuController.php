@@ -52,8 +52,9 @@ class SuratPraktekSatuController extends Controller
         return view('pages.surat_praktek_satu.show', compact('surat'));
     }
 
-    public function edit(SuratPraktekSatu $surat)
+    public function edit(string $id)
     {
+        $surat = SuratPraktekSatu::findOrFail($id);
         return view('pages.surat_praktek_satu.edit', compact('surat'));
     }
 
@@ -75,5 +76,10 @@ class SuratPraktekSatuController extends Controller
     {
         $surat->delete();
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil dihapus.');
+    }
+
+    public function cetak(SuratPraktekSatu $surat)
+    {
+        return view('pages.surat_praktek_satu.cetak_surat_praktek', compact('surat'));
     }
 }

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Surat Keterangan Praktek</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1cm 2.25cm 0.3cm 2.54cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            margin: 1cm 2.25cm 0.3cm 2.54cm;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+        }
+
+        .header-center {
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        .header-center h2,
+        .header-center h3 {
+            margin: 0;
+        }
+
+        .info-rumah-sakit {
+            text-align: center;
+            font-size: 12pt;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: 1px solid #000;
+            margin: 10px 0 20px 0;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 5px;
+        }
+
+        .nomor {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .isi {
+            line-height: 1.6;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 140px 10px auto;
+            row-gap: 6px;
+            margin: 10px 0 20px 0;
+        }
+
+        .tabel-jadwal {
+            margin-left: 40px;
+        }
+
+        .ttd {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .ttd p {
+            margin: 4px 0;
+        }
+
+        .ttd img {
+            width: 180px;
+            /* kira-kira 5 cm */
+            height: auto;
+        }
+
+        ul {
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <img src="logo-kiri.png" alt="Logo Kiri">
+        <div class="header-center">
+            <h2>PEMERINTAH KABUPATEN BOGOR</h2>
+            <h3>RUMAH SAKIT UMUM DAERAH LEUWILIANG</h3>
+        </div>
+        <img src="logo-kanan.png" alt="Logo Kanan">
+    </div>
+
+    <div class="info-rumah-sakit">
+        Jl. Raya Cibeber - Leuwiliang Bogor Kode Pos 16640<br>
+        Telp. (0251) 8643290, Fax. (0251) 8643291<br>
+        Email: rsudleuwiliang@bogorkab.go.id
+    </div>
+
+    <hr>
+
+    <div class="title">SURAT KETERANGAN HARI DAN JAM PRAKTEK</div>
+    <div class="nomor">Nomor: 400.7.22.1/3185-RSUDL</div>
+
+    <div class="isi">
+        <p>Yang bertanda tangan di bawah ini:</p>
+        <div class="data-grid">
+            <div>Nama</div>
+            <div>:</div>
+            <div><strong>dr. Vitrie Winastri, S.H, MARS</strong></div>
+            <div>NIP</div>
+            <div>:</div>
+            <div>196710192002122002</div>
+            <div>Pangkat/Gol</div>
+            <div>:</div>
+            <div>Pembina Utama Muda, IV/c</div>
+            <div>Jabatan</div>
+            <div>:</div>
+            <div>Direktur</div>
+        </div>
+
+        <p>Dengan ini menerangkan bahwa:</p>
+        <div class="data-grid">
+            <div>Nama</div>
+            <div>:</div>
+            <div><strong>R. Hanriyansah, A.md.Kep</strong></div>
+            <div>Alamat Praktek</div>
+            <div>:</div>
+            <div>RSUD Leuwiliang</div>
+            <div>Profesi</div>
+            <div>:</div>
+            <div>Perawat</div>
+        </div>
+
+        <p>Adalah benar pernah berpraktek di RSUD Leuwiliang dengan jadwal sebagai berikut:</p>
+
+        <div class="tabel-jadwal">
+            <p><strong>Hari Praktek</strong>: Senin s.d Minggu, dengan mempertimbangkan jam efektif 37.5 jam dalam 1
+                minggu</p>
+            <p><strong>Jam Praktek</strong>: Sistem kerja Shifting, waktu sebagai berikut:</p>
+            <ul>
+                <li>Shift Pagi: 07.30 s.d 14.30 WIB</li>
+                <li>Shift Sore: 14.00 s.d 21.00 WIB</li>
+                <li>Shift Malam: 21.00 s.d 07.30 WIB</li>
+            </ul>
+        </div>
+
+        <p>Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
+        <p>Atas perhatiannya diucapkan terima kasih.</p>
+    </div>
+
+    <div class="ttd">
+        <p>Dikeluarkan di: Leuwiliang</p>
+        <p>Tanggal: 15 Mei 2025</p>
+        <br>
+        <img src="ttd-vitrie.png" alt="Tanda Tangan Direktur">
+    </div>
+
+</body>
+
+</html>

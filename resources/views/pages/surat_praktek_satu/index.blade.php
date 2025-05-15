@@ -64,6 +64,12 @@
                                                 <button type="submit" class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                             </form>
+                                            <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
+                                                class="btn btn-sm btn-secondary" target="_blank">
+                                                <i class="ri-printer-line"></i> Cetak
+                                            </a>
+
+
                                         </td>
                                     </tr>
                                 @endforeach

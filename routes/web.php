@@ -114,7 +114,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('pendidikan', PendidikanController::class);
     Route::resource('surat_praktek_satu', SuratPraktekSatuController::class);
-
+    Route::get('surat_praktek_satu/cetak/{surat}', [SuratPraktekSatuController::class, 'cetak'])->name('surat_praktek_satu.cetak');
 });
 
 // Rute untuk koperasi
