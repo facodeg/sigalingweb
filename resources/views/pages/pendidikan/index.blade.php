@@ -39,6 +39,7 @@
                                     <th>Jabatan</th>
                                     <th>Pendidikan</th>
                                     <th>Nama Sekolah</th>
+                                    <th>Status</th>
                                     <th>Tahun</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -52,6 +53,7 @@
                                         <td>{{ $item->jabatan }}</td>
                                         <td>{{ $item->pendidikan }}</td>
                                         <td>{{ $item->nama_sekolah }}</td>
+                                        <td>{{ $item->status_pg }}</td>
                                         <td>{{ $item->Tahun }}</td>
                                         <td>
                                             <a href="{{ route('pendidikan.edit', $item->id_pendidikan) }}"
