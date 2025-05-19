@@ -85,15 +85,27 @@ class SuratPraktekSatuController extends Controller
 
     public function update(Request $request, SuratPraktekSatu $surat)
     {
-        $validated = $request->validate([
+        $request->validate([
+            'no_surat' => 'required|string|max:255',
             'penanda_tangan_nama' => 'required|string|max:255',
             'praktikan_nama' => 'required|string|max:255',
             'jam_efektif_mingguan' => 'nullable|numeric',
             'tanggal_dikeluarkan' => 'nullable|date',
             'profesi' => 'nullable|string|max:255',
+            'tempat_dikeluarkan' => 'nullable|string|max:255',
         ]);
 
-        $surat->update($validated + $request->only(['penanda_tangan_nip', 'penanda_tangan_pangkat', 'penanda_tangan_jabatan', 'alamat_praktek', 'profesi', 'hari_praktek', 'shift_pagi', 'shift_sore', 'shift_malam', 'tempat_dikeluarkan']));
+        dd($request->all());
+
+        $surat->update([
+            'no_surat' => $request->no_surat,
+            'penanda_tangan_nama' => $request->penanda_tangan_nama,
+            'praktikan_nama' => $request->praktikan_nama,
+            'jam_efektif_mingguan' => $request->jam_efektif_mingguan,
+            'tanggal_dikeluarkan' => $request->tanggal_dikeluarkan,
+            'profesi' => $request->profesi,
+            'tempat_dikeluarkan' => $request->tempat_dikeluarkan,
+        ]);
 
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil diperbarui.');
     }
