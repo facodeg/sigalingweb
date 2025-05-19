@@ -39,6 +39,7 @@
 
                                     <th>Profesi</th>
                                     <th>Unit</th>
+                                    <th>Status Surat</th>
                                     <th>Tanggal Dikeluarkan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -50,6 +51,19 @@
                                         <td>{{ $item->praktikan_nama }}</td>
                                         <td>{{ $item->profesi }}</td>
                                         <td>{{ $item->unit }}</td>
+                                        <td>
+                                            <select class="form-select form-select-sm status-surat"
+                                                data-id="{{ $item->id }}">
+                                                <option value="proses"
+                                                    {{ $item->status_surat == 'proses' ? 'selected' : '' }}>Proses</option>
+                                                <option value="pengajuan"
+                                                    {{ $item->status_surat == 'pengajuan' ? 'selected' : '' }}>Pengajuan
+                                                </option>
+                                                <option value="selesai"
+                                                    {{ $item->status_surat == 'selesai' ? 'selected' : '' }}>Selesai
+                                                </option>
+                                            </select>
+                                        </td>
                                         {{-- <td>{{ $item->tempat_dikeluarkan }}</td> --}}
                                         {{-- <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</td> --}}
 
@@ -111,6 +125,31 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: ['copy', 'excel', 'pdf', 'print']
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.status-surat').on('change', function() {
+                let suratId = $(this).data('id');
+                let newStatus = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('surat_praktek_satu.updateStatus') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: suratId,
+                        status: newStatus
+                    },
+                    success: function(res) {
+                        console.log(res.message);
+                    },
+                    error: function() {
+                        alert('Gagal memperbarui status.');
+                    }
+                });
             });
         });
     </script>

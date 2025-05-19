@@ -113,4 +113,14 @@ class SuratPraktekSatuController extends Controller
 
         return view('pages.surat_praktek_satu.cetak_surat_praktek2', compact('surat', 'dataPraktikan'));
     }
+
+    public function updateStatus(Request $request)
+{
+    $surat = \App\Models\SuratPraktekSatu::findOrFail($request->id);
+    $surat->status_surat = $request->status;
+    $surat->save();
+
+    return response()->json(['message' => 'Status berhasil diperbarui']);
+}
+
 }
