@@ -57,7 +57,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="profesi" class="form-label">Profesi</label>
                             <input type="text" name="profesi" id="profesi" class="form-control"
-                                value="{{ $surat->profesi }}" readonly>
+                                value="{{ $surat->profesi }}" >
                         </div>
 
                         <div class="mb-3 col-md-6">
