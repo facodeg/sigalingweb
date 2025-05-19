@@ -94,9 +94,11 @@ class SuratPraktekSatuController extends Controller
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil diperbarui.');
     }
 
-    public function destroy(SuratPraktekSatu $surat)
+    public function destroy(string $id)
     {
-        $surat->delete();
+        $surat = SuratPraktekSatu::findOrFail($id);
+        SuratPraktekSatu::where('no_surat', $surat->no_surat)->delete();
+
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil dihapus.');
     }
 
@@ -115,12 +117,11 @@ class SuratPraktekSatuController extends Controller
     }
 
     public function updateStatus(Request $request)
-{
-    $surat = \App\Models\SuratPraktekSatu::findOrFail($request->id);
-    $surat->status_surat = $request->status;
-    $surat->save();
+    {
+        $surat = \App\Models\SuratPraktekSatu::findOrFail($request->id);
+        $surat->status_surat = $request->status;
+        $surat->save();
 
-    return response()->json(['message' => 'Status berhasil diperbarui']);
-}
-
+        return response()->json(['message' => 'Status berhasil diperbarui']);
+    }
 }
