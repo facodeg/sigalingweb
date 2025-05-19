@@ -120,6 +120,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('surat_praktek_satu/cetak2/{id}', [SuratPraktekSatuController::class, 'cetak2'])->name('surat_praktek_satu.cetak2');
 
     Route::post('/surat_praktek_satu/update-status', [\App\Http\Controllers\SuratPraktekSatuController::class, 'updateStatus'])->name('surat_praktek_satu.updateStatus');
+
+    Route::post('/surat-praktek-satu/update-tanggal', [SuratPraktekSatuController::class, 'updateTanggal'])->name('surat_praktek_satu.updateTanggal');
 });
 
 // Rute untuk koperasi

@@ -51,8 +51,17 @@
                                         <td>{{ $item->praktikan_nama }}</td>
                                         <td>{{ $item->profesi }}</td>
                                         <td>{{ $item->unit }}</td>
+                                        @php
+                                            $statusClass = match ($item->status_surat) {
+                                                'proses' => 'bg-danger text-white',
+                                                'pengajuan' => 'bg-warning text-dark',
+                                                'selesai' => 'bg-success text-white',
+                                                default => '',
+                                            };
+                                        @endphp
+
                                         <td>
-                                            <select class="form-select form-select-sm status-surat"
+                                            <select class="form-select form-select-sm status-surat {{ $statusClass }}"
                                                 data-id="{{ $item->id }}">
                                                 <option value="proses"
                                                     {{ $item->status_surat == 'proses' ? 'selected' : '' }}>Proses</option>
@@ -64,10 +73,16 @@
                                                 </option>
                                             </select>
                                         </td>
+
                                         {{-- <td>{{ $item->tempat_dikeluarkan }}</td> --}}
                                         {{-- <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</td> --}}
 
-                                        <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('d-m-Y') }}</td>
+                                        <td>
+                                            <input type="date" class="form-control form-control-sm tanggal-dikeluarkan"
+                                                data-id="{{ $item->id }}"
+                                                value="{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('Y-m-d') }}">
+                                        </td>
+
                                         <td>
                                             <a href="{{ route('surat_praktek_satu.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning">Edit</a>
@@ -148,6 +163,31 @@
                     },
                     error: function() {
                         alert('Gagal memperbarui status.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.tanggal-dikeluarkan').on('change', function() {
+                let suratId = $(this).data('id');
+                let newTanggal = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('surat_praktek_satu.updateTanggal') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: suratId,
+                        tanggal: newTanggal
+                    },
+                    success: function(res) {
+                        console.log(res.message);
+                    },
+                    error: function() {
+                        alert('Gagal memperbarui tanggal.');
                     }
                 });
             });

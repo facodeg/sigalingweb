@@ -124,4 +124,17 @@ class SuratPraktekSatuController extends Controller
 
         return response()->json(['message' => 'Status berhasil diperbarui']);
     }
+
+    public function updateTanggal(Request $request)
+    {
+        $surat = SuratPraktekSatu::find($request->id);
+        if (!$surat) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+
+        $surat->tanggal_dikeluarkan = $request->tanggal;
+        $surat->save();
+
+        return response()->json(['message' => 'Tanggal berhasil diperbarui.']);
+    }
 }
