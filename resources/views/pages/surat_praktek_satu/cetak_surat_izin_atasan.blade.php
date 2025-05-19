@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Surat Keterangan Praktek</title>
+    <title>Surat Izin Atasan</title>
     <style>
         @page {
             size: A4 portrait;
@@ -41,10 +41,6 @@
             margin: 10px 0 20px 0;
         }
 
-        .tabel-jadwal {
-            margin-left: 40px;
-        }
-
         .ttd {
             margin-top: 40px;
             text-align: right;
@@ -66,8 +62,6 @@
 </head>
 
 <body>
-
-    <!-- Header RSUD -->
     <table style="width: 100%; text-align: center;">
         <tr>
             <td style="width: 80px;">
@@ -93,14 +87,9 @@
     <hr style="border: none; border-top: 1px solid black; margin: 0;">
     <hr style="border: none; border-top: 4px solid black; margin-top: 1px;">
 
-
-
-
-    <!-- Judul Surat -->
-    <div class="title">SURAT KETERANGAN HARI DAN JAM PRAKTEK</div>
+    <div class="title">SURAT IZIN ATASAN</div>
     <div class="nomor">Nomor: {{ $surat->no_surat ?? '__________' }}</div>
 
-    <!-- Isi Surat -->
     <div class="isi">
         <p>Yang bertanda tangan di bawah ini:</p>
         <div class="data-grid">
@@ -118,74 +107,44 @@
             <div>{{ $surat->penanda_tangan_jabatan }}</div>
         </div>
 
-        <p>Dengan ini menerangkan bahwa:</p>
+        <p>Dengan ini memberikan izin pada :</p>
         <div class="data-grid">
             <div>Nama</div>
             <div>:</div>
             <div><strong>{{ $surat->praktikan_nama }}</strong></div>
-            <div>Alamat Praktek</div>
+            <div>NIP</div>
             <div>:</div>
-            <div>{{ $surat->alamat_praktek }}</div>
-            <div>Profesi</div>
+            <div>{{ $surat->nip ?? '-' }}</div>
+            <div>Jabatan</div>
             <div>:</div>
             <div>{{ $surat->profesi }}</div>
         </div>
 
-        <p>Adalah benar pernah berpraktek di RSUD Leuwiliang dengan jadwal sebagai berikut:</p>
-
-        <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <table style="text-align: left; font-size: 12pt;">
-                <tr>
-                    <td style="vertical-align: top; width: 120px;">Hari Praktek</td>
-                    <td style="vertical-align: top;">:</td>
-                    <td>
-                        {{ $surat->hari_praktek }}, dengan mempertimbangkan jam efektif
-                        {{ $surat->jam_efektif_mingguan }} jam dalam 1 minggu
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align: top;">Jam Praktek</td>
-                    <td style="vertical-align: top;">:</td>
-                    <td>
-                        Sistem kerja <em>Shifting</em>, waktu sebagai berikut:
-                        <div style="margin-left: 0;">
-                            <table style="margin-top: 6px;">
-                                <tr>
-                                    <td style="width: 120px;">Shift Pagi</td>
-                                    <td style="width: 10px;">:</td>
-                                    <td>{{ $surat->shift_pagi }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Shift Sore</td>
-                                    <td>:</td>
-                                    <td>{{ $surat->shift_sore }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Shift Malam</td>
-                                    <td>:</td>
-                                    <td>{{ $surat->shift_malam }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <p>Untuk berpraktik pada :</p>
+        <div class="data-grid">
+            <div>Nama Fasilitas</div>
+            <div>:</div>
+            <div>{{ $surat->alamat_praktek }}</div>
+            <div>Alamat</div>
+            <div>:</div>
+            <div>Jl. Raya Cibeber – Leuwiliang Bogor</div>
         </div>
 
+        <p>Dengan ketentuan :</p>
+        <ol>
+            <li>Tidak mengganggu kegiatan tugas rutin kedinasan jam kerja pada hari kerja sebagai ASN;</li>
+            <li>Hal-hal yang menyangkut urusan kegiatan pada sarana/tempat praktik tersebut menjadi tanggung jawab yang
+                bersangkutan.</li>
+        </ol>
 
-
-        <p>Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
-        <p>Atas perhatiannya diucapkan terima kasih.</p>
+        <p>Demikian Surat Izin Atasan ini dibuat agar dapat dipergunakan sebagaimana mestinya.</p>
     </div>
 
-    <!-- Tanda Tangan -->
     <div class="ttd">
-
         <p>Dikeluarkan di: {{ $surat->tempat_dikeluarkan }}</p>
         <u>
-            <p>Tanggal: {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}
-        </u></p>
-
+            <p>Tanggal: {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</p>
+        </u>
         <br>
         <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" alt="Tanda Tangan Direktur">
     </div>

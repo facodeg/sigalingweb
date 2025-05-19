@@ -34,12 +34,11 @@
                         <table id="example2" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Nomor Surat</th>
                                     <th>Nama Praktikan</th>
-                                    <th>Alamat Praktek</th>
-                                    <th>Hari Praktek</th>
-                                    <th>Jam Efektif</th>
-                                    <th>Shift Pagi</th>
-                                    <th>Shift Sore</th>
+
+                                    <th>Profesi</th>
+                                    <th>Unit</th>
                                     <th>Tanggal Dikeluarkan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -47,12 +46,13 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
+                                        <td>{{ $item->no_surat }}</td>
                                         <td>{{ $item->praktikan_nama }}</td>
-                                        <td>{{ $item->alamat_praktek }}</td>
-                                        <td>{{ $item->hari_praktek }}</td>
-                                        <td>{{ $item->jam_efektif_mingguan }} jam</td>
-                                        <td>{{ $item->shift_pagi }}</td>
-                                        <td>{{ $item->shift_sore }}</td>
+                                        <td>{{ $item->profesi }}</td>
+                                        <td>{{ $item->unit }}</td>
+                                        {{-- <td>{{ $item->tempat_dikeluarkan }}</td> --}}
+                                        {{-- <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</td> --}}
+
                                         <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('d-m-Y') }}</td>
                                         <td>
                                             <a href="{{ route('surat_praktek_satu.edit', $item->id) }}"
@@ -64,10 +64,26 @@
                                                 <button type="submit" class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                             </form>
-                                            <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
-                                                class="btn btn-sm btn-secondary" target="_blank">
-                                                <i class="ri-printer-line"></i> Cetak
-                                            </a>
+                                            @php
+                                                $countSurat = \App\Models\SuratPraktekSatu::where(
+                                                    'no_surat',
+                                                    $item->no_surat,
+                                                )->count();
+                                            @endphp
+
+                                            @if ($countSurat > 1)
+                                                <a href="{{ route('surat_praktek_satu.cetak2', $item->id) }}"
+                                                    class="btn btn-sm btn-info" target="_blank">
+                                                    <i class="ri-printer-line"></i> Cetak
+                                                </a>
+                                            @else
+                                                <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
+                                                    class="btn btn-sm btn-secondary" target="_blank">
+                                                    <i class="ri-printer-line"></i> Cetak
+                                                </a>
+                                            @endif
+
+
 
 
                                         </td>
