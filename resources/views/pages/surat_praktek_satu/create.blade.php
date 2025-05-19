@@ -31,8 +31,10 @@
         @endif
 
         @php
-            $dataPendidikan = \App\Models\Pendidikan::select('nama', 'jabatan')->get();
+            $dataPendidikan = \App\Models\Pendidikan::select('nama', 'jabatan', 'nip')->get();
         @endphp
+
+
 
         <div class="card">
             <div class="card-body">
@@ -68,6 +70,10 @@
                                     <label class="form-label">Nama Praktikan</label>
                                     <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama"
                                         required>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label">NIP</label>
+                                    <input type="text" name="nip[]" class="form-control nip" readonly>
                                 </div>
                                 <div class="mb-3 col-md-4">
                                     <label class="form-label">Profesi</label>
@@ -158,7 +164,8 @@
 @push('scripts')
     <datalist id="list-nama">
         @foreach ($dataPendidikan as $p)
-            <option value="{{ $p->nama }}" data-jabatan="{{ $p->jabatan }}"></option>
+            <option value="{{ $p->nama }}" data-jabatan="{{ $p->jabatan }}" data-nip="{{ $p->nip }}">
+            </option>
         @endforeach
     </datalist>
 
@@ -167,15 +174,18 @@
             function bindAutoFill(container) {
                 const inputNama = container.querySelector('.praktikan-nama');
                 const inputProfesi = container.querySelector('.profesi');
+                const inputNip = container.querySelector('.nip'); // tambahkan ini
                 const datalist = document.getElementById('list-nama');
 
                 inputNama.addEventListener('input', function() {
                     const val = inputNama.value;
                     const options = datalist.options;
                     inputProfesi.value = '';
+                    inputNip.value = ''; // reset NIP
                     for (let i = 0; i < options.length; i++) {
                         if (options[i].value === val) {
                             inputProfesi.value = options[i].dataset.jabatan || '';
+                            inputNip.value = options[i].dataset.nip || '';
                             break;
                         }
                     }

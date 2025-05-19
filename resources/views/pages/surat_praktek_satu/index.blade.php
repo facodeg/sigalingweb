@@ -35,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th>Nomor Surat</th>
+                                    <th>Nama Surat</th>
                                     <th>Nama Praktikan</th>
 
                                     <th>Profesi</th>
@@ -48,6 +49,9 @@
                                 @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $item->no_surat }}</td>
+                                        <td>{{ $item->nama_surat }}</td>
+                                        {{-- <td>{{ $item->penanda_tangan_nama }}</td> --}}
+                                        {{-- <td>{{ $item->penanda_tangan_jabatan }}</td> --}}
                                         <td>{{ $item->praktikan_nama }}</td>
                                         <td>{{ $item->profesi }}</td>
                                         <td>{{ $item->unit }}</td>
@@ -105,12 +109,23 @@
                                                     class="btn btn-sm btn-info" target="_blank">
                                                     <i class="ri-printer-line"></i> Cetak
                                                 </a>
+                                            @elseif ($item->nama_surat === 'SURAT IZIN ATASAN')
+                                                <a href="{{ route('surat_praktek_satu.cetak_izin_atasan', $item->id) }}"
+                                                    class="btn btn-sm btn-dark" target="_blank">
+                                                    <i class="ri-printer-line"></i> Cetak
+                                                </a>
+                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN HARI DAN JAM PRAKTEK')
+                                                <a href="{{ route('surat_praktek_satu.cetak', $item->id) }}"
+                                                    class="btn btn-sm btn-primary" target="_blank">
+                                                    <i class="ri-printer-line"></i> Cetak
+                                                </a>
                                             @else
                                                 <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
                                                     class="btn btn-sm btn-secondary" target="_blank">
                                                     <i class="ri-printer-line"></i> Cetak
                                                 </a>
                                             @endif
+
 
 
 
@@ -188,6 +203,59 @@
                     },
                     error: function() {
                         alert('Gagal memperbarui tanggal.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            function updateSelectClass(selectElement, status) {
+                // Hapus semua class warna dulu
+                $(selectElement).removeClass('bg-danger bg-warning bg-success text-white text-dark');
+
+                // Tambah class sesuai status baru
+                switch (status) {
+                    case 'proses':
+                        $(selectElement).addClass('bg-danger text-white');
+                        break;
+                    case 'pengajuan':
+                        $(selectElement).addClass('bg-warning text-dark');
+                        break;
+                    case 'selesai':
+                        $(selectElement).addClass('bg-success text-white');
+                        break;
+                }
+            }
+
+            // Saat pertama load, set warna sesuai status
+            $('.status-surat').each(function() {
+                updateSelectClass(this, $(this).val());
+            });
+
+            // Saat dropdown berubah
+            $('.status-surat').on('change', function() {
+                let suratId = $(this).data('id');
+                let newStatus = $(this).val();
+
+                // Update warna tampilan
+                updateSelectClass(this, newStatus);
+
+                // Kirim via AJAX
+                $.ajax({
+                    url: '{{ route('surat_praktek_satu.updateStatus') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: suratId,
+                        status: newStatus
+                    },
+                    success: function(res) {
+                        console.log(res.message);
+                    },
+                    error: function() {
+                        alert('Gagal memperbarui status.');
                     }
                 });
             });

@@ -21,15 +21,17 @@ class SuratPraktekSatuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_surat' => 'required|string|max:255', // ✅ validasi baru
+            'nama_surat' => 'required|string|max:255',
             'no_surat' => 'required|string|max:255',
             'praktikan_nama' => 'required|array',
             'praktikan_nama.*' => 'required|string|max:255',
+            'nip' => 'required|array',
+            'nip.*' => 'nullable|string|max:255',
             'profesi' => 'required|array',
             'profesi.*' => 'nullable|string|max:255',
-            'alamat_praktek' => 'required|string|max:255',
             'unit' => 'required|array',
             'unit.*' => 'nullable|string|max:255',
+            'alamat_praktek' => 'required|string|max:255',
             'hari_praktek' => 'nullable|string|max:255',
             'jam_efektif_mingguan' => 'nullable|numeric',
             'shift_pagi' => 'nullable|string|max:255',
@@ -46,9 +48,10 @@ class SuratPraktekSatuController extends Controller
         $count = count($request->praktikan_nama);
         for ($i = 0; $i < $count; $i++) {
             \App\Models\SuratPraktekSatu::create([
-                'nama_surat' => $request->nama_surat, // ✅ ditambahkan
+                'nama_surat' => $request->nama_surat,
                 'no_surat' => $request->no_surat,
                 'praktikan_nama' => $request->praktikan_nama[$i],
+                'nip' => $request->nip[$i] ?? null,
                 'profesi' => $request->profesi[$i] ?? null,
                 'unit' => $request->unit[$i] ?? null,
                 'alamat_praktek' => $request->alamat_praktek,
@@ -87,6 +90,7 @@ class SuratPraktekSatuController extends Controller
             'praktikan_nama' => 'required|string|max:255',
             'jam_efektif_mingguan' => 'nullable|numeric',
             'tanggal_dikeluarkan' => 'nullable|date',
+            'profesi' => 'nullable|string|max:255',
         ]);
 
         $surat->update($validated + $request->only(['penanda_tangan_nip', 'penanda_tangan_pangkat', 'penanda_tangan_jabatan', 'alamat_praktek', 'profesi', 'hari_praktek', 'shift_pagi', 'shift_sore', 'shift_malam', 'tempat_dikeluarkan']));
@@ -136,5 +140,17 @@ class SuratPraktekSatuController extends Controller
         $surat->save();
 
         return response()->json(['message' => 'Tanggal berhasil diperbarui.']);
+    }
+
+    public function cetakIzinAtasan($id)
+    {
+        $surat = SuratPraktekSatu::findOrFail($id);
+        return view('pages.surat_praktek_satu.cetak_surat_izin_atasan', compact('surat'));
+    }
+
+    public function cetakHariJam($id)
+    {
+        $data = SuratPraktekSatu::findOrFail($id);
+        return view('surat_praktek_satu.cetak_hari_dan_jam', compact('data'));
     }
 }
