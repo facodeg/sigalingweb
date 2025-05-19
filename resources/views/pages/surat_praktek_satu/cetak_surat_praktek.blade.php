@@ -181,10 +181,14 @@
     <!-- Tanda Tangan -->
     <div class="ttd">
 
+
+
         <p>Dikeluarkan di: {{ $surat->tempat_dikeluarkan }}</p>
-        <u>
-            <p>Tanggal: {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}
-        </u></p>
+        <p><u>Tanggal:
+                {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->locale('id')->translatedFormat('d F Y') }}</u>
+        </p>
+
+
 
         <br>
         <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" alt="Tanda Tangan Direktur">
