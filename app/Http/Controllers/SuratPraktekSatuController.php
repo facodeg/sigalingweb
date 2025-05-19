@@ -83,8 +83,9 @@ class SuratPraktekSatuController extends Controller
         return view('pages.surat_praktek_satu.edit', compact('surat'));
     }
 
-    public function update(Request $request, SuratPraktekSatu $surat)
+    public function update(Request $request, $id)
     {
+        // Validasi data
         $request->validate([
             'no_surat' => 'required|string|max:255',
             'penanda_tangan_nama' => 'required|string|max:255',
@@ -95,8 +96,10 @@ class SuratPraktekSatuController extends Controller
             'tempat_dikeluarkan' => 'nullable|string|max:255',
         ]);
 
-        dd($request->all());
+        // Ambil data surat langsung dari database
+        $surat = SuratPraktekSatu::findOrFail($id);
 
+        // Update data
         $surat->update([
             'no_surat' => $request->no_surat,
             'penanda_tangan_nama' => $request->penanda_tangan_nama,
@@ -107,6 +110,11 @@ class SuratPraktekSatuController extends Controller
             'tempat_dikeluarkan' => $request->tempat_dikeluarkan,
         ]);
 
+        // Ambil data terbaru setelah update (optional tapi membantu debug)
+        $updatedSurat = $surat->fresh();
+
+        // Tampilkan hasil debug
+        // Redirect jika tidak dd()
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil diperbarui.');
     }
 

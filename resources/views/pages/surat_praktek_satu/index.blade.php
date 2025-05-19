@@ -31,7 +31,7 @@
                         <a href="{{ route('surat_praktek_satu.create') }}" class="mb-3 btn btn-primary">Tambah Surat
                             Praktek</a>
 
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example2" class="table dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Nomor Surat</th>
@@ -153,9 +153,16 @@
         $(document).ready(function() {
             $('#example2').DataTable({
                 responsive: true,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'excel', 'pdf', 'print']
+                dom: 'Blfrtip',
+                buttons: ['copy', 'excel', 'pdf', 'print'],
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                pageLength: 10
             });
+            $('.dt-buttons').addClass('mb-3');
+            $('.dataTables_length').css('margin-right', '20px');
         });
     </script>
 

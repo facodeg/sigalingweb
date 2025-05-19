@@ -44,6 +44,19 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>NIP</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Jabatan</th>
+                                    <th>Pendidikan</th>
+                                    <th>Nama Sekolah</th>
+                                    <th>Status</th>
+                                    <th>Tahun</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                             <tbody>
                                 @foreach ($pendidikan as $item)
                                     <tr>
@@ -71,6 +84,7 @@
                             </tbody>
                         </table>
 
+
                     </div>
                 </div>
             </div>
@@ -88,9 +102,33 @@
         $(document).ready(function() {
             $('#example2').DataTable({
                 responsive: true,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'excel', 'pdf', 'print']
+                dom: 'Blfrtip',
+                buttons: ['copy', 'excel', 'pdf', 'print'],
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                pageLength: 10,
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        var column = this;
+                        if (column.index() === 8) return; // Skip "Aksi" column
+
+                        var input = document.createElement("input");
+                        input.style.width = '100%';
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('keyup change', function() {
+                                if (column.search() !== this.value) {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                    });
+                }
             });
+
+            // Tambahkan margin agar tombol & dropdown tidak saling berhimpit
+            $('.dt-buttons').addClass('mb-3');
+            $('.dataTables_length').css('margin-right', '20px');
         });
     </script>
 @endpush
