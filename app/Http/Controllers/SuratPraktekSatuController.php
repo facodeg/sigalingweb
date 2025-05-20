@@ -121,7 +121,7 @@ class SuratPraktekSatuController extends Controller
     public function destroy(string $id)
     {
         $surat = SuratPraktekSatu::findOrFail($id);
-        SuratPraktekSatu::where('no_surat', $surat->no_surat)->delete();
+        $surat->delete();
 
         return redirect()->route('surat_praktek_satu.index')->with('success', 'Data berhasil dihapus.');
     }
