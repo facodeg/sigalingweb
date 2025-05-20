@@ -143,10 +143,10 @@
     <div class="ttd" style="text-align: Right; margin-top: 40px;">
         <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan }}</p>
         <p><u>Tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</u></p>
-        <br>
-    <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
-    <br><br>
-</div>
+
+        <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
+        <br><br>
+    </div>
 
 
     <script>
@@ -155,7 +155,7 @@
         };
     </script>
 
-    
+
 
 </body>
 
