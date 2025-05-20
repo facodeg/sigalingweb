@@ -179,20 +179,12 @@
     </div>
 
     <!-- Tanda Tangan -->
-    <div class="ttd">
-
-
-
-        <p>Dikeluarkan di: {{ $surat->tempat_dikeluarkan }}</p>
-        <p><u>Tanggal:
-                {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->locale('id')->translatedFormat('d F Y') }}</u>
-        </p>
-
-
-
+    <div class="ttd" style="text-align: Right; margin-top: 40px;">
+        <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan }}</p>
+        <p><u>Tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</u></p>
         <br>
-        <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" alt="Tanda Tangan Direktur">
-    </div>
+    <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
+    <br><br>
 
     <script>
         window.onload = function() {

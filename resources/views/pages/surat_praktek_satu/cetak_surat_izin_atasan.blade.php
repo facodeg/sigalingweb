@@ -140,14 +140,14 @@
         <p>Demikian Surat Izin Atasan ini dibuat agar dapat dipergunakan sebagaimana mestinya.</p>
     </div>
 
-    <div class="ttd">
-        <p>Dikeluarkan di: {{ $surat->tempat_dikeluarkan }}</p>
-        <u>
-            <p>Tanggal: {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</p>
-        </u>
+    <div class="ttd" style="text-align: Right; margin-top: 40px;">
+        <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan }}</p>
+        <p><u>Tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</u></p>
         <br>
-        <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" alt="Tanda Tangan Direktur">
-    </div>
+    <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
+    <br><br>
+</div>
+
 
     <script>
         window.onload = function() {
