@@ -119,6 +119,11 @@
                                                     class="btn btn-sm btn-primary" target="_blank">
                                                     <i class="ri-printer-line"></i> Cetak
                                                 </a>
+                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN')
+                                                <a href="{{ route('surat_praktek_satu.cetak_keterangan', $item->id) }}"
+                                                    class="btn btn-sm btn-success" target="_blank">
+                                                    <i class="ri-printer-line"></i> Cetak
+                                                </a>
                                             @else
                                                 <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
                                                     class="btn btn-sm btn-secondary" target="_blank">

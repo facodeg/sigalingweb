@@ -124,7 +124,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/surat-praktek-satu/update-tanggal', [SuratPraktekSatuController::class, 'updateTanggal'])->name('surat_praktek_satu.updateTanggal');
 
     Route::get('/surat-praktek-satu/{id}/cetak-izin-atasan', [SuratPraktekSatuController::class, 'cetakIzinAtasan'])->name('surat_praktek_satu.cetak_izin_atasan');
-Route::get('/surat-praktek-satu/{id}/cetak-hari-jam', [SuratPraktekSatuController::class, 'cetakHariJam'])->name('surat_praktek_satu.cetak_hari_jam');
+    Route::get('/surat-praktek-satu/{id}/cetak-hari-jam', [SuratPraktekSatuController::class, 'cetakHariJam'])->name('surat_praktek_satu.cetak_hari_jam');
+    Route::get('/surat_praktek_satu/cetak_keterangan/{id}', [SuratPraktekSatuController::class, 'cetakKeterangan'])->name('surat_praktek_satu.cetak_keterangan');
 });
 
 // Rute untuk koperasi

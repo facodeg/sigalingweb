@@ -43,6 +43,8 @@ class SuratPraktekSatuController extends Controller
             'penanda_tangan_nip' => 'required|string|max:255',
             'penanda_tangan_pangkat' => 'required|string|max:255',
             'penanda_tangan_jabatan' => 'required|string|max:255',
+            'tmt' => 'nullable|string|max:255',
+            'maksud' => 'nullable|string|max:255',
         ]);
 
         $count = count($request->praktikan_nama);
@@ -66,6 +68,8 @@ class SuratPraktekSatuController extends Controller
                 'penanda_tangan_nip' => $request->penanda_tangan_nip,
                 'penanda_tangan_pangkat' => $request->penanda_tangan_pangkat,
                 'penanda_tangan_jabatan' => $request->penanda_tangan_jabatan,
+                'tmt' => $request->tmt,
+                'maksud' => $request->maksud,
             ]);
         }
 
@@ -172,5 +176,11 @@ class SuratPraktekSatuController extends Controller
     {
         $data = SuratPraktekSatu::findOrFail($id);
         return view('surat_praktek_satu.cetak_hari_dan_jam', compact('data'));
+    }
+
+    public function cetakKeterangan($id)
+    {
+        $surat = SuratPraktekSatu::findOrFail($id);
+        return view('pages.surat_praktek_satu.cetak_surat_keterangan', compact('surat'));
     }
 }

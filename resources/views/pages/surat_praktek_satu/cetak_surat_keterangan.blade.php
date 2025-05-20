@@ -29,13 +29,14 @@
             margin-bottom: 30px;
         }
 
-        .data-grid {
+        table.info-table {
             margin-left: 30px;
-            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 12pt;
         }
 
-        .data-grid p {
-            margin: 5px 0;
+        table.info-table td {
+            vertical-align: top;
         }
 
         .ttd {
@@ -51,6 +52,7 @@
 </head>
 
 <body>
+    <!-- Kop Surat -->
     <table style="width: 100%; text-align: center;">
         <tr>
             <td style="width: 80px;">
@@ -76,33 +78,74 @@
     <hr style="border: none; border-top: 1px solid black; margin: 0;">
     <hr style="border: none; border-top: 4px solid black; margin-top: 1px;">
 
+    <!-- Judul -->
     <div class="title">SURAT KETERANGAN</div>
     <div class="nomor">Nomor: {{ $surat->no_surat ?? '__________' }}</div>
 
+    <!-- Penandatangan -->
     <p>Yang bertanda tangan di bawah ini:</p>
-    <div class="data-grid">
-        <p>a. Nama : {{ $surat->penanda_tangan_nama ?? 'dr. Ridwan' }}</p>
-        <p>b. Jabatan : {{ $surat->penanda_tangan_jabatan ?? 'Kepala Sub Bagian Kepegawaian' }}</p>
-    </div>
+    <table class="info-table" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td style="width: 20px;">a.</td>
+            <td style="width: 200px;">Nama</td>
+            <td style="width: 10px;">:</td>
+            <td>{{ $surat->penanda_tangan_nama ?? 'dr. Ridwan' }}</td>
+        </tr>
+        <tr>
+            <td>b.</td>
+            <td>Jabatan</td>
+            <td>:</td>
+            <td>{{ $surat->penanda_tangan_jabatan ?? 'Kepala Sub Bagian Kepegawaian' }}</td>
+        </tr>
+    </table>
 
-    <p>Dengan ini menerangkan bahwa:</p>
-    <div class="data-grid">
-        <p>a. Nama / NIP : {{ $surat->praktikan_nama ?? '' }} /
-            {{ $surat->nip ?? '' }}</p>
-        <p>b. Pangkat / Golongan : {{ $surat->penanda_tangan_pangkat ?? '-' }}</p>
-        <p>c. Jabatan : {{ $surat->profesi ?? '' }}</p>
-        <p>d. TMT : {{ $surat->tmt ?? '' }}</p>
-        <p>e. Maksud : {{ $surat->maksud ?? 'Untuk melengkapi syarat administrasi pengajuan KPR Perumahan' }}</p>
-    </div>
+    <p style="margin-top: 20px;">Dengan ini menerangkan bahwa:</p>
+    <table class="info-table" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td style="width: 20px;">a.</td>
+            <td style="width: 200px;">Nama / NIP</td>
+            <td style="width: 10px;">:</td>
+            <td>
+                {{ $surat->praktikan_nama ?? '' }}<br>
+                {{ $surat->nip ?? '' }}
+            </td>
+        </tr>
+        <tr>
+            <td>b.</td>
+            <td>Pangkat / Golongan</td>
+            <td>:</td>
+            <td>{{ $surat->penanda_tangan_pangkat ?? '-' }}</td>
+        </tr>
+        <tr>
+            <td>c.</td>
+            <td>Jabatan</td>
+            <td>:</td>
+            <td>{{ $surat->profesi ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>d.</td>
+            <td>TMT</td>
+            <td>:</td>
+            <td>{{ $surat->tmt ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>e.</td>
+            <td>Maksud</td>
+            <td>:</td>
+            <td>{{ $surat->maksud ?? 'Untuk melengkapi syarat administrasi pengajuan KPR Perumahan' }}</td>
+        </tr>
+    </table>
+
 
     <p>Demikian Surat Keterangan ini dibuat untuk dipergunakan seperlunya.</p>
 
-   <div class="ttd" style="text-align: Right; margin-top: 40px;">
-        <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan }}</p>
+    <!-- Tanda Tangan -->
+    <div class="ttd">
+        <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan ?? 'Leuwiliang' }}</p>
         <p><u>Tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</u></p>
-        
-    <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
-    <br><br>
+        <img src="{{ asset('assets/images/ttd-ridwan.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
+
+    </div>
 
     <script>
         window.onload = function() {

@@ -214,8 +214,10 @@
                 });
             }
 
+            // Bind autofill awal
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
+            // Tambah praktikan
             document.getElementById('tambah-praktikan').addEventListener('click', function() {
                 const wrapper = document.getElementById('praktikan-wrapper');
                 const entry = wrapper.querySelector('.praktikan-entry');
@@ -232,16 +234,43 @@
             const tmtSection = document.getElementById('tmt-section');
             const maksudSection = document.getElementById('maksud-section');
 
+            const fieldsToHideForKeterangan = [
+                'hari_praktek',
+                'jam_efektif_mingguan',
+                'shift_pagi',
+                'shift_sore',
+                'shift_malam'
+            ];
+
+            function toggleFieldVisibility(fieldId, show) {
+                const field = document.getElementById(fieldId);
+                if (field && field.closest('.mb-3')) {
+                    field.closest('.mb-3').style.display = show ? 'block' : 'none';
+                }
+            }
+
             suratSelect.addEventListener('change', function() {
                 const value = this.value;
                 const isIzinAtasan = value === 'SURAT IZIN ATASAN';
                 const isKeterangan = value === 'SURAT KETERANGAN';
 
-                jadwalSection.style.display = isIzinAtasan ? 'none' : 'block';
-                tambahBtnWrapper.style.display = isIzinAtasan ? 'none' : 'block';
+                // Sembunyikan semua field jadwal jika "SURAT IZIN ATASAN" atau "SURAT KETERANGAN"
+                const showJadwal = !(isIzinAtasan || isKeterangan);
+                jadwalSection.style.display = showJadwal ? 'block' : 'none';
+
+                // Field khusus "SURAT KETERANGAN"
                 tmtSection.classList.toggle('d-none', !isKeterangan);
                 maksudSection.classList.toggle('d-none', !isKeterangan);
 
+                // Tampilkan/hilangkan field shift & jadwal satuan
+                fieldsToHideForKeterangan.forEach(id => {
+                    toggleFieldVisibility(id, !isKeterangan);
+                });
+
+                // Atur tombol tambah
+                tambahBtnWrapper.style.display = isIzinAtasan ? 'none' : 'block';
+
+                // Batasi 1 praktikan untuk "SURAT IZIN ATASAN"
                 const entries = praktikanWrapper.querySelectorAll('.praktikan-entry');
                 if (isIzinAtasan && entries.length > 1) {
                     entries.forEach((entry, index) => {
