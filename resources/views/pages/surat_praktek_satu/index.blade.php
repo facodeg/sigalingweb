@@ -168,9 +168,12 @@
 
     <script>
         $(document).ready(function() {
-            $('.status-surat').on('change', function() {
+            // Event delegation untuk dropdown status
+            $(document).on('change', '.status-surat', function() {
                 let suratId = $(this).data('id');
                 let newStatus = $(this).val();
+
+                updateSelectClass(this, newStatus); // update warna class dropdown
 
                 $.ajax({
                     url: '{{ route('surat_praktek_satu.updateStatus') }}',
@@ -188,12 +191,9 @@
                     }
                 });
             });
-        });
-    </script>
 
-    <script>
-        $(document).ready(function() {
-            $('.tanggal-dikeluarkan').on('change', function() {
+            // Event delegation untuk input tanggal
+            $(document).on('change', '.tanggal-dikeluarkan', function() {
                 let suratId = $(this).data('id');
                 let newTanggal = $(this).val();
 
@@ -213,16 +213,11 @@
                     }
                 });
             });
-        });
-    </script>
 
-    <script>
-        $(document).ready(function() {
+            // Fungsi untuk update warna class berdasarkan status
             function updateSelectClass(selectElement, status) {
-                // Hapus semua class warna dulu
                 $(selectElement).removeClass('bg-danger bg-warning bg-success text-white text-dark');
 
-                // Tambah class sesuai status baru
                 switch (status) {
                     case 'proses':
                         $(selectElement).addClass('bg-danger text-white');
@@ -236,34 +231,10 @@
                 }
             }
 
-            // Saat pertama load, set warna sesuai status
-            $('.status-surat').each(function() {
-                updateSelectClass(this, $(this).val());
-            });
-
-            // Saat dropdown berubah
-            $('.status-surat').on('change', function() {
-                let suratId = $(this).data('id');
-                let newStatus = $(this).val();
-
-                // Update warna tampilan
-                updateSelectClass(this, newStatus);
-
-                // Kirim via AJAX
-                $.ajax({
-                    url: '{{ route('surat_praktek_satu.updateStatus') }}',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: suratId,
-                        status: newStatus
-                    },
-                    success: function(res) {
-                        console.log(res.message);
-                    },
-                    error: function() {
-                        alert('Gagal memperbarui status.');
-                    }
+            // Set warna saat pertama load
+            $(document).ready(function() {
+                $('.status-surat').each(function() {
+                    updateSelectClass(this, $(this).val());
                 });
             });
         });
