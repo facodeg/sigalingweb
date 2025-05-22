@@ -153,27 +153,40 @@
                             <input type="text" name="tempat_dikeluarkan" id="tempat_dikeluarkan" class="form-control"
                                 value="Leuwiliang">
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="penanda_tangan_nama" class="form-label">Nama Penandatangan</label>
-                            <input type="text" name="penanda_tangan_nama" id="penanda_tangan_nama"
-                                class="form-control" value="dr. Vitrie Winastri, S.H., MARS">
+                            <select name="penanda_tangan_nama" id="penanda_tangan_nama" class="form-select">
+                                <option value="dr. Vitrie Winastri, S.H., MARS">dr. Vitrie Winastri, S.H., MARS</option>
+                                <option value="dr. Ridwan">dr. Ridwan</option>
+                            </select>
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="penanda_tangan_nip" class="form-label">NIP</label>
-                            <input type="text" name="penanda_tangan_nip" id="penanda_tangan_nip" class="form-control"
-                                value="196710192002122002">
+                            <select name="penanda_tangan_nip" id="penanda_tangan_nip" class="form-select">
+                                <option value="196710192002122002">196710192002122002</option>
+                                <option value="197606232010011008">197606232010011008</option>
+                            </select>
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="penanda_tangan_pangkat" class="form-label">Pangkat / Golongan</label>
-                            <input type="text" name="penanda_tangan_pangkat" id="penanda_tangan_pangkat"
-                                class="form-control" value="Pembina Utama Muda, IV/c">
+                            <select name="penanda_tangan_pangkat" id="penanda_tangan_pangkat" class="form-select">
+                                <option value="Pembina Utama Muda, IV/c">Pembina Utama Muda, IV/c</option>
+                                <option value="Pembina, IV/a">Pembina, IV/a</option>
+                            </select>
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="penanda_tangan_jabatan" class="form-label">Jabatan</label>
-                            <input type="text" name="penanda_tangan_jabatan" id="penanda_tangan_jabatan"
-                                class="form-control" value="Direktur RSUD Leuwiliang">
+                            <select name="penanda_tangan_jabatan" id="penanda_tangan_jabatan" class="form-select">
+                                <option value="Direktur RSUD Leuwiliang">Direktur RSUD Leuwiliang</option>
+                                <option value="Kepala Sub Bagian Kepegawaian">Kepala Sub Bagian Kepegawaian</option>
+                            </select>
                         </div>
                     </div>
+
 
                     <button type="submit" class="mt-3 btn btn-primary">Simpan</button>
                     <a href="{{ route('surat_praktek_satu.index') }}" class="mt-3 btn btn-secondary">Kembali</a>
@@ -182,7 +195,6 @@
         </div>
     </div>
 @endsection
-
 @push('scripts')
     <datalist id="list-nama">
         @foreach ($dataPendidikan as $p)
@@ -193,6 +205,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const suratSelect = document.getElementById('nama_surat');
+            const jadwalSection = document.getElementById('jadwal-praktek');
+            const tambahBtnWrapper = document.getElementById('tambah-btn-wrapper');
+            const praktikanWrapper = document.getElementById('praktikan-wrapper');
+            const tmtSection = document.getElementById('tmt-section');
+            const maksudSection = document.getElementById('maksud-section');
+
+            const namaPenandatangan = document.getElementById('penanda_tangan_nama');
+            const nipPenandatangan = document.getElementById('penanda_tangan_nip');
+            const pangkatPenandatangan = document.getElementById('penanda_tangan_pangkat');
+            const jabatanPenandatangan = document.getElementById('penanda_tangan_jabatan');
+
+            const fieldsToHideForKeterangan = [
+                'hari_praktek',
+                'jam_efektif_mingguan',
+                'shift_pagi',
+                'shift_sore',
+                'shift_malam'
+            ];
+
             function bindAutoFill(container) {
                 const inputNama = container.querySelector('.praktikan-nama');
                 const inputProfesi = container.querySelector('.profesi');
@@ -214,10 +246,8 @@
                 });
             }
 
-            // Bind autofill awal
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
-            // Tambah praktikan
             document.getElementById('tambah-praktikan').addEventListener('click', function() {
                 const wrapper = document.getElementById('praktikan-wrapper');
                 const entry = wrapper.querySelector('.praktikan-entry');
@@ -226,21 +256,6 @@
                 wrapper.appendChild(clone);
                 bindAutoFill(clone);
             });
-
-            const suratSelect = document.getElementById('nama_surat');
-            const jadwalSection = document.getElementById('jadwal-praktek');
-            const tambahBtnWrapper = document.getElementById('tambah-btn-wrapper');
-            const praktikanWrapper = document.getElementById('praktikan-wrapper');
-            const tmtSection = document.getElementById('tmt-section');
-            const maksudSection = document.getElementById('maksud-section');
-
-            const fieldsToHideForKeterangan = [
-                'hari_praktek',
-                'jam_efektif_mingguan',
-                'shift_pagi',
-                'shift_sore',
-                'shift_malam'
-            ];
 
             function toggleFieldVisibility(fieldId, show) {
                 const field = document.getElementById(fieldId);
@@ -254,28 +269,54 @@
                 const isIzinAtasan = value === 'SURAT IZIN ATASAN';
                 const isKeterangan = value === 'SURAT KETERANGAN';
 
-                // Sembunyikan semua field jadwal jika "SURAT IZIN ATASAN" atau "SURAT KETERANGAN"
+                // Tampilkan/sembunyikan jadwal praktek
                 const showJadwal = !(isIzinAtasan || isKeterangan);
                 jadwalSection.style.display = showJadwal ? 'block' : 'none';
 
-                // Field khusus "SURAT KETERANGAN"
+                // Tampilkan/matikan field tambahan
                 tmtSection.classList.toggle('d-none', !isKeterangan);
                 maksudSection.classList.toggle('d-none', !isKeterangan);
 
-                // Tampilkan/hilangkan field shift & jadwal satuan
+                // Tampilkan/hilangkan field per-item
                 fieldsToHideForKeterangan.forEach(id => {
                     toggleFieldVisibility(id, !isKeterangan);
                 });
 
-                // Atur tombol tambah
+                // Atur tombol tambah praktikan
                 tambahBtnWrapper.style.display = isIzinAtasan ? 'none' : 'block';
 
-                // Batasi 1 praktikan untuk "SURAT IZIN ATASAN"
+                // Batasi hanya 1 praktikan jika IZIN ATASAN
                 const entries = praktikanWrapper.querySelectorAll('.praktikan-entry');
-                if (isIzinAtasan && entries.length > 1) {
+                if ((isIzinAtasan || isKeterangan) && entries.length > 1) {
                     entries.forEach((entry, index) => {
                         if (index > 0) entry.remove();
                     });
+                }
+
+                // Atur default penandatangan
+                if (isKeterangan) {
+                    namaPenandatangan.value = 'dr. Ridwan';
+                    nipPenandatangan.value = '197606232010011008';
+                    pangkatPenandatangan.value = 'Pembina, IV/a';
+                    jabatanPenandatangan.value = 'Kepala Sub Bagian Kepegawaian';
+
+                    // Kosongkan field waktu praktik
+                    document.getElementById('hari_praktek').value = '';
+                    document.getElementById('jam_efektif_mingguan').value = '';
+                    document.getElementById('shift_pagi').value = '';
+                    document.getElementById('shift_sore').value = '';
+                    document.getElementById('shift_malam').value = '';
+                } else {
+                    namaPenandatangan.value = 'dr. Vitrie Winastri, S.H., MARS';
+                    nipPenandatangan.value = '196710192002122002';
+                    pangkatPenandatangan.value = 'Pembina Utama Muda, IV/c';
+                    jabatanPenandatangan.value = 'Direktur RSUD Leuwiliang';
+
+                    document.getElementById('hari_praktek').value = 'Senin s.d Minggu';
+                    document.getElementById('jam_efektif_mingguan').value = '37.5';
+                    document.getElementById('shift_pagi').value = '07.30 s.d 14.30 WIB';
+                    document.getElementById('shift_sore').value = '14.00 s.d 21.00 WIB';
+                    document.getElementById('shift_malam').value = '21.00 s.d 07.30 WIB';
                 }
             });
         });
