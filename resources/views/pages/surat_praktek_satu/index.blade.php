@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Data Surat Praktek')
+@section('title', 'Data Surat ')
 
 @section('main')
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box justify-content-between d-flex align-items-md-center flex-md-row flex-column">
-                    <h4 class="page-title">Daftar Surat Keterangan Praktek</h4>
+                    <h4 class="page-title">Daftar Surat Keterangan </h4>
                     <ol class="m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item active">Surat Praktek</li>
+                        <li class="breadcrumb-item active">Surat </li>
                     </ol>
                 </div>
             </div>
