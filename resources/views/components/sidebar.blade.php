@@ -207,7 +207,7 @@
                             <li class="{{ Request::is('surat_praktek_satu*') ? 'menuitem-active' : '' }}">
                                 <a href="{{ route('surat_praktek_satu.index') }}">
                                     <i class="ri-file-list-3-line"></i>
-                                    <span>Surat Praktek</span>
+                                    <span>Pembuatan Surat</span>
                                 </a>
                             </li>
                         </ul>
