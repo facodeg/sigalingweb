@@ -31,7 +31,7 @@
                         <a href="{{ route('surat_praktek_satu.create') }}" class="mb-3 btn btn-primary">Tambah Surat
                             Praktek</a>
 
-                        <table id="example2" class="table table-bordered table-striped dt-responsive nowrap w-75">
+                        <table id="example2" class="table table-bordered table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Nomor Surat</th>
