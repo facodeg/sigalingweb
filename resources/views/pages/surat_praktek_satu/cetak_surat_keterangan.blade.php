@@ -114,7 +114,7 @@
             <td>b.</td>
             <td>Pangkat / Golongan</td>
             <td>:</td>
-            <td>{{ $surat->penanda_tangan_pangkat ?? '-' }}</td>
+            <td>{{ $surat->praktikan_penanda_tangan ?? '-' }}</td>
         </tr>
         <tr>
             <td>c.</td>
