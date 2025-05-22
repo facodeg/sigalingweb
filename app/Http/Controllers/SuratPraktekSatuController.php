@@ -10,9 +10,7 @@ class SuratPraktekSatuController extends Controller
     public function index()
     {
         $data = SuratPraktekSatu::all();
-        $countPerNomor = SuratPraktekSatu::selectRaw('no_surat, count(*) as total')->groupBy('no_surat')->pluck('total', 'no_surat');
-
-        return view('pages.surat_praktek_satu.index', compact('data', 'countPerNomor'));
+        return view('pages.surat_praktek_satu.index', compact('data'));
     }
 
     public function create()
