@@ -143,9 +143,16 @@
     <div class="ttd">
         <p>Dikeluarkan di : {{ $surat->tempat_dikeluarkan ?? 'Leuwiliang' }}</p>
         <p><u>Tanggal : {{ \Carbon\Carbon::parse($surat->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</u></p>
-        <img src="{{ asset('assets/images/ttd-ridwan.jpg') }}" style="width: 300px;" alt="Tanda Tangan Direktur">
 
+        @if ($surat->penanda_tangan_nama === 'dr. Ridwan')
+            <img src="{{ asset('assets/images/ttd-ridwan.jpg') }}" style="width: 300px;" alt="Tanda Tangan dr. Ridwan">
+        @elseif ($surat->penanda_tangan_nama === 'dr. Vitrie Winastri, S.H., MARS')
+            <img src="{{ asset('assets/images/ttd-vitrie.jpg') }}" style="width: 300px;" alt="Tanda Tangan dr. Vitrie">
+        @endif
+
+        <br><br>
     </div>
+
 
     <script>
         window.onload = function() {
