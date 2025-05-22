@@ -7,36 +7,46 @@
     <title>@yield('title') &mdash; Sigaling</title>
 
 
-    <link rel="stylesheet"
-        href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}">
+    <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-    <!-- Select2 css -->
+
+    <!-- Theme Config -->
+    <script src="{{ asset('assets/js/config.js') }}"></script>
+
+    <!-- App CSS -->
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- Select2 -->
     <link href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <!-- Bootstrap Touchspin -->
     <link href="{{ asset('assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 
-    <!-- Daterangepicker css -->
+    <!-- Date/Time Pickers -->
     <link href="{{ asset('assets/vendor/daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
-
-    <!-- Bootstrap Touchspin css -->
-
-
-    <!-- Flatpickr Timepicker css -->
     <link href="{{ asset('assets/vendor/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Theme Config Js -->
-    <script src="{{ asset('assets/js/config.js') }}"></script>
+    <!-- Vector Map -->
+    <link href="{{ asset('assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}"
+        rel="stylesheet" type="text/css" />
 
-    <!-- App css -->
-    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- Icons css -->
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <!-- DataTables Core CSS -->
     <link href="{{ asset('assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
+    <link href="{{ asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}"
+        rel="stylesheet" type="text/css" />
 
+    <!-- DataTables Extensions -->
+    <link href="{{ asset('assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
 
 
 </head>

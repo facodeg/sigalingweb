@@ -30,116 +30,135 @@
                     <div class="card-body">
                         <a href="{{ route('surat_praktek_satu.create') }}" class="mb-3 btn btn-primary">Tambah Surat
                             Praktek</a>
+                        @php
+                            $kategori = [
+                                'SURAT KETERANGAN',
+                                'SURAT IZIN ATASAN',
+                                'SURAT KETERANGAN HARI DAN JAM PRAKTEK',
+                                'SURAT KETERANGAN KERJA',
+                            ];
+                        @endphp
 
-                        <table id="example2" class="table table-bordered table-striped dt-responsive nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th>Nomor Surat</th>
-                                    <th>Nama Surat</th>
-                                    <th>Nama Praktikan</th>
+                        <ul class="nav nav-pills nav-justified mb-3">
+                            @foreach ($kategori as $index => $jenis)
+                                @php
+                                    $colorClass = match ($jenis) {
+                                        'SURAT KETERANGAN' => 'nav-keterangan',
+                                        'SURAT IZIN ATASAN' => 'nav-izin',
+                                        'SURAT KETERANGAN HARI DAN JAM PRAKTEK' => 'nav-jam',
+                                        'SURAT KETERANGAN KERJA' => 'nav-kerja',
+                                        default => '',
+                                    };
+                                @endphp
+                                <li class="nav-item">
+                                    <a href="#tab-{{ $index }}" data-bs-toggle="tab"
+                                        class="nav-link rounded-0 {{ $colorClass }} {{ $index == 0 ? 'active' : '' }}">
+                                        {{ $jenis }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
 
-                                    <th>Profesi</th>
-                                    <th>Unit</th>
-                                    <th>Status Surat</th>
-                                    <th>Tanggal Dikeluarkan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $item)
-                                    <tr>
-                                        <td>{{ $item->no_surat }}</td>
-                                        <td>{{ $item->nama_surat }}</td>
-                                        {{-- <td>{{ $item->penanda_tangan_nama }}</td> --}}
-                                        {{-- <td>{{ $item->penanda_tangan_jabatan }}</td> --}}
-                                        <td>{{ $item->praktikan_nama }}</td>
-                                        <td>{{ $item->profesi }}</td>
-                                        <td>{{ $item->unit }}</td>
-                                        @php
-                                            $statusClass = match ($item->status_surat) {
-                                                'proses' => 'bg-danger text-white',
-                                                'pengajuan' => 'bg-warning text-dark',
-                                                'selesai' => 'bg-success text-white',
-                                                default => '',
-                                            };
-                                        @endphp
+                        <!-- Tabs Content -->
+                        <div class="tab-content">
+                            @foreach ($kategori as $index => $jenis)
+                                <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
+                                    id="tab-{{ $index }}" role="tabpanel">
+                                    <div class="table-responsive">
+                                        <table id="example21-{{ $index }}"
+                                            class="table table-bordered table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nomor Surat</th>
+                                                    <th>Nama Praktikan</th>
+                                                    <th>Profesi</th>
+                                                    <th>Unit</th>
+                                                    <th>Status Surat</th>
+                                                    <th>Tanggal Dikeluarkan</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data->where('nama_surat', $jenis) as $item)
+                                                    @php
+                                                        $statusClass = match ($item->status_surat) {
+                                                            'proses' => 'bg-danger text-white',
+                                                            'pengajuan' => 'bg-warning text-dark',
+                                                            'selesai' => 'bg-success text-white',
+                                                            default => '',
+                                                        };
+                                                    @endphp
+                                                    <tr>
+                                                        <td>{{ $item->no_surat }}</td>
+                                                        <td>{{ $item->praktikan_nama }}</td>
+                                                        <td>{{ $item->profesi }}</td>
+                                                        <td>{{ $item->unit }}</td>
+                                                        <td>
+                                                            <select
+                                                                class="form-select form-select-sm status-surat {{ $statusClass }}"
+                                                                data-id="{{ $item->id }}">
+                                                                <option value="proses"
+                                                                    {{ $item->status_surat === 'proses' ? 'selected' : '' }}>
+                                                                    Proses</option>
+                                                                <option value="pengajuan"
+                                                                    {{ $item->status_surat === 'pengajuan' ? 'selected' : '' }}>
+                                                                    Pengajuan</option>
+                                                                <option value="selesai"
+                                                                    {{ $item->status_surat === 'selesai' ? 'selected' : '' }}>
+                                                                    Selesai</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="date"
+                                                                class="form-control form-control-sm tanggal-dikeluarkan"
+                                                                data-id="{{ $item->id }}"
+                                                                value="{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('Y-m-d') }}">
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('surat_praktek_satu.edit', $item->id) }}"
+                                                                class="btn btn-sm btn-warning">Edit</a>
+                                                            <form
+                                                                action="{{ route('surat_praktek_satu.destroy', $item->id) }}"
+                                                                method="POST" style="display:inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Yakin?')">Hapus</button>
+                                                            </form>
+                                                            @php
+                                                                $countSurat = \App\Models\SuratPraktekSatu::where(
+                                                                    'no_surat',
+                                                                    $item->no_surat,
+                                                                )->count();
+                                                            @endphp
+                                                            @if ($countSurat > 1)
+                                                                <a href="{{ route('surat_praktek_satu.cetak2', $item->id) }}"
+                                                                    class="btn btn-sm btn-info" target="_blank">Cetak</a>
+                                                            @elseif ($item->nama_surat === 'SURAT IZIN ATASAN')
+                                                                <a href="{{ route('surat_praktek_satu.cetak_izin_atasan', $item->id) }}"
+                                                                    class="btn btn-sm btn-dark" target="_blank">Cetak</a>
+                                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN HARI DAN JAM PRAKTEK')
+                                                                <a href="{{ route('surat_praktek_satu.cetak', $item->id) }}"
+                                                                    class="btn btn-sm btn-primary" target="_blank">Cetak</a>
+                                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN')
+                                                                <a href="{{ route('surat_praktek_satu.cetak_keterangan', $item->id) }}"
+                                                                    class="btn btn-sm btn-success" target="_blank">Cetak</a>
+                                                            @else
+                                                                <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
+                                                                    class="btn btn-sm btn-secondary"
+                                                                    target="_blank">Cetak</a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
 
-                                        <td>
-                                            <select class="form-select form-select-sm status-surat {{ $statusClass }}"
-                                                data-id="{{ $item->id }}">
-                                                <option value="proses"
-                                                    {{ $item->status_surat == 'proses' ? 'selected' : '' }}>Proses</option>
-                                                <option value="pengajuan"
-                                                    {{ $item->status_surat == 'pengajuan' ? 'selected' : '' }}>Pengajuan
-                                                </option>
-                                                <option value="selesai"
-                                                    {{ $item->status_surat == 'selesai' ? 'selected' : '' }}>Selesai
-                                                </option>
-                                            </select>
-                                        </td>
 
-                                        {{-- <td>{{ $item->tempat_dikeluarkan }}</td> --}}
-                                        {{-- <td>{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->translatedFormat('d F Y') }}</td> --}}
-
-                                        <td>
-                                            <input type="date" class="form-control form-control-sm tanggal-dikeluarkan"
-                                                data-id="{{ $item->id }}"
-                                                value="{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('Y-m-d') }}">
-                                        </td>
-
-                                        <td>
-                                            <a href="{{ route('surat_praktek_satu.edit', $item->id) }}"
-                                                class="btn btn-sm btn-warning">Edit</a>
-                                            <form action="{{ route('surat_praktek_satu.destroy', $item->id) }}"
-                                                method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
-                                            </form>
-                                            @php
-                                                $countSurat = \App\Models\SuratPraktekSatu::where(
-                                                    'no_surat',
-                                                    $item->no_surat,
-                                                )->count();
-                                            @endphp
-
-                                            @if ($countSurat > 1)
-                                                <a href="{{ route('surat_praktek_satu.cetak2', $item->id) }}"
-                                                    class="btn btn-sm btn-info" target="_blank">
-                                                    <i class="ri-printer-line"></i> Cetak
-                                                </a>
-                                            @elseif ($item->nama_surat === 'SURAT IZIN ATASAN')
-                                                <a href="{{ route('surat_praktek_satu.cetak_izin_atasan', $item->id) }}"
-                                                    class="btn btn-sm btn-dark" target="_blank">
-                                                    <i class="ri-printer-line"></i> Cetak
-                                                </a>
-                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN HARI DAN JAM PRAKTEK')
-                                                <a href="{{ route('surat_praktek_satu.cetak', $item->id) }}"
-                                                    class="btn btn-sm btn-primary" target="_blank">
-                                                    <i class="ri-printer-line"></i> Cetak
-                                                </a>
-                                            @elseif ($item->nama_surat === 'SURAT KETERANGAN')
-                                                <a href="{{ route('surat_praktek_satu.cetak_keterangan', $item->id) }}"
-                                                    class="btn btn-sm btn-success" target="_blank">
-                                                    <i class="ri-printer-line"></i> Cetak
-                                                </a>
-                                            @else
-                                                <a href="{{ route('surat_praktek_satu.cetak', $item) }}"
-                                                    class="btn btn-sm btn-secondary" target="_blank">
-                                                    <i class="ri-printer-line"></i> Cetak
-                                                </a>
-                                            @endif
-
-
-
-
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
 
                     </div>
                 </div>
@@ -156,20 +175,31 @@
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#example2').DataTable({
-                responsive: true,
-                dom: 'Blfrtip',
-                buttons: ['copy', 'excel', 'pdf', 'print'],
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
-                ],
-                pageLength: 10
+            // Inisialisasi semua tabel di awal
+            @foreach ($kategori as $index => $jenis)
+                $('#example21-{{ $index }}').DataTable({
+                    responsive: true,
+                    dom: 'Blfrtip',
+                    buttons: ['copy', 'excel', 'pdf', 'print'],
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ],
+                    pageLength: 10
+                });
+            @endforeach
+
+            // Saat tab diklik, redraw datatable di dalamnya agar responsif
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                let target = $(e.target).attr('href'); // ex: #tab-1
+                let table = $(target).find('table').attr('id'); // get table ID
+                if ($.fn.DataTable.isDataTable('#' + table)) {
+                    $('#' + table).DataTable().columns.adjust().responsive.recalc();
+                }
             });
-            $('.dt-buttons').addClass('mb-3');
-            $('.dataTables_length').css('margin-right', '20px');
         });
     </script>
+
 
     <script>
         $(document).ready(function() {
