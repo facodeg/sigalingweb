@@ -116,7 +116,7 @@
             <div class="card">
                 <div class="card-body">
                     <a href="{{ route('surat_praktek_satu.create') }}" class="mb-3 btn btn-primary">Tambah Surat
-                        Praktek</a>
+                    </a>
                     @php
                         $kategori = [
                             'SURAT KETERANGAN',
