@@ -136,15 +136,19 @@
                                     'SURAT KETERANGAN KERJA' => 'nav-kerja',
                                     default => '',
                                 };
+
+                                $jumlah = $data->where('nama_surat', $jenis)->count();
                             @endphp
                             <li class="nav-item">
                                 <a href="#tab-{{ $index }}" data-bs-toggle="tab"
                                     class="nav-link rounded-0 {{ $colorClass }} {{ $index == 0 ? 'active' : '' }}">
                                     {{ $jenis }}
+                                    <span class="badge bg-light text-dark ms-1">{{ $jumlah }}</span>
                                 </a>
                             </li>
                         @endforeach
                     </ul>
+
 
                     <!-- Tabs Content -->
                     <div class="tab-content">
