@@ -70,6 +70,7 @@ class SuratPraktekSatuController extends Controller
                 'penanda_tangan_jabatan' => $request->penanda_tangan_jabatan,
                 'tmt' => $request->tmt,
                 'maksud' => $request->maksud,
+                'status_surat' => 'proses', // tambahkan di sini
             ]);
         }
 
