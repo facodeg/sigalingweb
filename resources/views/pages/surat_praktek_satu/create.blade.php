@@ -108,7 +108,10 @@
                             Praktikan</button>
                     </div>
 
-                    <div id="izin-atasan-section" class="row d-none">
+                    {{-- Jadwal Praktek --}}
+                    <div id="jadwal-praktek">
+                        <div class="row">
+                            <div id="izin-atasan-section" class="row d-none">
                                 <div class="mb-3 col-md-6">
                                     <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
                                     <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
@@ -120,11 +123,6 @@
                                         class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
                                 </div>
                             </div>
-
-                    {{-- Jadwal Praktek --}}
-                    <div id="jadwal-praktek">
-                        <div class="row">
-
                             <div class="mb-3 col-md-6">
                                 <label for="hari_praktek" class="form-label">Hari Praktek</label>
                                 <input type="text" name="hari_praktek" id="hari_praktek" class="form-control"
