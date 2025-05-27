@@ -111,10 +111,17 @@
                     {{-- Jadwal Praktek --}}
                     <div id="jadwal-praktek">
                         <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
-                                <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
-                                    value="RSUD Leuwiliang" readonly>
+                            <div id="izin-atasan-section" class="row d-none">
+                                <div class="mb-3 col-md-6">
+                                    <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
+                                    <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
+                                        value="RSUD Leuwiliang">
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="alamat_lengkap_praktek" class="form-label">Alamat Lengkap Praktek</label>
+                                    <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek"
+                                        class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
+                                </div>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="hari_praktek" class="form-label">Hari Praktek</label>
@@ -217,6 +224,9 @@
             const pangkatPenandatangan = document.getElementById('penanda_tangan_pangkat');
             const jabatanPenandatangan = document.getElementById('penanda_tangan_jabatan');
 
+            const alamatLengkapField = document.getElementById('alamat_lengkap_praktek');
+            const alamatLengkapWrapper = alamatLengkapField?.closest('.mb-3');
+
             const fieldsToHideForKeterangan = [
                 'hari_praktek',
                 'jam_efektif_mingguan',
@@ -277,7 +287,15 @@
                 tmtSection.classList.toggle('d-none', !isKeterangan);
                 maksudSection.classList.toggle('d-none', !isKeterangan);
 
-                // Tampilkan/hilangkan field per-item
+                // Field alamat lengkap
+                if (isIzinAtasan && alamatLengkapWrapper) {
+                    alamatLengkapWrapper.style.display = 'block';
+                } else if (alamatLengkapWrapper) {
+                    alamatLengkapWrapper.style.display = 'none';
+                    alamatLengkapField.value = '';
+                }
+
+                // Tampilkan/hilangkan field waktu
                 fieldsToHideForKeterangan.forEach(id => {
                     toggleFieldVisibility(id, !isKeterangan);
                 });
@@ -293,14 +311,13 @@
                     });
                 }
 
-                // Atur default penandatangan
+                // Default penandatangan
                 if (isKeterangan) {
                     namaPenandatangan.value = 'dr. Ridwan';
                     nipPenandatangan.value = '197606232010011008';
                     pangkatPenandatangan.value = 'Pembina, IV/a';
                     jabatanPenandatangan.value = 'Kepala Sub Bagian Kepegawaian';
 
-                    // Kosongkan field waktu praktik
                     document.getElementById('hari_praktek').value = '';
                     document.getElementById('jam_efektif_mingguan').value = '';
                     document.getElementById('shift_pagi').value = '';
@@ -319,6 +336,9 @@
                     document.getElementById('shift_malam').value = '21.00 s.d 07.30 WIB';
                 }
             });
+
+            // Trigger default pada load
+            suratSelect.dispatchEvent(new Event('change'));
         });
     </script>
 @endpush

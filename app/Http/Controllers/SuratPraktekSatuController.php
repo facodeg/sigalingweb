@@ -32,6 +32,7 @@ class SuratPraktekSatuController extends Controller
             'unit' => 'required|array',
             'unit.*' => 'nullable|string|max:255',
             'alamat_praktek' => 'required|string|max:255',
+            'alamat_lengkap_praktek' => 'nullable|string|max:255',
             'hari_praktek' => 'nullable|string|max:255',
             'jam_efektif_mingguan' => 'nullable|numeric',
             'shift_pagi' => 'nullable|string|max:255',
@@ -57,6 +58,7 @@ class SuratPraktekSatuController extends Controller
                 'profesi' => $request->profesi[$i] ?? null,
                 'unit' => $request->unit[$i] ?? null,
                 'alamat_praktek' => $request->alamat_praktek,
+                'alamat_lengkap_praktek' => $request->alamat_lengkap_praktek,
                 'hari_praktek' => $count == 1 ? $request->hari_praktek : null,
                 'jam_efektif_mingguan' => $count == 1 ? $request->jam_efektif_mingguan : null,
                 'shift_pagi' => $count == 1 ? $request->shift_pagi : null,
@@ -70,7 +72,7 @@ class SuratPraktekSatuController extends Controller
                 'penanda_tangan_jabatan' => $request->penanda_tangan_jabatan,
                 'tmt' => $request->tmt,
                 'maksud' => $request->maksud,
-                'status_surat' => 'proses', // tambahkan di sini
+                'status_surat' => 'proses',
             ]);
         }
 
