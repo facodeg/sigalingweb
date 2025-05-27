@@ -111,7 +111,7 @@
                     {{-- Jadwal Praktek --}}
                     <div id="jadwal-praktek">
                         <div class="row">
-                            <div class="row d-none">
+                            <div id="izin-atasan-section" class="row d-none">
                                 <div class="mb-3 col-md-6">
                                     <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
                                     <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
@@ -226,6 +226,7 @@
 
             const alamatLengkapField = document.getElementById('alamat_lengkap_praktek');
             const alamatLengkapWrapper = alamatLengkapField?.closest('.mb-3');
+            const alamatPraktekWrapper = document.getElementById('alamat_praktek')?.closest('.mb-3');
 
             const fieldsToHideForKeterangan = [
                 'hari_praktek',
@@ -279,31 +280,33 @@
                 const isIzinAtasan = value === 'SURAT IZIN ATASAN';
                 const isKeterangan = value === 'SURAT KETERANGAN';
 
-                // Tampilkan/sembunyikan jadwal praktek
+                // Tampilkan/sembunyikan jadwal
                 const showJadwal = !(isIzinAtasan || isKeterangan);
                 jadwalSection.style.display = showJadwal ? 'block' : 'none';
 
-                // Tampilkan/matikan field tambahan
+                // Field tambahan khusus
                 tmtSection.classList.toggle('d-none', !isKeterangan);
                 maksudSection.classList.toggle('d-none', !isKeterangan);
 
-                // Field alamat lengkap
-                if (isIzinAtasan && alamatLengkapWrapper) {
-                    alamatLengkapWrapper.style.display = 'block';
-                } else if (alamatLengkapWrapper) {
-                    alamatLengkapWrapper.style.display = 'none';
+                // Alamat lengkap (khusus izin atasan)
+                if (isIzinAtasan && alamatLengkapWrapper && alamatPraktekWrapper) {
+                    alamatLengkapWrapper.classList.remove('d-none');
+                    alamatPraktekWrapper.classList.remove('d-none');
+                } else if (alamatLengkapWrapper && alamatPraktekWrapper) {
+                    alamatLengkapWrapper.classList.add('d-none');
+                    alamatPraktekWrapper.classList.remove('d-none');
                     alamatLengkapField.value = '';
                 }
 
-                // Tampilkan/hilangkan field waktu
+                // Sembunyikan beberapa field untuk keterangan
                 fieldsToHideForKeterangan.forEach(id => {
                     toggleFieldVisibility(id, !isKeterangan);
                 });
 
-                // Atur tombol tambah praktikan
+                // Tombol tambah praktikan
                 tambahBtnWrapper.style.display = isIzinAtasan ? 'none' : 'block';
 
-                // Batasi hanya 1 praktikan jika IZIN ATASAN
+                // Batasi 1 praktikan
                 const entries = praktikanWrapper.querySelectorAll('.praktikan-entry');
                 if ((isIzinAtasan || isKeterangan) && entries.length > 1) {
                     entries.forEach((entry, index) => {
@@ -311,13 +314,14 @@
                     });
                 }
 
-                // Default penandatangan
+                // Default nilai penandatangan
                 if (isKeterangan) {
                     namaPenandatangan.value = 'dr. Ridwan';
                     nipPenandatangan.value = '197606232010011008';
                     pangkatPenandatangan.value = 'Pembina, IV/a';
                     jabatanPenandatangan.value = 'Kepala Sub Bagian Kepegawaian';
 
+                    // Kosongkan jadwal
                     document.getElementById('hari_praktek').value = '';
                     document.getElementById('jam_efektif_mingguan').value = '';
                     document.getElementById('shift_pagi').value = '';
@@ -337,7 +341,7 @@
                 }
             });
 
-            // Trigger default pada load
+            // Trigger default saat load
             suratSelect.dispatchEvent(new Event('change'));
         });
     </script>
