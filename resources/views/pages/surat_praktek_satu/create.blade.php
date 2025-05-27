@@ -111,24 +111,14 @@
                     {{-- Jadwal Praktek --}}
                     <div id="jadwal-praktek">
                         <div class="row">
-                            <div id="izin-atasan-section" class="row d-none">
-                                <div class="mb-3 col-md-6">
-                                    <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
-                                    <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
-                                        value="RSUD Leuwiliang">
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="alamat_lengkap_praktek" class="form-label">Alamat Lengkap Praktek</label>
-                                    <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek"
-                                        class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
-                                </div>
-                            </div>
+
                             <div class="mb-3 col-md-6">
                                 <label for="hari_praktek" class="form-label">Hari Praktek</label>
                                 <input type="text" name="hari_praktek" id="hari_praktek" class="form-control"
                                     value="Senin s.d Minggu">
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="jam_efektif_mingguan" class="form-label">Jam Efektif / Minggu</label>
@@ -152,6 +142,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
+                            <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
+                                value="RSUD Leuwiliang">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="alamat_lengkap_praktek" class="form-label">Alamat Lengkap Praktek</label>
+                            <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek"
+                                class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
+                        </div>
+                    </div>
+
 
                     {{-- Penandatangan --}}
                     <div class="row">
