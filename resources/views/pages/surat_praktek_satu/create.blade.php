@@ -111,7 +111,7 @@
                     {{-- Jadwal Praktek --}}
                     <div id="jadwal-praktek">
                         <div class="row">
-                            <div id="izin-atasan-section" class="row d-none">
+                            <div class="row d-none">
                                 <div class="mb-3 col-md-6">
                                     <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
                                     <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
