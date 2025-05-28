@@ -127,8 +127,9 @@
             <div>{{ $surat->alamat_praktek }}</div>
             <div>Alamat</div>
             <div>:</div>
-            <div>Jl. Raya Cibeber – Leuwiliang Bogor</div>
+            <div>{{ $surat->alamat_lengkap_praktek ?? 'Jl. Raya Cibeber – Leuwiliang Bogor' }}</div>
         </div>
+
 
         <p>Dengan ketentuan :</p>
         <ol>
