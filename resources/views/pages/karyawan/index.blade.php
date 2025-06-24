@@ -33,6 +33,7 @@
                         <table id="example2" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nama</th>
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
@@ -47,6 +48,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nama</th>
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
@@ -62,6 +64,7 @@
                             <tbody>
                                 @foreach ($karyawans as $item)
                                     <tr>
+                                        <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ route('karyawan.rincian', $item->id) }}" class="text-blue"
                                                 style="text-decoration: none;">
