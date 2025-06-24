@@ -91,7 +91,7 @@
                                         <td>{{ $item->nip_nrp_nipppk_nipb }}</td>
                                         <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         <td>{{ $item->status_kepegawaian }}</td>
-                                        <td>{{ $item->pendidikan }}</td>
+                                        <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan }}</td>
                                         <td>{{ $item->gol }}</td>
                                         <td>{{ $item->tmt_jabatan }}</td>
