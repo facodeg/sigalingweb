@@ -133,10 +133,10 @@
                 buttons: ['copy', 'excel', 'pdf', 'print'],
                 lengthMenu: [
                     [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"],
-                    order: [
-                        [1, 'desc']
-                    ]
+                    [5, 10, 25, 50, "All"]
+                ],
+                order: [
+                    [0, 'asc'] // Urutkan kolom pertama (ID) secara naik
                 ],
                 pageLength: 10,
                 initComplete: function() {
