@@ -39,7 +39,7 @@
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
                                     <th>Pendidikan</th>
-                                    <th>Jabatan</th>
+                                    <th>Jabatan Terakhir</th>
                                     <th>Golongan</th>
                                     <th>TMT Jabatan</th>
                                     <th>Status</th>
