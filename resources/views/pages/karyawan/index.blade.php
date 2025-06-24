@@ -133,7 +133,11 @@
                 buttons: ['copy', 'excel', 'pdf', 'print'],
                 lengthMenu: [
                     [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
+                    [5, 10, 25, 50, "All"],
+                    pageLength: 10,
+                    order: [
+                        [1, 'desc']
+                    ]
                 ],
                 pageLength: 10,
                 initComplete: function() {
