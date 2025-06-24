@@ -189,14 +189,27 @@
                 </div> --}}
 
                 <li
-                    class="side-nav-item {{ Request::is('pendidikan*') || Request::is('surat_praktek_satu*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#kepegawaian" class="side-nav-link" aria-expanded="false">
+                    class="side-nav-item
+    {{ Request::is('pendidikan*') ||
+    Request::is('surat_praktek_satu*') ||
+    Request::is('pegawai*') ||
+    Request::is('karyawan*') ||
+    Request::is('riwayat_jabatan*') ||
+    Request::is('riwayat_golongan*') ||
+    Request::is('riwayat_sk*') ||
+    Request::is('riwayat_mutasi*') ||
+    Request::is('pendidikan_db*')
+        ? 'menuitem-active'
+        : '' }}">
+                    <a data-bs-toggle="collapse" href="#adminKepegawaian" class="side-nav-link"
+                        aria-expanded="{{ Request::is('pendidikan*') || Request::is('surat_praktek_satu*') || Request::is('pegawai*') || Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'true' : 'false' }}">
                         <i class="ri-parent-fill"></i>
-                        <span>Kepegawaian</span>
+                        <span>Admin Kepegawaian</span>
                         <span class="menu-arrow"></span>
                     </a>
 
-                    <div class="collapse" id="kepegawaian">
+                    <div class="collapse {{ Request::is('pendidikan*') || Request::is('surat_praktek_satu*') || Request::is('pegawai*') || Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'show' : '' }}"
+                        id="adminKepegawaian">
                         <ul class="side-nav-second-level">
                             <li class="{{ Request::is('pendidikan*') ? 'menuitem-active' : '' }}">
                                 <a href="{{ route('pendidikan.index') }}">
@@ -210,9 +223,78 @@
                                     <span>Pembuatan Surat</span>
                                 </a>
                             </li>
+                            <li class="{{ Request::is('pegawai*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('pegawai.index') }}">
+                                    <i class="ri-user-3-line"></i>
+                                    <span>Pegawai</span>
+                                </a>
+                            </li>
+
+                            <!-- Submenu Kepegawaian -->
+                            <li
+                                class="side-nav-item
+                {{ Request::is('karyawan*') ||
+                Request::is('riwayat_jabatan*') ||
+                Request::is('riwayat_golongan*') ||
+                Request::is('riwayat_sk*') ||
+                Request::is('riwayat_mutasi*') ||
+                Request::is('pendidikan_db*')
+                    ? 'menuitem-active'
+                    : '' }}">
+                                <a data-bs-toggle="collapse" href="#menuKepegawaian" class="side-nav-link"
+                                    aria-expanded="{{ Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'true' : 'false' }}">
+                                    <i class="ri-parent-fill"></i>
+                                    <span>Kepegawaian</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse {{ Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'show' : '' }}"
+                                    id="menuKepegawaian">
+                                    <ul class="side-nav-second-level">
+                                        <li class="{{ Request::is('karyawan*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('karyawan.index') }}">
+                                                <i class="ri-user-star-line"></i>
+                                                <span>Karyawan</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{ Request::is('riwayat_jabatan*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('riwayat_jabatan.index') }}">
+                                                <i class="ri-briefcase-line"></i>
+                                                <span>Riwayat Jabatan</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{ Request::is('riwayat_golongan*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('riwayat_golongan.index') }}">
+                                                <i class="ri-bar-chart-box-line"></i>
+                                                <span>Riwayat Golongan</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{ Request::is('riwayat_sk*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('riwayat_sk.index') }}">
+                                                <i class="ri-draft-line"></i>
+                                                <span>Riwayat SK</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{ Request::is('riwayat_mutasi*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('riwayat_mutasi.index') }}">
+                                                <i class="ri-exchange-line"></i>
+                                                <span>Riwayat Mutasi</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{ Request::is('pendidikan_db*') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('pendidikan_db.index') }}">
+                                                <i class="ri-database-2-line"></i>
+                                                <span>Pendidikan db</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </li>
+
+
+
 
 
 

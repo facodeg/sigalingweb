@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Data Pendidikan')
+@section('title', 'Data Karyawan')
 
 @section('main')
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box justify-content-between d-flex align-items-md-center flex-md-row flex-column">
-                    <h4 class="page-title">Daftar Riwayat Pendidikan</h4>
+                    <h4 class="page-title">Daftar Data Karyawan</h4>
                     <ol class="m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Data</a></li>
-                        <li class="breadcrumb-item active">Pendidikan</li>
+                        <li class="breadcrumb-item active">Karyawan</li>
                     </ol>
                 </div>
             </div>
@@ -28,53 +28,76 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('pendidikan.create') }}" class="btn btn-primary mb-3">Tambah Data Pendidikan</a>
+                        <a href="{{ route('karyawan.create') }}" class="btn btn-primary mb-3">Tambah Data Karyawan</a>
 
                         <table id="example2" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nama</th>
-                                    <th>NIP</th>
+                                    <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Status Kepegawaian</th>
                                     <th>Jabatan</th>
-                                    <th>Pendidikan</th>
-                                    <th>Nama Sekolah</th>
+                                    <th>Golongan</th>
+                                    <th>TMT Jabatan</th>
                                     <th>Status</th>
-                                    <th>Tahun</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>NIP</th>
+                                    <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Status Kepegawaian</th>
                                     <th>Jabatan</th>
-                                    <th>Pendidikan</th>
-                                    <th>Nama Sekolah</th>
+                                    <th>Golongan</th>
+                                    <th>TMT Jabatan</th>
                                     <th>Status</th>
-                                    <th>Tahun</th>
                                     <th></th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($pendidikan as $item)
+                                @foreach ($karyawans as $item)
                                     <tr>
-                                        <td>{{ $item->id_pendidikan }}</td>
-                                        <td>{{ $item->nama }}</td>
-                                        <td>{{ $item->nip }}</td>
-                                        <td>{{ $item->jk }}</td>
-                                        <td>{{ $item->jabatan }}</td>
-                                        <td>{{ $item->pendidikan }}</td>
-                                        <td>{{ $item->nama_sekolah }}</td>
-                                        <td>{{ $item->status_pg }}</td>
-                                        <td>{{ $item->Tahun }}</td>
                                         <td>
-                                            <a href="{{ route('pendidikan.edit', $item->id_pendidikan) }}"
+                                            <a href="{{ route('karyawan.rincian', $item->id) }}" class="text-blue"
+                                                style="text-decoration: none;">
+                                                <div class="d-flex align-items-center">
+                                                    @if (empty($item->upload_foto_diri))
+                                                        @php
+                                                            // Penentuan avatar default berdasarkan jenis kelamin
+                                                            $avatarIndex = ($loop->iteration % 4) + 1; // 1 - 5
+                                                            $avatarFile =
+                                                                $item->jk == 'L'
+                                                                    ? "avatar-{$avatarIndex}.jpg" // avatar-1 sampai avatar-5
+                                                                    : 'avatar-' . ($avatarIndex + 4) . '.jpg'; // avatar-6 sampai avatar-10
+                                                        @endphp
+                                                        <img src="{{ asset('assets/images/users/' . $avatarFile) }}"
+                                                            alt="user-image" width="42" class="rounded-circle me-2">
+                                                    @else
+                                                        <img src="{{ asset('storage/' . $item->upload_foto_diri) }}"
+                                                            class="shadow rounded-circle me-2" height="42"
+                                                            alt="User Avatar">
+                                                    @endif
+                                                    <span>{{ $item->nama }}</span>
+                                                </div>
+                                            </a>
+                                        </td>
+
+
+                                        <td>{{ $item->nip_nrp_nipppk_nipb }}</td>
+                                        <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                        <td>{{ $item->status_kepegawaian }}</td>
+                                        <td>{{ $item->jabatan }}</td>
+                                        <td>{{ $item->gol }}</td>
+                                        <td>{{ $item->tmt_jabatan }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td>
+                                            <a href="{{ route('karyawan.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning">Edit</a>
-                                            <form action="{{ route('pendidikan.destroy', $item->id_pendidikan) }}"
-                                                method="POST" style="display:inline-block;">
+                                            <form action="{{ route('karyawan.destroy', $item->id) }}" method="POST"
+                                                style="display:inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger"
@@ -85,7 +108,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-
 
                     </div>
                 </div>
@@ -128,7 +150,6 @@
                 }
             });
 
-            // Tambahkan margin agar tombol & dropdown tidak saling berhimpit
             $('.dt-buttons').addClass('mb-3');
             $('.dataTables_length').css('margin-right', '20px');
         });

@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardKoperasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IzinController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KonfirmasiAnggotaController;
 use App\Http\Controllers\LimitPinjamanController;
@@ -28,8 +29,10 @@ use App\Http\Controllers\PerAnggotaController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SimpananWajibController;
+use App\Http\Controllers\SipController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\StorageLinkController;
+use App\Http\Controllers\StrController;
 use App\Http\Controllers\SuratPraktekSatuController;
 use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\UserController;
@@ -126,6 +129,30 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/surat-praktek-satu/{id}/cetak-izin-atasan', [SuratPraktekSatuController::class, 'cetakIzinAtasan'])->name('surat_praktek_satu.cetak_izin_atasan');
     Route::get('/surat-praktek-satu/{id}/cetak-hari-jam', [SuratPraktekSatuController::class, 'cetakHariJam'])->name('surat_praktek_satu.cetak_hari_jam');
     Route::get('/surat_praktek_satu/cetak_keterangan/{id}', [SuratPraktekSatuController::class, 'cetakKeterangan'])->name('surat_praktek_satu.cetak_keterangan');
+
+    Route::resource('pegawai', PegawaiController::class);
+    // Route::resource('pendidikan', PendidikanController::class);
+    Route::resource('pendidikan_db', PendidikanDbController::class);
+    Route::resource('surat_praktek_satu', SuratPraktekSatuController::class);
+    Route::resource('riwayat_jabatan', RiwayatJabatanController::class);
+    Route::resource('riwayat_golongan', RiwayatGolonganController::class);
+    Route::resource('riwayat_sk', RiwayatSKController::class);
+    Route::resource('riwayat_mutasi', RiwayatMutasiController::class);
+
+    Route::resource('karyawan', KaryawanController::class);
+
+    Route::get('/karyawan/{id}/rincian', [KaryawanController::class, 'rincian'])->name('karyawan.rincian');
+
+    // STR
+    Route::post('/str/store', [StrController::class, 'store'])->name('str.store');
+    Route::get('/str/{id}/edit', [StrController::class, 'edit'])->name('str.edit');
+    Route::put('/str/{id}', [StrController::class, 'update'])->name('str.update');
+    Route::delete('/str/{id}', [StrController::class, 'destroy'])->name('str.destroy');
+
+    // SIP
+    Route::post('/sip/store', [SipController::class, 'store'])->name('sip.store');
+    Route::put('/sip/{id}', [SipController::class, 'update'])->name('sip.update');
+    Route::delete('/sip/{id}', [SipController::class, 'destroy'])->name('sip.destroy');
 });
 
 // Rute untuk koperasi

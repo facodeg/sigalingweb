@@ -10,13 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('riwayat_jabatan', function (Blueprint $table) {
+        Schema::create('data_keluarga', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('karyawan_id')->constrained('karyawans')->onDelete('cascade');
-            $table->string('nama_jabatan');
-            $table->date('tmt_jabatan')->nullable();
-            $table->string('unit_kerja')->nullable();
-            $table->text('keterangan')->nullable();
+            $table->foreignId('karyawan_id')->constrained()->onDelete('cascade');
+            $table->string('nama');
+            $table->string('hubungan'); // contoh: Istri, Anak
+            $table->date('tgl_lahir')->nullable();
+            $table->string('pekerjaan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('riwayat_jabatan');
+        Schema::dropIfExists('data_keluarga');
     }
 };

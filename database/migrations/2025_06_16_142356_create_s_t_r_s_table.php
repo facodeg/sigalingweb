@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('riwayat_jabatan', function (Blueprint $table) {
+        Schema::create('s_t_r_s', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('karyawan_id')->constrained('karyawans')->onDelete('cascade');
-            $table->string('nama_jabatan');
-            $table->date('tmt_jabatan')->nullable();
-            $table->string('unit_kerja')->nullable();
-            $table->text('keterangan')->nullable();
+            $table->foreignId('karyawan_id')->constrained()->onDelete('cascade');
+            $table->string('nomor'); // No STR
+            $table->date('tgl_terbit');
+            $table->date('tgl_expired');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('riwayat_jabatan');
+        Schema::dropIfExists('s_t_r_s');
     }
 };
