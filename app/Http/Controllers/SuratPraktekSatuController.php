@@ -9,7 +9,7 @@ class SuratPraktekSatuController extends Controller
 {
     public function index()
     {
-        $data = SuratPraktekSatu::all();
+        $data = SuratPraktekSatu::orderBy('created_at', 'desc')->get();
         return view('pages.surat_praktek_satu.index', compact('data'));
     }
 
