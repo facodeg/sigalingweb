@@ -274,7 +274,8 @@
                             [5, 10, 25, 50, -1],
                             [5, 10, 25, 50, "All"]
                         ],
-                        pageLength: 10
+                        pageLength: 10,
+                        order: [[5, 'desc']]
                     });
                 @endforeach
 
