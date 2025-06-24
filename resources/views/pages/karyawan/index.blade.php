@@ -37,6 +37,7 @@
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
+                                    <th>Pendidikan</th>
                                     <th>Jabatan</th>
                                     <th>Golongan</th>
                                     <th>TMT Jabatan</th>
