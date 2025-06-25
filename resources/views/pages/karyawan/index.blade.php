@@ -147,7 +147,7 @@
                 initComplete: function() {
                     this.api().columns().every(function() {
                         var column = this;
-                        if (column.index() === 8) return; // Skip "Aksi" column
+                        if (column.index() === 9) return; // Skip "Aksi" column
 
                         var input = document.createElement("input");
                         input.style.width = '100%';
