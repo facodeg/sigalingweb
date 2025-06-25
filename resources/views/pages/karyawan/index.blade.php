@@ -66,9 +66,10 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>
-                                            <a href="{{ route('karyawan.rincian', $item->id) }}" class="text-blue"
-                                                style="text-decoration: none;">
-                                                <div class="d-flex align-items-center">
+
+                                            <div class="d-flex align-items-center">
+                                                <a href="{{ route('karyawan.rincian', $item->id) }}" class="text-blue"
+                                                    style="text-decoration: none;">
                                                     @if (empty($item->upload_foto_diri))
                                                         @php
                                                             // Penentuan avatar default berdasarkan jenis kelamin
@@ -85,9 +86,10 @@
                                                             class="shadow rounded-circle me-2" height="42"
                                                             alt="User Avatar">
                                                     @endif
-                                                    <span>{{ $item->nama }}</span>
-                                                </div>
-                                            </a>
+                                                </a>
+                                                <span>{{ $item->nama }}</span>
+                                            </div>
+
                                         </td>
 
 
