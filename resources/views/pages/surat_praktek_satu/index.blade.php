@@ -156,7 +156,7 @@
                             <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
                                 id="tab-{{ $index }}" role="tabpanel">
 
-                                @if ($jenis === 'SURAT KETERANGAN')
+                                @if (in_array($jenis, ['SURAT KETERANGAN', 'SURAT IZIN ATASAN', 'SURAT KETERANGAN HARI DAN JAM PRAKTEK']))
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <select class="form-select filter-bulan"
