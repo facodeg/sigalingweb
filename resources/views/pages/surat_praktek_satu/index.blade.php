@@ -176,6 +176,7 @@
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Nomor Surat</th>
                                                 <th>Nama Praktikan</th>
                                                 <th>Profesi</th>
@@ -186,7 +187,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data->where('nama_surat', $jenis) as $item)
+                                            @foreach ($data->where('nama_surat', $jenis)->values() as $i => $item)
                                                 @php
                                                     $statusClass = match ($item->status_surat) {
                                                         'proses' => 'bg-danger text-white',
@@ -196,6 +197,7 @@
                                                     };
                                                 @endphp
                                                 <tr>
+                                                    <td>{{ $i + 1 }}</td>
                                                     <td>{{ $item->no_surat }}</td>
                                                     <td>{{ $item->praktikan_nama }}</td>
                                                     <td>{{ $item->profesi }}</td>
