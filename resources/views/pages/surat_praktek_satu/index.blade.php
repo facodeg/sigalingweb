@@ -155,6 +155,22 @@
                         @foreach ($kategori as $index => $jenis)
                             <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
                                 id="tab-{{ $index }}" role="tabpanel">
+
+                                @if ($jenis === 'SURAT KETERANGAN')
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <select class="form-select filter-bulan"
+                                                data-target="example21-{{ $index }}">
+                                                <option value="">-- Filter Bulan --</option>
+                                                @foreach (range(1, 12) as $bulan)
+                                                    <option value="{{ sprintf('%02d', $bulan) }}">
+                                                        {{ \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="table-responsive">
                                     <table id="example21-{{ $index }}"
                                         class="table table-bordered table-striped dt-responsive nowrap w-100">
@@ -199,7 +215,8 @@
                                                                 Selesai</option>
                                                         </select>
                                                     </td>
-                                                    <td>
+                                                    <td
+                                                        data-bulan="{{ \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('m') }}">
                                                         <input type="date"
                                                             class="form-control form-control-sm tanggal-dikeluarkan"
                                                             data-id="{{ $item->id }}"
@@ -275,7 +292,9 @@
                             [5, 10, 25, 50, "All"]
                         ],
                         pageLength: 10,
-                        order: [[5, 'desc']]
+                        order: [
+                            [5, 'desc']
+                        ]
                     });
                 @endforeach
 
@@ -360,6 +379,26 @@
                 $(document).ready(function() {
                     $('.status-surat').each(function() {
                         updateSelectClass(this, $(this).val());
+                    });
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('.filter-bulan').on('change', function() {
+                    const selectedMonth = $(this).val();
+                    const targetTable = $(this).data('target');
+                    const table = $('#' + targetTable).DataTable();
+
+                    table.rows().every(function() {
+                        const row = $(this.node());
+                        const bulan = row.find('td[data-bulan]').data('bulan');
+
+                        if (!selectedMonth || bulan == selectedMonth) {
+                            row.show();
+                        } else {
+                            row.hide();
+                        }
                     });
                 });
             });
