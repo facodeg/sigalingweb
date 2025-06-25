@@ -197,7 +197,7 @@
                                                     };
                                                 @endphp
                                                 <tr>
-                                                    <td>{{ $i + 1 }}</td>
+                                                    <td class="nomor-urut"></td>
                                                     <td>{{ $item->no_surat }}</td>
                                                     <td>{{ $item->praktikan_nama }}</td>
                                                     <td>{{ $item->profesi }}</td>
@@ -386,6 +386,13 @@
             });
         </script>
         <script>
+            function updateNomorUrut(targetTable) {
+                const rows = $('#' + targetTable + ' tbody tr:visible');
+                rows.each(function(index) {
+                    $(this).find('td.nomor-urut').text(index + 1);
+                });
+            }
+
             $(document).ready(function() {
                 $('.filter-bulan').on('change', function() {
                     const selectedMonth = $(this).val();
@@ -402,7 +409,14 @@
                             row.hide();
                         }
                     });
+
+                    updateNomorUrut(targetTable);
                 });
+
+                // Set urutan awal saat datatable sudah load
+                @foreach ($kategori as $index => $jenis)
+                    updateNomorUrut('example21-{{ $index }}');
+                @endforeach
             });
         </script>
     @endpush
