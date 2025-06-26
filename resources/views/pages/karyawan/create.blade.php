@@ -139,9 +139,13 @@
 
                         <div class="mb-3 col-md-6">
                             <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status1" name="status">
-                                <option value="Nakes" {{ $karyawan->status == 'Nakes' ? 'selected' : '' }}>Nakes</option>
-                                <option value="Non Nakes" {{ $karyawan->status == 'Non Nakes' ? 'selected' : '' }}>Non
+
+                            <select class="form-select" id="status" name="status">
+                                <option value="Nakes"
+                                    {{ old('status', $karyawan->status ?? '') == 'Nakes' ? 'selected' : '' }}>Nakes
+                                </option>
+                                <option value="Non Nakes"
+                                    {{ old('status', $karyawan->status ?? '') == 'Non Nakes' ? 'selected' : '' }}>Non
                                     Nakes</option>
                             </select>
                         </div>
