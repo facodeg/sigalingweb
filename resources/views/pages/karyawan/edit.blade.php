@@ -127,7 +127,7 @@
                 <div class="card-header"><strong>Lainnya</strong></div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach ([['npwp', 'NPWP'], ['ruangan', 'Ruangan'], ['status', 'Status'], ['status_nakes', 'Status Nakes'], ['keterangan', 'Keterangan', 12]] as $input)
+                        @foreach ([['npwp', 'NPWP'], ['ruangan', 'Ruangan'], ['status', 'status'], ['status_nakes', 'Status Nakes'], ['keterangan', 'Keterangan', 12]] as $input)
                             <div class="mb-3 col-md-{{ $input[2] ?? 6 }}">
                                 <label for="{{ $input[0] }}" class="form-label">{{ $input[1] }}</label>
                                 <input type="text" class="form-control" id="{{ $input[0] }}"
