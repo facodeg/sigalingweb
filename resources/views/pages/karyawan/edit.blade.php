@@ -127,13 +127,24 @@
                 <div class="card-header"><strong>Lainnya</strong></div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach ([['npwp', 'NPWP'], ['ruangan', 'Ruangan'], ['status', 'status'], ['status_nakes', 'Status Nakes'], ['keterangan', 'Keterangan', 12]] as $input)
-                            <div class="mb-3 col-md-{{ $input[2] ?? 6 }}">
-                                <label for="{{ $input[0] }}" class="form-label">{{ $input[1] }}</label>
-                                <input type="text" class="form-control" id="{{ $input[0] }}"
-                                    name="{{ $input[0] }}" value="{{ $karyawan[$input[0]] ?? '' }}">
+                        @php
+                            $lainnya = [
+                                ['name' => 'npwp', 'label' => 'NPWP'],
+                                ['name' => 'ruangan', 'label' => 'Ruangan'],
+                                ['name' => 'status', 'label' => 'Status'],
+                                ['name' => 'status_nakes', 'label' => 'Status Nakes'],
+                                ['name' => 'keterangan', 'label' => 'Keterangan', 'col' => 12],
+                            ];
+                        @endphp
+
+                        @foreach ($lainnya as $field)
+                            <div class="mb-3 col-md-{{ $field['col'] ?? 6 }}">
+                                <label for="{{ $field['name'] }}" class="form-label">{{ $field['label'] }}</label>
+                                <input type="text" class="form-control" id="{{ $field['name'] }}"
+                                    name="{{ $field['name'] }}" value="{{ $karyawan[$field['name']] ?? '' }}">
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
