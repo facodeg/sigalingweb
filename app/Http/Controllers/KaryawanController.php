@@ -117,19 +117,19 @@ class KaryawanController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return redirect()->route('pages.karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
+        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
     }
 
     public function destroy(Karyawan $karyawan)
     {
         $karyawan->delete();
 
-        return redirect()->route('pages.karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
+        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
     }
 
     public function rincian($id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        return view('pages.karyawan.rincian', compact('karyawan'));
+        return view('karyawan.rincian', compact('karyawan'));
     }
 }
