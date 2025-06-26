@@ -128,25 +128,32 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="status1" class="form-label">Status 1</label>
-                            <input type="text" class="form-control" id="status1" name="status"
-                                value="{{ $karyawan->status ?? '' }}">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status1" name="status">
+                                <option value="Nakes" {{ $karyawan->status == 'Nakes' ? 'selected' : '' }}>Nakes</option>
+                                <option value="Non Nakes" {{ $karyawan->status == 'Non Nakes' ? 'selected' : '' }}>Non
+                                    Nakes</option>
+                            </select>
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="status_nakes" class="form-label">Status Nakes</label>
                             <input type="text" class="form-control" id="status_nakes" name="status_nakes"
                                 value="{{ $karyawan->status_nakes ?? '' }}">
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="npwp" class="form-label">NPWP</label>
                             <input type="text" class="form-control" id="npwp" name="npwp"
                                 value="{{ $karyawan->npwp ?? '' }}">
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="ruangan" class="form-label">Ruangan</label>
                             <input type="text" class="form-control" id="ruangan" name="ruangan"
                                 value="{{ $karyawan->ruangan ?? '' }}">
                         </div>
+
                         <div class="mb-3 col-md-12">
                             <label for="keterangan" class="form-label">Keterangan</label>
                             <input type="text" class="form-control" id="keterangan" name="keterangan"
@@ -155,6 +162,7 @@
                     </div>
                 </div>
             </div>
+
 
 
             <div class="text-end">

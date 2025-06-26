@@ -125,16 +125,42 @@
                 <div class="card-header"><strong>Lainnya</strong></div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach ([['npwp', 'NPWP'], ['ruangan', 'Ruangan'], ['status', 'Status'], ['status_nakes', 'Status Nakes'], ['keterangan', 'Keterangan', 12]] as $input)
-                            <div class="mb-3 col-md-{{ $input[2] ?? 6 }}">
-                                <label for="{{ $input[0] }}" class="form-label">{{ $input[1] }}</label>
-                                <input type="text" class="form-control" id="{{ $input[0] }}"
-                                    name="{{ $input[0] }}">
-                            </div>
-                        @endforeach
+                        <div class="mb-3 col-md-6">
+                            <label for="npwp" class="form-label">NPWP</label>
+                            <input type="text" class="form-control" id="npwp" name="npwp"
+                                value="{{ $karyawan->npwp ?? '' }}">
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="ruangan" class="form-label">Ruangan</label>
+                            <input type="text" class="form-control" id="ruangan" name="ruangan"
+                                value="{{ $karyawan->ruangan ?? '' }}">
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status1" name="status">
+                                <option value="Nakes" {{ $karyawan->status == 'Nakes' ? 'selected' : '' }}>Nakes</option>
+                                <option value="Non Nakes" {{ $karyawan->status == 'Non Nakes' ? 'selected' : '' }}>Non
+                                    Nakes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="status_nakes" class="form-label">Status Nakes</label>
+                            <input type="text" class="form-control" id="status_nakes" name="status_nakes"
+                                value="{{ $karyawan->status_nakes ?? '' }}">
+                        </div>
+
+                        <div class="mb-3 col-md-12">
+                            <label for="keterangan" class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                value="{{ $karyawan->keterangan ?? '' }}">
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <div class="text-end">
                 <button type="submit" class="btn btn-success">Simpan Data</button>
