@@ -128,7 +128,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="status" class="form-label">Status</label>
+                            <label for="status1" class="form-label">Status 1</label>
                             <input type="text" class="form-control" id="status1" name="status"
                                 value="{{ $karyawan->status1 ?? '' }}">
                         </div>
