@@ -99,7 +99,7 @@
                                         <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan_terakhir }}</td>
                                         <td>{{ $item->gol }}</td>
-                                        <td>{{ $item->tmt_jabatan }}</td>
+                                        <td>{{ $item->tmt_kerja_di_rsud }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="{{ route('karyawan.edit', $item->id) }}"
