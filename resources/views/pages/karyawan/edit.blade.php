@@ -130,7 +130,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="status" class="form-label">Status</label>
                             <input type="text" class="form-control" id="status" name="status"
-                                value="{{ $karyawan->status ?? '' }}">
+                                value="{{ $karyawan->status1 ?? '' }}">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="status_nakes" class="form-label">Status Nakes</label>
