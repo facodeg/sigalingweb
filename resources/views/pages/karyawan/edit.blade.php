@@ -127,18 +127,35 @@
                 <div class="card-header"><strong>Lainnya</strong></div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach ([['status', 'Status', 6], ['status_nakes', 'Status Nakes', 6], ['npwp', 'NPWP', 6], ['ruangan', 'Ruangan', 6], ['keterangan', 'Keterangan', 12]] as [$name, $label, $col])
-                            <div class="mb-3 col-md-{{ $col }}">
-                                <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-                                <input type="text" class="form-control" id="{{ $name }}"
-                                    name="{{ $name }}" value="{{ $karyawan[$name] ?? '' }}">
-                            </div>
-                        @endforeach
-
-
+                        <div class="mb-3 col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="status" name="status"
+                                value="{{ $karyawan->status ?? '' }}">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="status_nakes" class="form-label">Status Nakes</label>
+                            <input type="text" class="form-control" id="status_nakes" name="status_nakes"
+                                value="{{ $karyawan->status_nakes ?? '' }}">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="npwp" class="form-label">NPWP</label>
+                            <input type="text" class="form-control" id="npwp" name="npwp"
+                                value="{{ $karyawan->npwp ?? '' }}">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="ruangan" class="form-label">Ruangan</label>
+                            <input type="text" class="form-control" id="ruangan" name="ruangan"
+                                value="{{ $karyawan->ruangan ?? '' }}">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="keterangan" class="form-label">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                value="{{ $karyawan->keterangan ?? '' }}">
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <div class="text-end">
                 <button type="submit" class="btn btn-primary">Update Data</button>
