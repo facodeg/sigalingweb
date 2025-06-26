@@ -129,7 +129,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="status" class="form-label">Status</label>
-                            <input type="text" class="form-control" id="status" name="status"
+                            <input type="text" class="form-control" id="status1" name="status"
                                 value="{{ $karyawan->status1 ?? '' }}">
                         </div>
                         <div class="mb-3 col-md-6">
