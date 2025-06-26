@@ -55,7 +55,7 @@ class KaryawanController extends Controller
 
         Karyawan::create($request->all());
 
-        return redirect()->route('pages.karyawan.index')->with('success', 'Data karyawan berhasil ditambahkan.');
+        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil ditambahkan.');
     }
 
     public function show(Karyawan $karyawan)
