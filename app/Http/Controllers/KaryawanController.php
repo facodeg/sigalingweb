@@ -130,6 +130,6 @@ class KaryawanController extends Controller
     public function rincian($id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        return view('pages.gkaryawan.rincian', compact('karyawan'));
+        return view('pages.karyawan.rincian', compact('karyawan'));
     }
 }
