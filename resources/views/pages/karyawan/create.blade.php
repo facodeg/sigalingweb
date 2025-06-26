@@ -142,10 +142,10 @@
 
                             <select class="form-select" id="status1" name="status">
                                 <option value="Nakes"
-                                    {{ old('status', $karyawan->status ?? '') == 'Nakes' ? 'selected' : '' }}>Nakes
+                                    {{ old('status1', $karyawan->status ?? '') == 'Nakes' ? 'selected' : '' }}>Nakes
                                 </option>
                                 <option value="Non Nakes"
-                                    {{ old('status', $karyawan->status ?? '') == 'Non Nakes' ? 'selected' : '' }}>Non
+                                    {{ old('status1', $karyawan->status ?? '') == 'Non Nakes' ? 'selected' : '' }}>Non
                                     Nakes</option>
                             </select>
                         </div>
