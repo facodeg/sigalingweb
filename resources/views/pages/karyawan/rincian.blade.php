@@ -718,39 +718,7 @@
         });
     </script>
 
-    <script>
-        function openEditModalPendidikan(pendidikan) {
-            const existing = document.getElementById('editModalPendidikan');
-            if (existing) existing.remove();
 
-            const modal = document.createElement('div');
-            modal.innerHTML = `
-        <div class="modal fade" id="editModalPendidikan" tabindex="-1">
-            <div class="modal-dialog">
-                <form method="POST" action="/pendidikan/${pendidikan.id}">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_method" value="PUT">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Edit Data Pendidikan</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="pegawai_id" value="${pendidikan.pegawai_id}">
-                            <div class="mb-3"><label>Jenjang</label><input type="text" name="jenjang" class="form-control" value="${pendidikan.jenjang}" required></div>
-                            <div class="mb-3"><label>Institusi</label><input type="text" name="institusi" class="form-control" value="${pendidikan.institusi}" required></div>
-                            <div class="mb-3"><label>Program Studi</label><input type="text" name="program_studi" class="form-control" value="${pendidikan.program_studi ?? ''}"></div>
-                            <div class="mb-3"><label>Tahun Lulus</label><input type="number" name="tahun_lulus" class="form-control" value="${pendidikan.tahun_lulus}" required></div>
-                        </div>
-                        <div class="modal-footer"><button type="submit" class="btn btn-primary">Simpan Perubahan</button></div>
-                    </div>
-                </form>
-            </div>
-        </div>`;
-            document.body.appendChild(modal);
-            new bootstrap.Modal(document.getElementById('editModalPendidikan')).show();
-        }
-    </script>
 
 
     <script>

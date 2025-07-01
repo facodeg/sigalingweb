@@ -53,6 +53,8 @@ class KaryawanController extends Controller
             'status_nakes' => 'nullable|in:NAKES,NON',
         ]);
 
+        dd($request->all());
+
         Karyawan::create($request->all());
 
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil ditambahkan.');
