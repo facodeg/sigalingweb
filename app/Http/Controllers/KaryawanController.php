@@ -22,8 +22,8 @@ class KaryawanController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:100',
-            'nip_nrp_nipppk_nipb' => 'required|string|unique:karyawans',
-            'status_kepegawaian' => 'required|in:PNS,PPPK,BLUD,PTT',
+            'nip_nrp_nipppk_nipb' => 'required|string',
+            'status_kepegawaian' => 'required',
             'tempat_lahir' => 'nullable|string|max:100',
             'tgl_lahir' => 'nullable|date',
             'umur_tahun' => 'nullable|integer',
@@ -50,7 +50,7 @@ class KaryawanController extends Controller
             'kabupaten' => 'nullable|string|max:100',
             'agama' => 'nullable|string|max:50',
             'ruangan' => 'nullable|string|max:100',
-            'status_nakes' => 'nullable|in:NAKES,NON',
+            'status_nakes' => 'nullable',
         ]);
 
         dd($request->all());
