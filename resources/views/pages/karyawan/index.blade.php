@@ -38,6 +38,7 @@
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
+                                    <th>Status </th>
                                     <th>Pendidikan</th>
                                     <th>Jabatan Terakhir</th>
                                     <th>Golongan</th>
@@ -53,6 +54,7 @@
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
+                                    <th>Status </th>
                                     <th>Pendidikan</th>
                                     <th>Jabatan Terakhir</th>
                                     <th>Golongan</th>
@@ -96,6 +98,7 @@
                                         <td>{{ $item->nip_nrp_nipppk_nipb }}</td>
                                         <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         <td>{{ $item->status_kepegawaian }}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan_terakhir }}</td>
                                         <td>{{ $item->gol }}</td>
