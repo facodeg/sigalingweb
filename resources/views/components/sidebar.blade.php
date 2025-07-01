@@ -280,12 +280,6 @@
                                                 <span>Riwayat Mutasi</span>
                                             </a>
                                         </li>
-                                        <li class="{{ Request::is('pendidikan_db*') ? 'menuitem-active' : '' }}">
-                                            <a href="{{ route('pendidikan_db.index') }}">
-                                                <i class="ri-database-2-line"></i>
-                                                <span>Pendidikan db</span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
