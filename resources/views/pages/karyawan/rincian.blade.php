@@ -471,13 +471,15 @@
                                                     </td>
                                                     <td>
                                                         <a href="javascript:;" class="btn btn-sm btn-warning"
-                                                            onclick='openEditModalPendidikan(@json($pendidikan))'>Edit</a>
-                                                        <form action="{{ route('pendidikan.destroy', $pendidikan->id) }}"
+                                                            onclick='openEditModalJabatan(@json($jabatan))'>Edit</a>
+
+                                                        <form action="{{ route('jabatan.destroy', $jabatan->id) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-danger"
                                                                 onclick="return confirm('Hapus data ini?')">Hapus</button>
                                                         </form>
+
                                                     </td>
 
                                                 </tr>
