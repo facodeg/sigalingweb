@@ -466,9 +466,7 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $jabatan->nama_jabatan }}</td>
                                                     <td>{{ $jabatan->unit_kerja }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($jabatan->mulai)->format('d-m-Y') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($jabatan->selesai)->format('d-m-Y') }}
-                                                    </td>
+                                                    
                                                     <td>
                                                         <a href="javascript:;" class="btn btn-sm btn-warning"
                                                             onclick='openEditModalJabatan(@json($jabatan))'>Edit</a>
