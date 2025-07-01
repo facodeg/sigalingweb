@@ -413,6 +413,45 @@
                                 </div>
 
                                 <div class="table-responsive">
+                                    <!-- Tombol Tambah -->
+                                    <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
+                                        data-bs-target="#tambahModalPendidikan">
+                                        Tambah Data Pendidikan
+                                    </button>
+
+                                    <!-- Modal Tambah -->
+                                    <div class="modal fade" id="tambahModalPendidikan" tabindex="-1"
+                                        aria-labelledby="modalLabelPendidikan" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <form method="POST" action="{{ route('pendidikan.store') }}">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Tambah Data Pendidikan</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="pegawai_id"
+                                                            value="{{ $karyawan->id }}">
+                                                        <div class="mb-3"><label>Jenjang</label><input type="text"
+                                                                name="jenjang" class="form-control" required></div>
+                                                        <div class="mb-3"><label>Institusi</label><input type="text"
+                                                                name="institusi" class="form-control" required></div>
+                                                        <div class="mb-3"><label>Program Studi</label><input
+                                                                type="text" name="program_studi" class="form-control">
+                                                        </div>
+                                                        <div class="mb-3"><label>Tahun Lulus</label><input
+                                                                type="number" name="tahun_lulus" class="form-control"
+                                                                required></div>
+                                                    </div>
+                                                    <div class="modal-footer"><button type="submit"
+                                                            class="btn btn-primary">Simpan</button></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
                                     <table id="example4" class="table mb-0 table-striped table-hover table-sm">
                                         <thead>
                                             <tr>
@@ -434,9 +473,16 @@
                                                     <td>{{ \Carbon\Carbon::parse($jabatan->selesai)->format('d-m-Y') }}
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <a href="javascript:;" class="btn btn-sm btn-warning"
+                                                            onclick='openEditModalPendidikan(@json($pendidikan))'>Edit</a>
+                                                        <form action="{{ route('pendidikan.destroy', $pendidikan->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Hapus data ini?')">Hapus</button>
+                                                        </form>
                                                     </td>
+
                                                 </tr>
                                             @empty
                                                 <tr>
@@ -678,6 +724,41 @@
                 .appendTo('#example6_wrapper .col-md-6:eq(0)');
         });
     </script>
+
+    <script>
+        function openEditModalPendidikan(pendidikan) {
+            const existing = document.getElementById('editModalPendidikan');
+            if (existing) existing.remove();
+
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+        <div class="modal fade" id="editModalPendidikan" tabindex="-1">
+            <div class="modal-dialog">
+                <form method="POST" action="/pendidikan/${pendidikan.id}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Data Pendidikan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="pegawai_id" value="${pendidikan.pegawai_id}">
+                            <div class="mb-3"><label>Jenjang</label><input type="text" name="jenjang" class="form-control" value="${pendidikan.jenjang}" required></div>
+                            <div class="mb-3"><label>Institusi</label><input type="text" name="institusi" class="form-control" value="${pendidikan.institusi}" required></div>
+                            <div class="mb-3"><label>Program Studi</label><input type="text" name="program_studi" class="form-control" value="${pendidikan.program_studi ?? ''}"></div>
+                            <div class="mb-3"><label>Tahun Lulus</label><input type="number" name="tahun_lulus" class="form-control" value="${pendidikan.tahun_lulus}" required></div>
+                        </div>
+                        <div class="modal-footer"><button type="submit" class="btn btn-primary">Simpan Perubahan</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>`;
+            document.body.appendChild(modal);
+            new bootstrap.Modal(document.getElementById('editModalPendidikan')).show();
+        }
+    </script>
+
 
     <script>
         // Tambah Data STR Modal
