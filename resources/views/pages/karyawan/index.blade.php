@@ -28,7 +28,24 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+
                         <a href="{{ route('karyawan.create') }}" class="btn btn-primary mb-3">Tambah Data Karyawan</a>
+
+                        {{-- Tombol Filter Status --}}
+                        <div class="mb-3">
+                            <button class="btn btn-success filter-status" data-status="Aktif">
+                                Aktif (<span
+                                    id="count-aktif">{{ $karyawans->where('status_nakes', 'Aktif')->count() }}</span>)
+                            </button>
+                            <button class="btn btn-warning filter-status" data-status="Pensiun">
+                                Pensiun (<span
+                                    id="count-pensiun">{{ $karyawans->where('status_nakes', 'Pensiun')->count() }}</span>)
+                            </button>
+                            <button class="btn btn-danger filter-status" data-status="Resign">
+                                Resign (<span
+                                    id="count-resign">{{ $karyawans->where('status_nakes', 'Resign')->count() }}</span>)
+                            </button>
+                        </div>
 
                         <table id="example2" class="table table-bordered table-striped">
                             <thead>
@@ -38,13 +55,14 @@
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
-                                    <th>Status </th>
+                                    <th>Status Nakes</th>
                                     <th>Pendidikan</th>
                                     <th>Jabatan Terakhir</th>
                                     <th>Golongan</th>
                                     <th>TMT Jabatan</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
+                                    <th style="display: none;">StatusNakesFilter</th> {{-- Kolom tersembunyi untuk filter --}}
                                 </tr>
                             </thead>
                             <tfoot>
@@ -54,13 +72,14 @@
                                     <th>NIP/NIPPPK</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Status Kepegawaian</th>
-                                    <th>Status </th>
+                                    <th>Status Nakes</th>
                                     <th>Pendidikan</th>
                                     <th>Jabatan Terakhir</th>
                                     <th>Golongan</th>
                                     <th>TMT Jabatan</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
+                                    <th style="display: none;">StatusNakesFilter</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -68,18 +87,16 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>
-
                                             <div class="d-flex align-items-center">
                                                 <a href="{{ route('karyawan.rincian', $item->id) }}" class="text-blue"
                                                     style="text-decoration: none;">
                                                     @if (empty($item->upload_foto_diri))
                                                         @php
-                                                            // Penentuan avatar default berdasarkan jenis kelamin
-                                                            $avatarIndex = ($loop->iteration % 4) + 1; // 1 - 5
+                                                            $avatarIndex = ($loop->iteration % 4) + 1;
                                                             $avatarFile =
                                                                 $item->jk == 'L'
-                                                                    ? "avatar-{$avatarIndex}.jpg" // avatar-1 sampai avatar-5
-                                                                    : 'avatar-' . ($avatarIndex + 4) . '.jpg'; // avatar-6 sampai avatar-10
+                                                                    ? "avatar-{$avatarIndex}.jpg"
+                                                                    : 'avatar-' . ($avatarIndex + 4) . '.jpg';
                                                         @endphp
                                                         <img src="{{ asset('assets/images/users/' . $avatarFile) }}"
                                                             alt="user-image" width="42" class="rounded-circle me-2">
@@ -91,9 +108,7 @@
                                                 </a>
                                                 <span>{{ $item->nama }}</span>
                                             </div>
-
                                         </td>
-
 
                                         <td>{{ $item->nip_nrp_nipppk_nipb }}</td>
                                         <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
@@ -101,7 +116,7 @@
                                         <td>
                                             <select
                                                 class="form-select form-select-sm status-nakes-dropdown
-        {{ $item->status_nakes == 'Aktif' ? 'bg-success text-white' : ($item->status_nakes == 'Pensiun' ? 'bg-warning text-dark' : 'bg-danger text-white') }}"
+                                        {{ $item->status_nakes == 'Aktif' ? 'bg-success text-white' : ($item->status_nakes == 'Pensiun' ? 'bg-warning text-dark' : 'bg-danger text-white') }}"
                                                 data-id="{{ $item->id }}">
                                                 <option value="Aktif"
                                                     {{ $item->status_nakes == 'Aktif' ? 'selected' : '' }}>Aktif</option>
@@ -112,8 +127,6 @@
                                                     {{ $item->status_nakes == 'Resign' ? 'selected' : '' }}>Resign</option>
                                             </select>
                                         </td>
-
-
                                         <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan_terakhir }}</td>
                                         <td>{{ $item->gol }}</td>
@@ -130,6 +143,7 @@
                                                     onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                             </form>
                                         </td>
+                                        <td style="display: none;">{{ $item->status_nakes }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -139,6 +153,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 
@@ -150,6 +165,18 @@
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 
     <script>
+        function updateDropdownColor(selectElement, status) {
+            $(selectElement).removeClass('bg-success bg-warning bg-danger text-white text-dark');
+
+            if (status === 'Aktif') {
+                $(selectElement).addClass('bg-success text-white');
+            } else if (status === 'Pensiun') {
+                $(selectElement).addClass('bg-warning text-dark');
+            } else if (status === 'Resign') {
+                $(selectElement).addClass('bg-danger text-white');
+            }
+        }
+
         $(document).ready(function() {
             var table = $('#example2').DataTable({
                 responsive: true,
@@ -160,13 +187,13 @@
                     [5, 10, 25, 50, "All"]
                 ],
                 order: [
-                    [0, 'asc'] // Urutkan kolom pertama (ID) secara naik
+                    [0, 'asc']
                 ],
                 pageLength: 10,
                 initComplete: function() {
                     this.api().columns().every(function() {
                         var column = this;
-                        if (column.index() === 10) return; // Skip "Aksi" column
+                        if (column.index() === 11) return; // Kolom Aksi
 
                         var input = document.createElement("input");
                         input.style.width = '100%';
@@ -180,31 +207,37 @@
                 }
             });
 
-            $('.dt-buttons').addClass('mb-3');
-            $('.dataTables_length').css('margin-right', '20px');
-        });
+            // Filter awal tampilkan hanya status "Aktif"
+            table.column(12).search('Aktif').draw();
 
-        // ✅ Event delegation: handle change for dynamically generated dropdowns
-        $(document).on('change', '.status-nakes-dropdown', function() {
-            var selectedValue = $(this).val();
-            var karyawanId = $(this).data('id');
-            var selectElement = this;
+            // Filter berdasarkan tombol status
+            $('.filter-status').on('click', function() {
+                const status = $(this).data('status');
+                table.column(12).search(status).draw();
+            });
 
-            $.ajax({
-                url: "{{ route('karyawan.updateStatusNakes') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: karyawanId,
-                    status_nakes: selectedValue
-                },
-                success: function(response) {
-                    console.log(response.message);
-                    updateDropdownColor(selectElement, selectedValue);
-                },
-                error: function() {
-                    alert('Gagal memperbarui status');
-                }
+            // Handle perubahan dropdown status-nakes
+            $(document).on('change', '.status-nakes-dropdown', function() {
+                const selectedValue = $(this).val();
+                const karyawanId = $(this).data('id');
+                const selectElement = this;
+
+                $.ajax({
+                    url: "{{ route('karyawan.updateStatusNakes') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: karyawanId,
+                        status_nakes: selectedValue
+                    },
+                    success: function(response) {
+                        updateDropdownColor(selectElement, selectedValue);
+                        console.log(response.message);
+                    },
+                    error: function() {
+                        alert('Gagal memperbarui status');
+                    }
+                });
             });
         });
     </script>
