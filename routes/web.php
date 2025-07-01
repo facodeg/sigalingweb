@@ -133,7 +133,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('pegawai', PegawaiController::class);
     // Route::resource('pendidikan', PendidikanController::class);
-    Route::resource('pendidikan_db', PendidikanDbController::class);
+
     Route::resource('surat_praktek_satu', SuratPraktekSatuController::class);
     Route::resource('riwayat_jabatan', RiwayatJabatanController::class);
     Route::resource('riwayat_golongan', RiwayatGolonganController::class);
@@ -157,9 +157,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/karyawan/update-status-nakes', [App\Http\Controllers\KaryawanController::class, 'updateStatusNakes'])->name('karyawan.updateStatusNakes');
 
-    Route::post('/pendidikan/store', [PendidikanTbController::class, 'store'])->name('pendidikan.store');
-    Route::put('/pendidikan/{id}', [PendidikanTbController::class, 'update'])->name('pendidikan.update');
-    Route::delete('/pendidikan/{id}', [PendidikanTbController::class, 'destroy'])->name('pendidikan.destroy');
+    Route::resource('/pendidikan_tb', PendidikanTbController::class)->only(['store', 'update', 'destroy']);
 });
 
 // Rute untuk koperasi

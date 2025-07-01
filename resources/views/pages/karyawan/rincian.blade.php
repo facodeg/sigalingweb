@@ -364,7 +364,7 @@
                                     <div class="modal fade" id="tambahModalPendidikan" tabindex="-1"
                                         aria-labelledby="modalLabelPendidikan" aria-hidden="true">
                                         <div class="modal-dialog">
-                                            <form method="POST" action="{{ route('pendidikan.store') }}">
+                                            <form method="POST" action="{{ route('pendidikan_tb.store'') }}">
                                                 @csrf
                                                 <div class="modal-content">
                                                     <div class="modal-header">
