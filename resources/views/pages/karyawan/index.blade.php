@@ -99,7 +99,9 @@
                                         <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         <td>{{ $item->status_kepegawaian }}</td>
                                         <td>
-                                            <select class="form-select form-select-sm status-nakes-dropdown"
+                                            <select
+                                                class="form-select form-select-sm status-nakes-dropdown
+        {{ $item->status_nakes == 'Aktif' ? 'bg-success text-white' : ($item->status_nakes == 'Pensiun' ? 'bg-warning text-dark' : 'bg-danger text-white') }}"
                                                 data-id="{{ $item->id }}">
                                                 <option value="Aktif"
                                                     {{ $item->status_nakes == 'Aktif' ? 'selected' : '' }}>Aktif</option>
@@ -110,6 +112,7 @@
                                                     {{ $item->status_nakes == 'Resign' ? 'selected' : '' }}>Resign</option>
                                             </select>
                                         </td>
+
 
                                         <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan_terakhir }}</td>
@@ -185,6 +188,7 @@
         $(document).on('change', '.status-nakes-dropdown', function() {
             var selectedValue = $(this).val();
             var karyawanId = $(this).data('id');
+            var selectElement = this;
 
             $.ajax({
                 url: "{{ route('karyawan.updateStatusNakes') }}",
@@ -196,10 +200,9 @@
                 },
                 success: function(response) {
                     console.log(response.message);
-                    // Optional: show success feedback
-                    // alert('Status berhasil diperbarui!');
+                    updateDropdownColor(selectElement, selectedValue);
                 },
-                error: function(xhr) {
+                error: function() {
                     alert('Gagal memperbarui status');
                 }
             });
