@@ -359,6 +359,39 @@
                                         data-bs-target="#tambahModalPendidikan">
                                         Tambah Data Pendidikan
                                     </button>
+
+                                    <!-- Modal Tambah -->
+                                    <div class="modal fade" id="tambahModalPendidikan" tabindex="-1"
+                                        aria-labelledby="modalLabelPendidikan" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <form method="POST" action="{{ route('pendidikan.store') }}">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Tambah Data Pendidikan</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="pegawai_id"
+                                                            value="{{ $karyawan->id }}">
+                                                        <div class="mb-3"><label>Jenjang</label><input type="text"
+                                                                name="jenjang" class="form-control" required></div>
+                                                        <div class="mb-3"><label>Institusi</label><input type="text"
+                                                                name="institusi" class="form-control" required></div>
+                                                        <div class="mb-3"><label>Program Studi</label><input
+                                                                type="text" name="program_studi" class="form-control">
+                                                        </div>
+                                                        <div class="mb-3"><label>Tahun Lulus</label><input
+                                                                type="number" name="tahun_lulus" class="form-control"
+                                                                required></div>
+                                                    </div>
+                                                    <div class="modal-footer"><button type="submit"
+                                                            class="btn btn-primary">Simpan</button></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <div class="ms-auto">
                                         <a href="javascript:;" class="btn btn-sm btn-outline-secondary">View all</a>
                                     </div>
@@ -414,43 +447,7 @@
 
                                 <div class="table-responsive">
                                     <!-- Tombol Tambah -->
-                                    <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
-                                        data-bs-target="#tambahModalPendidikan">
-                                        Tambah Data Pendidikan
-                                    </button>
 
-                                    <!-- Modal Tambah -->
-                                    <div class="modal fade" id="tambahModalPendidikan" tabindex="-1"
-                                        aria-labelledby="modalLabelPendidikan" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <form method="POST" action="{{ route('pendidikan.store') }}">
-                                                @csrf
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Tambah Data Pendidikan</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="pegawai_id"
-                                                            value="{{ $karyawan->id }}">
-                                                        <div class="mb-3"><label>Jenjang</label><input type="text"
-                                                                name="jenjang" class="form-control" required></div>
-                                                        <div class="mb-3"><label>Institusi</label><input type="text"
-                                                                name="institusi" class="form-control" required></div>
-                                                        <div class="mb-3"><label>Program Studi</label><input
-                                                                type="text" name="program_studi" class="form-control">
-                                                        </div>
-                                                        <div class="mb-3"><label>Tahun Lulus</label><input
-                                                                type="number" name="tahun_lulus" class="form-control"
-                                                                required></div>
-                                                    </div>
-                                                    <div class="modal-footer"><button type="submit"
-                                                            class="btn btn-primary">Simpan</button></div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
 
                                     <table id="example4" class="table mb-0 table-striped table-hover table-sm">
                                         <thead>
