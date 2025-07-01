@@ -132,4 +132,13 @@ class KaryawanController extends Controller
         $karyawan = Karyawan::findOrFail($id);
         return view('pages.karyawan.rincian', compact('karyawan'));
     }
+
+    public function updateStatusNakes(Request $request)
+    {
+        $karyawan = Karyawan::findOrFail($request->id);
+        $karyawan->status_nakes = $request->status_nakes;
+        $karyawan->save();
+
+        return response()->json(['message' => 'Status berhasil diperbarui']);
+    }
 }

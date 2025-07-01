@@ -153,6 +153,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/sip/store', [SipController::class, 'store'])->name('sip.store');
     Route::put('/sip/{id}', [SipController::class, 'update'])->name('sip.update');
     Route::delete('/sip/{id}', [SipController::class, 'destroy'])->name('sip.destroy');
+
+    Route::post('/karyawan/update-status-nakes', [App\Http\Controllers\KaryawanController::class, 'updateStatusNakes'])->name('karyawan.updateStatusNakes');
 });
 
 // Rute untuk koperasi

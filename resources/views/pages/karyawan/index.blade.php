@@ -98,7 +98,19 @@
                                         <td>{{ $item->nip_nrp_nipppk_nipb }}</td>
                                         <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         <td>{{ $item->status_kepegawaian }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>
+                                            <select class="form-select form-select-sm status-nakes-dropdown"
+                                                data-id="{{ $item->id }}">
+                                                <option value="Aktif"
+                                                    {{ $item->status_nakes == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                                <option value="Pensiun"
+                                                    {{ $item->status_nakes == 'Pensiun' ? 'selected' : '' }}>Pensiun
+                                                </option>
+                                                <option value="Resign"
+                                                    {{ $item->status_nakes == 'Resign' ? 'selected' : '' }}>Resign</option>
+                                            </select>
+                                        </td>
+
                                         <td>{{ $item->pendidikan_terakhir }}</td>
                                         <td>{{ $item->jabatan_terakhir }}</td>
                                         <td>{{ $item->gol }}</td>
@@ -133,9 +145,10 @@
     <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
-            $('#example2').DataTable({
+            var table = $('#example2').DataTable({
                 responsive: true,
                 dom: 'Blfrtip',
                 buttons: ['copy', 'excel', 'pdf', 'print'],
@@ -166,6 +179,30 @@
 
             $('.dt-buttons').addClass('mb-3');
             $('.dataTables_length').css('margin-right', '20px');
+        });
+
+        // ✅ Event delegation: handle change for dynamically generated dropdowns
+        $(document).on('change', '.status-nakes-dropdown', function() {
+            var selectedValue = $(this).val();
+            var karyawanId = $(this).data('id');
+
+            $.ajax({
+                url: "{{ route('karyawan.updateStatusNakes') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: karyawanId,
+                    status_nakes: selectedValue
+                },
+                success: function(response) {
+                    console.log(response.message);
+                    // Optional: show success feedback
+                    // alert('Status berhasil diperbarui!');
+                },
+                error: function(xhr) {
+                    alert('Gagal memperbarui status');
+                }
+            });
         });
     </script>
 @endpush
