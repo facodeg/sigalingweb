@@ -50,7 +50,7 @@ class KaryawanController extends Controller
             'kabupaten' => 'nullable|string|max:100',
             'agama' => 'nullable|string|max:50',
             'ruangan' => 'nullable|string|max:100',
-            'status_nakes' => 'nullable',
+            'status_nakes' => 'required',
         ]);
 
         Karyawan::create($request->all());

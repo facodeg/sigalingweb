@@ -162,10 +162,21 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="status_nakes" class="form-label">Status Nakes</label>
-                            <input type="text" class="form-control" id="status_nakes" name="status_nakes"
-                                value="{{ $karyawan->status_nakes ?? '' }}">
+                            <label for="status_nakes" class="form-label">Status Pegawai</label>
+                            <select class="form-select" id="status_nakes" name="status_nakes" required>
+                                <option value="">Pilih</option>
+                                <option value="Aktif"
+                                    {{ old('status_nakes', $karyawan->status_nakes ?? '') == 'Aktif' ? 'selected' : '' }}>
+                                    Aktif</option>
+                                <option value="Pensiun"
+                                    {{ old('status_nakes', $karyawan->status_nakes ?? '') == 'Pensiun' ? 'selected' : '' }}>
+                                    Pensiun</option>
+                                <option value="Resign"
+                                    {{ old('status_nakes', $karyawan->status_nakes ?? '') == 'Resign' ? 'selected' : '' }}>
+                                    Resign</option>
+                            </select>
                         </div>
+
 
                         <div class="mb-3 col-md-12">
                             <label for="keterangan" class="form-label">Keterangan</label>
