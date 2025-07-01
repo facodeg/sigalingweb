@@ -24,6 +24,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PendaftaranAnggotaController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\PendidikanTbController;
 use App\Http\Controllers\PengajuanPinjamanController;
 use App\Http\Controllers\PerAnggotaController;
 use App\Http\Controllers\PinjamanController;
@@ -156,10 +157,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/karyawan/update-status-nakes', [App\Http\Controllers\KaryawanController::class, 'updateStatusNakes'])->name('karyawan.updateStatusNakes');
 
-   Route::post('/pendidikan/store', [PendidikanTbController::class, 'store'])->name('pendidikan.store');
-Route::put('/pendidikan/{id}', [PendidikanTbController::class, 'update'])->name('pendidikan.update');
-Route::delete('/pendidikan/{id}', [PendidikanTbController::class, 'destroy'])->name('pendidikan.destroy');
-
+    Route::post('/pendidikan/store', [PendidikanTbController::class, 'store'])->name('pendidikan.store');
+    Route::put('/pendidikan/{id}', [PendidikanTbController::class, 'update'])->name('pendidikan.update');
+    Route::delete('/pendidikan/{id}', [PendidikanTbController::class, 'destroy'])->name('pendidikan.destroy');
 });
 
 // Rute untuk koperasi
