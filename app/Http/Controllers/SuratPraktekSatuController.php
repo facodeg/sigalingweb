@@ -45,7 +45,7 @@ class SuratPraktekSatuController extends Controller
             'penanda_tangan_pangkat' => 'required|string|max:255',
             'penanda_tangan_jabatan' => 'required|string|max:255',
             'tmt' => 'nullable|string|max:255',
-            'maksud' => 'nullable|string|max:255',
+            'maksud' => 'nullable|',
         ]);
 
         $count = count($request->praktikan_nama);
