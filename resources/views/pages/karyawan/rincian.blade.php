@@ -359,6 +359,8 @@
                                         data-bs-target="#tambahModalPendidikan">
                                         Tambah Data Pendidikan
                                     </button>
+
+
                                     <div class="ms-auto">
                                         <a href="javascript:;" class="btn btn-sm btn-outline-secondary">View all</a>
                                     </div>
@@ -414,10 +416,7 @@
 
                                 <div class="table-responsive">
                                     <!-- Tombol Tambah -->
-                                    <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
-                                        data-bs-target="#tambahModalPendidikan">
-                                        Tambah Data Pendidikan
-                                    </button>
+
 
                                     <!-- Modal Tambah -->
                                     <div class="modal fade" id="tambahModalPendidikan" tabindex="-1"
