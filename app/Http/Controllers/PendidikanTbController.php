@@ -10,12 +10,14 @@ class PendidikanTbController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pegawai_id' => 'required|exists:karyawans,id',
+            'pegawai_id' => 'required',
             'jenjang' => 'required|string|max:100',
             'institusi' => 'required|string|max:255',
             'program_studi' => 'nullable|string|max:255',
             'tahun_lulus' => 'required|integer',
         ]);
+
+        
 
         PendidikanTb::create($request->all());
 
