@@ -1,7 +1,9 @@
-<?namespace App\Http\Controllers;
+<?php
 
-use App\Models\PendidikanTb;
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use App\Models\PendidikanTb;
 
 class PendidikanTbController extends Controller
 {
