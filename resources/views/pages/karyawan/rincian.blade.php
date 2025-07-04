@@ -414,7 +414,7 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $pendidikan->jenjang }}</td>
                                                     <td>{{ $pendidikan->institusi }}</td>
-                                                    <td>{{ $pendidikan->prodi }}</td>
+                                                    <td>{{ $pendidikan->program_studi }}</td>
                                                     <td>{{ $pendidikan->tahun_lulus }}</td>
                                                     <td>
                                                         <a href="#" class="btn btn-sm btn-warning">Edit</a>
