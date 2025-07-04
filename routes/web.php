@@ -157,7 +157,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/karyawan/update-status-nakes', [App\Http\Controllers\KaryawanController::class, 'updateStatusNakes'])->name('karyawan.updateStatusNakes');
 
-    Route::resource('/pendidikan_tb', PendidikanTbController::class)->only(['store', 'update', 'destroy']);
+
+
+Route::resource('pendidikan_tb', PendidikanTbController::class)->only(['store', 'update', 'destroy']);
+
 });
 
 // Rute untuk koperasi
