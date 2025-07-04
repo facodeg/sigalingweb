@@ -17,8 +17,8 @@ class PendidikanTbController extends Controller
             'tahun_lulus' => 'required|integer',
         ]);
 
-        
 
+        
         PendidikanTb::create($request->all());
 
         return redirect()->back()->with('success', 'Data Pendidikan berhasil ditambahkan');
