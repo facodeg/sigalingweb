@@ -100,12 +100,24 @@
                     <div class="card-body">
                         <!-- Avatar dan Nama -->
                         <div class="d-flex flex-column align-items-center mb-4">
-                            @php $avatar = rand(1, 10); @endphp
-                            <img src="{{ asset('assets/images/users/avatar-' . $avatar . '.jpg') }}" alt="user-image"
-                                width="130" class="rounded-circle border shadow-sm mb-2">
+                            @if (empty($karyawan->upload_foto_diri))
+                                @php
+                                    $avatarIndex = ($karyawan->id % 4) + 1;
+                                    $avatarFile =
+                                        $karyawan->jk == 'L'
+                                            ? "avatar-{$avatarIndex}.jpg"
+                                            : 'avatar-' . ($avatarIndex + 4) . '.jpg';
+                                @endphp
+                                <img src="{{ asset('assets/images/users/' . $avatarFile) }}" alt="user-image" width="130"
+                                    class="rounded-circle border shadow-sm mb-2">
+                            @else
+                                <img src="{{ asset('storage/' . $karyawan->upload_foto_diri) }}"
+                                    class="shadow rounded-circle border mb-2" width="130" alt="User Avatar">
+                            @endif
                             <h4 class="fw-semibold text-primary">{{ $karyawan->nama }}</h4>
                             <span class="text-muted">{{ $karyawan->jabatan_terakhir }}</span>
                         </div>
+
 
                         <!-- Informasi Karyawan -->
                         <div class="row g-2 mb-3">
