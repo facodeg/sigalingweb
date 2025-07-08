@@ -137,7 +137,7 @@
                 <i class="ri-map-pin-line me-1"></i> Data Alamat
             </div>
             <div class="card-body p-0">
-                <div class="table table-bordered table-striped dt-responsive nowrap w-100">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-0">
                         <thead class="table-light">
                             <tr>
@@ -151,7 +151,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($alamatList as $alamat)
+                            @foreach ($alamatList as $alamat)
                                 <tr>
                                     <td>{{ $alamat->jenis }}</td>
                                     <td>{{ $alamat->provinsi }}</td>
@@ -172,19 +172,12 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        <i class="ri-information-line me-1"></i> Belum ada data alamat yang tersedia.
-                                    </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
 
         <!-- Tabel Riwayat Pendidikan -->
         <div class="card mt-4">
@@ -192,7 +185,7 @@
                 <strong>Riwayat Pendidikan</strong>
             </div>
             <div class="card-body p-0">
-                <div class="table table-bordered table-striped dt-responsive nowrap w-100">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-0">
                         <thead class="table-light">
                             <tr>
