@@ -8,6 +8,7 @@ use App\Models\Angsuran;
 use App\Models\Karyawan;
 use App\Models\LimitPinjaman;
 use App\Models\Pinjaman;
+use App\Models\Province;
 use App\Models\SimpananWajib;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,18 +32,20 @@ class PerAnggotaController extends Controller
         // Kembali ke view dengan data karyawan dan user
         return view('pages.perkaryawan.index', compact('karyawan', 'user'));
     }
+public function rincian()
+{
+    // Ambil user yang sedang login
+    $user = Auth::user();
 
-    public function rincian()
-    {
-        // Ambil user yang sedang login
-        $user = Auth::user();
+    // Temukan karyawan berdasarkan nip yang sama dengan email user
+    $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->firstOrFail();
 
-        // Temukan karyawan berdasarkan nip yang sama dengan email user
-        $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->firstOrFail();
+    // Ambil daftar provinsi
+    $provinsiList = Province::orderBy('name')->get();
 
-        // Kirim data ke view rincian karyawan
-        return view('pages.peranggota.rincian', compact('karyawan'));
-    }
+    // Kirim data ke view rincian karyawan
+    return view('pages.peranggota.rincian', compact('karyawan', 'provinsiList'));
+}
 
     public function edit()
     {

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\Province;
 use Illuminate\Http\Request;
+
 
 class KaryawanController extends Controller
 {
+
+
     public function index()
     {
         $karyawans = Karyawan::all();
@@ -129,8 +133,10 @@ class KaryawanController extends Controller
 
     public function rincian($id)
     {
-        $karyawan = Karyawan::findOrFail($id);
-        return view('pages.karyawan.rincian', compact('karyawan'));
+       $karyawan = Karyawan::findOrFail($id);
+    $provinsiList = Province::orderBy('name')->get();
+
+    return view('pages.karyawan.rincian', compact('karyawan', 'provinsiList'));
     }
 
     public function updateStatusNakes(Request $request)

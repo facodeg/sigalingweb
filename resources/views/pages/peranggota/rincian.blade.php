@@ -94,14 +94,15 @@
                     <div class="modal-body">
                         <div class="row">
                             <!-- Provinsi -->
-                            @php
-                                use App\Models\Province;
-                                $provinsiList = Province::orderBy('name')->get();
-                            @endphp
-
-                            @foreach ($provinsiList as $provinsi)
-                                <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
-                            @endforeach
+                            <div class="col-md-6 mb-2">
+                                <label>Provinsi</label>
+                                <select name="province_code" id="province" class="form-control select2" required>
+                                    <option value="">-- Pilih Provinsi --</option>
+                                    @foreach ($provinsiList as $provinsi)
+                                        <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <!-- Kabupaten -->
                             <div class="col-md-6 mb-2">
@@ -134,6 +135,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
