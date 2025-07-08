@@ -137,7 +137,7 @@
                 <i class="ri-map-pin-line me-1"></i> Data Alamat
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive">
+                <div class="table table-bordered table-striped dt-responsive nowrap w-100">
                     <table class="table table-bordered table-hover mb-0">
                         <thead class="table-light">
                             <tr>
@@ -185,7 +185,7 @@
                 <strong>Riwayat Pendidikan</strong>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive">
+                <div class="table table-bordered table-striped dt-responsive nowrap w-100">
                     <table class="table table-bordered table-hover mb-0">
                         <thead class="table-light">
                             <tr>
