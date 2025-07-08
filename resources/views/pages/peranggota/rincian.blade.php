@@ -101,7 +101,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="samaDenganDomisili" checked>
                                     <label class="form-check-label" for="samaDenganDomisili">
-                                        Alamat KTP sama dengan alamat domisili
+                                        Alamat Domisili sama dengan alamat KTP
                                     </label>
                                 </div>
                             </div>
@@ -276,7 +276,7 @@
                     .then(data => {
                         data.forEach(item => {
                             village.append(
-                            `<option value="${item.code}">${item.name}</option>`);
+                                `<option value="${item.code}">${item.name}</option>`);
                         });
                         village.trigger('change.select2');
                     });
@@ -300,7 +300,7 @@
                     .then(data => {
                         data.forEach(item => {
                             cityKtp.append(
-                            `<option value="${item.code}">${item.name}</option>`);
+                                `<option value="${item.code}">${item.name}</option>`);
                         });
                         cityKtp.trigger('change.select2');
                     });
