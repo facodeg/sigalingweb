@@ -71,25 +71,18 @@ class AlamatDomisiliController extends Controller
 
     public function update(Request $request, $id)
     {
-        $alamat = AlamatDomisili::findOrFail($id);
-
         $request->validate([
             'province_code' => 'required',
             'city_code' => 'required',
             'district_code' => 'required',
             'village_code' => 'required',
-            'alamat_lengkap' => 'required|string',
+            'alamat_lengkap' => 'required',
         ]);
 
-        $alamat->update([
-            'province_code' => $request->province_code,
-            'city_code' => $request->city_code,
-            'district_code' => $request->district_code,
-            'village_code' => $request->village_code,
-            'alamat_lengkap' => $request->alamat_lengkap,
-        ]);
+        $alamat = AlamatDomisili::findOrFail($id);
+        $alamat->update($request->all());
 
-        return redirect()->back()->with('success', 'Alamat berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data alamat berhasil diperbarui.');
     }
 
     public function destroy($id)

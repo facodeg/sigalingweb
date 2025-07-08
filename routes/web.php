@@ -58,6 +58,11 @@ Route::get('/', function () {
     // Jika pengguna belum login, tampilkan halaman login
     return view('pages.auth.login');
 });
+
+Route::get('/api/indonesia/provinces', function () {
+    return response()->json(Province::all());
+});
+
 Route::get('/api/indonesia/cities/{provinceCode}', function ($provinceCode) {
     return response()->json(City::where('province_code', $provinceCode)->get());
 });
@@ -203,6 +208,9 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::resource('alamat', AlamatDomisiliController::class)->only(['edit', 'update', 'destroy', 'store']);
 
     Route::post('/pendidikanuser/store', [PendidikanUserKaryawanController::class, 'store'])->name('pendidikanuser.store');
+    Route::put('/pendidikanuser/{id}', [PendidikanUserKaryawanController::class, 'update'])->name('pendidikanuser.update');
+    Route::delete('/pendidikanuser/{id}', [PendidikanUserKaryawanController::class, 'destroy'])->name('pendidikanuser.destroy');
+    Route::put('/alamat/{id}', [AlamatDomisiliController::class, 'update'])->name('alamat.update');
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi

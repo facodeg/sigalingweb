@@ -160,9 +160,17 @@
                                     <td>{{ $alamat->kelurahan }}</td>
                                     <td>{{ $alamat->alamat_lengkap }}</td>
                                     <td>
-                                        <a href="{{ route('alamat.edit', $alamat->id) }}" class="btn btn-sm btn-warning">
+                                        <button type="button" class="btn btn-sm btn-warning btn-edit-alamat"
+                                            data-bs-toggle="modal" data-bs-target="#modalEditAlamat"
+                                            data-id="{{ $alamat->id }}" data-provinsi="{{ $alamat->province_code }}"
+                                            data-kota="{{ $alamat->city_code }}"
+                                            data-kecamatan="{{ $alamat->district_code }}"
+                                            data-kelurahan="{{ $alamat->village_code }}"
+                                            data-alamat_lengkap="{{ $alamat->alamat_lengkap }}"
+                                            data-jenis="{{ $alamat->jenis }}">
                                             <i class="ri-edit-line"></i>
-                                        </a>
+                                        </button>
+
                                         <form action="{{ route('alamat.destroy', $alamat->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf @method('DELETE')
@@ -206,12 +214,19 @@
                                     <td>{{ $pendidikan->tahun_lulus }}</td>
                                     <td>{{ $pendidikan->keterangan }}</td>
                                     <td>
-                                        <a href="{{ route('pendidikan.edit', $pendidikan->id) }}"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="ri-edit-line"></i>
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-info btn-edit-pendidikan"
+                                            data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"
+                                            data-id="{{ $pendidikan->id }}" data-jenjang="{{ $pendidikan->jenjang }}"
+                                            data-institusi="{{ $pendidikan->institusi }}"
+                                            data-program_studi="{{ $pendidikan->program_studi }}"
+                                            data-tahun_lulus="{{ $pendidikan->tahun_lulus }}"
+                                            data-keterangan="{{ $pendidikan->keterangan }}">
+                                            <i class="ri-pencil-line"></i>
                                         </a>
-                                        <form action="{{ route('pendidikan.destroy', $pendidikan->id) }}" method="POST"
-                                            class="d-inline">
+
+                                        <form action="{{ route('pendidikanuser.destroy', $pendidikan->id) }}"
+                                            method="POST" class="d-inline">
+
                                             @csrf @method('DELETE')
                                             <button class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Yakin ingin menghapus?')">
@@ -231,6 +246,180 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Edit Pendidikan -->
+        <!-- Modal Edit Pendidikan -->
+        <div class="modal fade" id="modalEditPendidikan" tabindex="-1" aria-labelledby="modalEditPendidikanLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <form id="formEditPendidikan" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="pegawai_id" value="{{ $karyawan->id }}">
+
+                        <div class="modal-header bg-warning text-white">
+                            <h5 class="modal-title">
+                                <i class="ri-edit-box-line me-2"></i>Edit Riwayat Pendidikan
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
+                            <div class="mb-3">
+                                <label for="edit-jenjang" class="form-label">Jenjang <span
+                                        class="text-danger">*</span></label>
+                                <select name="jenjang" id="edit-jenjang" class="form-select select2" required>
+                                    <option value="">-- Pilih Jenjang --</option>
+                                    @foreach (['SD', 'SMP', 'SMA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3'] as $jenjang)
+                                        <option value="{{ $jenjang }}">{{ $jenjang }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-institusi" class="form-label">Institusi <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" name="institusi" id="edit-institusi" class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-program_studi" class="form-label">Program Studi</label>
+                                <input type="text" name="program_studi" id="edit-program_studi" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-tahun_lulus" class="form-label">Tahun Lulus <span
+                                        class="text-danger">*</span></label>
+                                <input type="number" name="tahun_lulus" id="edit-tahun_lulus" class="form-control"
+                                    min="1950" max="{{ date('Y') }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit-keterangan" class="form-label">Keterangan <span
+                                        class="text-danger">*</span></label>
+                                <select name="keterangan" id="edit-keterangan" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Terdata">Terdata</option>
+                                    <option value="Tidak Terdata">Tidak Terdata</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer bg-light border-top-0">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="ri-save-3-line me-1"></i> Simpan Perubahan
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="ri-close-line me-1"></i> Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                $('.btn-edit-pendidikan').on('click', function() {
+                    let id = $(this).data('id');
+                    let jenjang = $(this).data('jenjang');
+                    let institusi = $(this).data('institusi');
+                    let program_studi = $(this).data('program_studi');
+                    let tahun_lulus = $(this).data('tahun_lulus');
+                    let keterangan = $(this).data('keterangan');
+
+                    // Set action ke route update yang sesuai
+                    let updateUrl = `{{ url('/pendidikanuser') }}/${id}`;
+                    $('#formEditPendidikan').attr('action', updateUrl);
+
+                    // Set value ke form input
+                    $('#edit-jenjang').val(jenjang).trigger('change');
+                    $('#edit-institusi').val(institusi);
+                    $('#edit-program_studi').val(program_studi);
+                    $('#edit-tahun_lulus').val(tahun_lulus);
+                    $('#edit-keterangan').val(keterangan).trigger('change');
+                });
+
+                // Select2 Init untuk dalam modal
+                $('#modalEditPendidikan .select2').select2({
+                    dropdownParent: $('#modalEditPendidikan')
+                });
+
+                // Batas tahun maksimal 4 digit
+                const tahunEdit = document.querySelector('#edit-tahun_lulus');
+                if (tahunEdit) {
+                    tahunEdit.addEventListener('input', function() {
+                        if (this.value.length > 4) {
+                            this.value = this.value.slice(0, 4);
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <div class="modal fade" id="modalEditAlamat" tabindex="-1" aria-labelledby="modalEditAlamatLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content border-0 shadow">
+                    <form id="formEditAlamat" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
+
+                        <div class="modal-header bg-warning text-white">
+                            <h5 class="modal-title"><i class="ri-map-pin-edit-line me-2"></i> Edit Alamat</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Jenis Alamat</label>
+                                    <input type="text" name="keterangan" id="edit-jenis"
+                                        class="form-control bg-light" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Provinsi</label>
+                                    <select name="province_code" id="edit-provinsi" class="form-select select2"
+                                        required></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Kabupaten/Kota</label>
+                                    <select name="city_code" id="edit-kota" class="form-select select2"
+                                        required></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Kecamatan</label>
+                                    <select name="district_code" id="edit-kecamatan" class="form-select select2"
+                                        required></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Kelurahan</label>
+                                    <select name="village_code" id="edit-kelurahan" class="form-select select2"
+                                        required></select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Alamat Lengkap</label>
+                                    <textarea name="alamat_lengkap" id="edit-alamat_lengkap" class="form-control" rows="2" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer bg-light border-top-0">
+                            <button type="submit" class="btn btn-warning"><i class="ri-save-line me-1"></i>
+                                Simpan</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                                    class="ri-close-line me-1"></i> Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
 
 
 
@@ -474,6 +663,92 @@
         });
     </script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('.btn-edit-alamat').on('click', function() {
+                let id = $(this).data('id');
+                let jenis = $(this).data('jenis');
+                let alamat = $(this).data('alamat_lengkap');
+
+                let provinceCode = $(this).data('provinsi');
+                let cityCode = $(this).data('kota');
+                let districtCode = $(this).data('kecamatan');
+                let villageCode = $(this).data('kelurahan');
+
+                $('#edit-jenis').val(jenis);
+                $('#edit-alamat_lengkap').val(alamat);
+
+                // Atur action
+                let updateUrl = `/alamat/${id}`;
+                $('#formEditAlamat').attr('action', updateUrl);
+
+                // Load provinsi
+                fetch(`/api/indonesia/provinces`)
+                    .then(res => res.json())
+                    .then(data => {
+                        let select = $('#edit-provinsi');
+                        select.empty().append('<option value="">-- Pilih Provinsi --</option>');
+                        data.forEach(item => {
+                            select.append(`<option value="${item.code}">${item.name}</option>`);
+                        });
+                        select.val(provinceCode).trigger('change');
+                    });
+
+                // Load city, district, village secara berantai
+                setTimeout(() => {
+                    fetch(`/api/indonesia/cities/${provinceCode}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            let select = $('#edit-kota');
+                            select.empty().append('<option value="">-- Pilih Kota --</option>');
+                            data.forEach(item => {
+                                select.append(
+                                    `<option value="${item.code}">${item.name}</option>`
+                                );
+                            });
+                            select.val(cityCode).trigger('change');
+                        });
+                }, 300);
+
+                setTimeout(() => {
+                    fetch(`/api/indonesia/districts/${cityCode}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            let select = $('#edit-kecamatan');
+                            select.empty().append(
+                                '<option value="">-- Pilih Kecamatan --</option>');
+                            data.forEach(item => {
+                                select.append(
+                                    `<option value="${item.code}">${item.name}</option>`
+                                );
+                            });
+                            select.val(districtCode).trigger('change');
+                        });
+                }, 600);
+
+                setTimeout(() => {
+                    fetch(`/api/indonesia/villages/${districtCode}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            let select = $('#edit-kelurahan');
+                            select.empty().append(
+                                '<option value="">-- Pilih Kelurahan --</option>');
+                            data.forEach(item => {
+                                select.append(
+                                    `<option value="${item.code}">${item.name}</option>`
+                                );
+                            });
+                            select.val(villageCode).trigger('change');
+                        });
+                }, 900);
+
+                // Select2 init
+                $('#modalEditAlamat .select2').select2({
+                    dropdownParent: $('#modalEditAlamat')
+                });
+            });
+        });
+
+
         document.addEventListener('DOMContentLoaded', function() {
             // === Select2 Initialization ===
             $('#modalDomisili .select2').select2({
