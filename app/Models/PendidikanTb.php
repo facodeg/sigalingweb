@@ -11,7 +11,7 @@ class PendidikanTb extends Model
 
     protected $table = 'pendidikan_tb';
 
-    protected $fillable = ['pegawai_id', 'jenjang', 'institusi', 'program_studi', 'tahun_lulus'];
+    protected $fillable = ['pegawai_id', 'jenjang', 'institusi', 'program_studi', 'tahun_lulus','keterangan'];
 
     /**
      * Relasi ke model Karyawan

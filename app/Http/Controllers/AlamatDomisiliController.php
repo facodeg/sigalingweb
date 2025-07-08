@@ -16,11 +16,52 @@ class AlamatDomisiliController extends Controller
             'district_code' => 'required',
             'village_code' => 'required',
             'alamat_lengkap' => 'required|string',
-            'keterangan' => 'required|in:KTP,Domisili', // ✅ tambahkan validasi untuk field keterangan
+            'alamat_sama' => 'required|in:0,1',
         ]);
 
-        AlamatDomisili::create($request->all());
+        // Simpan alamat domisili
+        AlamatDomisili::create([
+            'karyawan_id' => $request->karyawan_id,
+            'province_code' => $request->province_code,
+            'city_code' => $request->city_code,
+            'district_code' => $request->district_code,
+            'village_code' => $request->village_code,
+            'alamat_lengkap' => $request->alamat_lengkap,
+            'keterangan' => 'Domisili',
+        ]);
 
-        return redirect()->back()->with('success', 'Alamat domisili berhasil disimpan.');
+        // Jika alamat sama, salin data untuk KTP juga
+        if ($request->alamat_sama == '1') {
+            AlamatDomisili::create([
+                'karyawan_id' => $request->karyawan_id,
+                'province_code' => $request->province_code,
+                'city_code' => $request->city_code,
+                'district_code' => $request->district_code,
+                'village_code' => $request->village_code,
+                'alamat_lengkap' => $request->alamat_lengkap,
+                'keterangan' => 'KTP',
+            ]);
+        } else {
+            // Kalau tidak sama, ambil data dari form KTP
+            $request->validate([
+                'province_code_ktp' => 'required',
+                'city_code_ktp' => 'required',
+                'district_code_ktp' => 'required',
+                'village_code_ktp' => 'required',
+                'alamat_lengkap_ktp' => 'required|string',
+            ]);
+
+            AlamatDomisili::create([
+                'karyawan_id' => $request->karyawan_id,
+                'province_code' => $request->province_code_ktp,
+                'city_code' => $request->city_code_ktp,
+                'district_code' => $request->district_code_ktp,
+                'village_code' => $request->village_code_ktp,
+                'alamat_lengkap' => $request->alamat_lengkap_ktp,
+                'keterangan' => 'KTP',
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Alamat domisili dan KTP berhasil disimpan.');
     }
 }

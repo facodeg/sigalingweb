@@ -73,7 +73,10 @@
                             <a href="{{ route('karyawan.edit', $karyawan->id) }}" class="btn btn-primary">Edit Data</a>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#modalDomisili">+ Tambah Domisili</button>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                data-bs-target="#modalPendidikan">+ Tambah Pendidikan</button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -87,6 +90,7 @@
                 <form action="{{ route('domisili.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
+                    <input type="hidden" name="is_ktp_juga" id="is_ktp_juga" value="0">
 
                     <div class="modal-header">
                         <h5 class="modal-title">Tambah Alamat Domisili / KTP</h5>
@@ -95,8 +99,7 @@
 
                     <div class="modal-body">
                         <div class="row">
-
-                            <!-- ✅ Checkbox -->
+                            <!-- Checkbox -->
                             <div class="col-12 mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="samaDenganDomisili" checked>
@@ -106,7 +109,7 @@
                                 </div>
                             </div>
 
-                            <!-- ✅ Alamat Domisili -->
+                            <!-- Alamat Domisili -->
                             <div id="formDomisili">
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
@@ -115,10 +118,10 @@
                                             <option value="Domisili" selected>Alamat Domisili</option>
                                         </select>
                                     </div>
-                                    <!-- ... form domisili yang sudah ada ... -->
                                     <div class="col-md-6 mb-2">
                                         <label>Provinsi</label>
-                                        <select name="province_code" id="province" class="form-control select2" required>
+                                        <select name="province_code" id="province" class="form-control select2"
+                                            required>
                                             <option value="">-- Pilih Provinsi --</option>
                                             @foreach ($provinsiList as $provinsi)
                                                 <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
@@ -151,7 +154,7 @@
                                 </div>
                             </div>
 
-                            <!-- ✅ Alamat KTP (ditampilkan hanya jika checkbox tidak dicentang) -->
+                            <!-- Alamat KTP -->
                             <div id="formKTP" style="display: none;">
                                 <hr>
                                 <div class="row">
@@ -206,6 +209,7 @@
             </div>
         </div>
     </div>
+
 
 @endsection
 
@@ -337,6 +341,23 @@
                         });
                         villageKtp.trigger('change.select2');
                     });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('samaDenganDomisili');
+            const formKTP = document.getElementById('formKTP');
+            const inputKtpFlag = document.getElementById('is_ktp_juga');
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    formKTP.style.display = 'none';
+                    inputKtpFlag.value = '0';
+                } else {
+                    formKTP.style.display = 'block';
+                    inputKtpFlag.value = '1';
+                }
             });
         });
     </script>

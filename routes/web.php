@@ -199,6 +199,7 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/anggota/{id}/update-password', [AkunAnggotaController::class, 'updatePassword'])->name('koperasi.anggota.update-password');
 
     Route::post('/domisili/store', [AlamatDomisiliController::class, 'store'])->name('domisili.store');
+    Route::post('/pendidikan/store', [PendidikanUserKaryawanController::class, 'store'])->name('pendidikan.store');
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi
