@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\Angsuran;
+use App\Models\Karyawan;
 use App\Models\LimitPinjaman;
 use App\Models\Pinjaman;
 use App\Models\SimpananWajib;
@@ -19,16 +20,16 @@ class PerAnggotaController extends Controller
         // Mendapatkan user yang sedang login
         $user = Auth::user();
 
-        // Mencari data anggota berdasarkan no_anggota yang sama dengan email user
-        $anggota = Anggota::where('no_anggota', $user->email)->first();
+        // Mencari data karyawan berdasarkan nip yang sama dengan email user
+        $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->first();
 
-        // Jika tidak ditemukan anggota
-        if (!$anggota) {
-            return redirect()->back()->with('error', 'Data anggota tidak ditemukan.');
+        // Jika tidak ditemukan
+        if (!$karyawan) {
+            return redirect()->back()->with('error', 'Data karyawan tidak ditemukan.');
         }
 
-        // Kembali ke view dengan data anggota dan user
-        return view('pages.peranggota.index', compact('anggota', 'user'));
+        // Kembali ke view dengan data karyawan dan user
+        return view('pages.perkaryawan.index', compact('karyawan', 'user'));
     }
 
     public function rincian()
@@ -36,47 +37,11 @@ class PerAnggotaController extends Controller
         // Ambil user yang sedang login
         $user = Auth::user();
 
-        // Temukan anggota berdasarkan email user
-        $anggota = Anggota::where('no_anggota', $user->email)->firstOrFail();
+        // Temukan karyawan berdasarkan nip yang sama dengan email user
+        $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->firstOrFail();
 
-        // Ambil data simpanan wajib berdasarkan no_anggota dari anggota yang ditemukan
-        $simpananWajib = SimpananWajib::where('no_anggota', $anggota->no_anggota)
-            ->orderBy('tgl_simpanan', 'desc')
-            ->get();
-
-        // Hitung total simpanan wajib hanya dengan status = 1
-        $totalSimpanan = $simpananWajib->where('status', 1)->sum('nominal');
-
-        // Ambil data pinjaman dengan status "disetujui" berdasarkan no_anggota dari anggota yang ditemukan
-        $pinjaman = Pinjaman::where('no_anggota', $anggota->no_anggota)
-            ->where('status', 'disetujui') // Menambahkan kondisi status disetujui
-            ->get();
-
-        // Hitung total pinjaman hanya jika status disetujui
-        $totalPinjaman = $pinjaman->sum('nominal');
-
-        // Ambil data angsuran berdasarkan no_anggota dari anggota yang ditemukan
-        $angsuran = Angsuran::whereHas('pinjaman', function ($query) use ($anggota) {
-            $query->where('no_anggota', $anggota->no_anggota);
-        })->get();
-
-        // Hitung total angsuran
-        $totalAngsuran = $angsuran->sum('nominal');
-
-        // Gunakan totalPinjaman sebagai maxValue
-        $maxValue = $totalPinjaman;
-
-        $limitPinjaman = LimitPinjaman::where('user_id', $user->id)->first();
-
-        // Jika tidak ada limit untuk user, ambil limit dengan status "semua"
-        $limitSemua = LimitPinjaman::where('status', 'semua')->first();
-
-        // Calculate percentage for the progress bar
-        // Avoid division by zero
-        $totalPinjamanPercentage = $maxValue > 0 ? min(($totalPinjaman / $maxValue) * 100, 100) : 0;
-
-        // Kirim data ke view rincian anggota
-        return view('pages.peranggota.rincian', compact('anggota', 'simpananWajib', 'totalSimpanan', 'pinjaman', 'maxValue', 'totalPinjaman', 'angsuran', 'totalAngsuran', 'totalPinjamanPercentage', 'limitPinjaman', 'limitSemua'));
+        // Kirim data ke view rincian karyawan
+        return view('pages.peranggota.rincian', compact('karyawan'));
     }
 
     public function edit()

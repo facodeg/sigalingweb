@@ -12,7 +12,8 @@
         "laravel/fortify": "^1.21",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "laravolt/indonesia": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "*",

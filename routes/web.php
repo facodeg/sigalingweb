@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjuanAnggotaController;
+use App\Http\Controllers\AlamatDomisiliController;
 use App\Http\Controllers\Anggota\AkunAnggotaController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AngsuranController;
@@ -40,6 +41,12 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAnggotaController;
 use App\Http\Controllers\WhatsAppController;
+use App\Models\City;
+use App\Models\District;
+use Laravolt\Indonesia\Facade as Indonesia;
+
+use App\Models\Province;
+use App\Models\Village;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -49,6 +56,17 @@ Route::get('/', function () {
 
     // Jika pengguna belum login, tampilkan halaman login
     return view('pages.auth.login');
+});
+Route::get('/api/indonesia/cities/{provinceCode}', function ($provinceCode) {
+    return response()->json(City::where('province_code', $provinceCode)->get());
+});
+
+Route::get('/api/indonesia/districts/{cityCode}', function ($cityCode) {
+    return response()->json(District::where('city_code', $cityCode)->get());
+});
+
+Route::get('/api/indonesia/villages/{districtCode}', function ($districtCode) {
+    return response()->json(Village::where('district_code', $districtCode)->get());
 });
 
 Route::get('/storage-link', [StorageLinkController::class, 'createLink']);
@@ -157,17 +175,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/karyawan/update-status-nakes', [App\Http\Controllers\KaryawanController::class, 'updateStatusNakes'])->name('karyawan.updateStatusNakes');
 
-
-
-Route::resource('pendidikan_tb', PendidikanTbController::class)->only(['store', 'update', 'destroy']);
-
+    Route::resource('pendidikan_tb', PendidikanTbController::class)->only(['store', 'update', 'destroy']);
 });
 
 // Rute untuk koperasi
 Route::middleware(['auth', 'anggota'])->group(function () {
     // Halaman utama koperasi
 
-    Route::get('/peranggota/home', [PerAnggotaController::class, 'rincian'])->name('peranggota.home');
+    Route::get('/pegawairsudl/home', [PerAnggotaController::class, 'rincian'])->name('peranggota.home');
 
     // Manajemen anggota koperasi
 
@@ -182,6 +197,8 @@ Route::middleware(['auth', 'anggota'])->group(function () {
 
     Route::get('/anggota/{id}/edit-password', [AkunAnggotaController::class, 'editPassword'])->name('koperasi.anggota.edit-password');
     Route::put('/anggota/{id}/update-password', [AkunAnggotaController::class, 'updatePassword'])->name('koperasi.anggota.update-password');
+
+    Route::post('/domisili/store', [AlamatDomisiliController::class, 'store'])->name('domisili.store');
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi

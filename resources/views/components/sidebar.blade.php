@@ -280,6 +280,12 @@
                                                 <span>Riwayat Mutasi</span>
                                             </a>
                                         </li>
+                                        <li class="side-nav-item">
+                                            <a href="{{ route('users.index') }}" class="side-nav-link">
+                                                <i class="ri-user-add-line"></i>
+                                                <span>Akun Pegawai</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -431,43 +437,22 @@
     @endif
 
     @if (auth()->user()->role == 'anggota')
-
-
-
-        <li class="side-nav-item {{ Request::is('peranggota/home') ? 'menuitem-active' : '' }}">
+        <li class="side-nav-item {{ Request::is('pegawairsudl/home') ? 'menuitem-active' : '' }}">
             <a href="{{ route('home') }}" class="side-nav-link">
                 <i class="ri-dashboard-2-fill"></i>
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="mt-1 side-nav-title"> Transaksi</li>
-        @if ($anggota->status == 'aktif')
-            <li class="side-nav-item" class='{{ Request::is('anggotas/perbarui*') ? 'menuitem-active' : '' }}'>
-                <a href="{{ route('anggotas.perbarui') }}" class="side-nav-link">
-                    <i class="ri-edit-box-fill"></i>
-                    <span>Perbarui Data </span>
-                </a>
-            </li>
-            <li class="side-nav-item" class='{{ Request::is('anggota*') ? 'menuitem-active' : '' }}'>
-                <a href="{{ route('anggota.index') }}" class="side-nav-link">
-                    <i class="ri-group-fill"></i>
-                    <span>Profil</span>
-                </a>
-            </li>
-            <li class="side-nav-item" class='{{ Request::is('pengajuanpinjaman*') ? 'menuitem-active' : '' }}'>
-                <a href="{{ route('pengajuanpinjaman.index') }}" class="side-nav-link">
-                    <i class="ri-money-dollar-circle-fill"></i>
-                    <span>Pinjaman</span>
-                </a>
-            </li>
-            <li class="side-nav-item" class='{{ Request::is('user/*/edit-password') ? 'menuitem-active' : '' }}'>
-                <a href="{{ route('koperasi.anggota.edit-password', ['id' => auth()->user()->id]) }}"
-                    class="side-nav-link">
-                    <i class="ri-lock-password-fill"></i>
-                    <span>Ubah Password</span>
-                </a>
-            </li>
-        @endif
+        <li class="mt-1 side-nav-title"> Pengaturan</li>
+
+
+        <li class="side-nav-item" class='{{ Request::is('user/*/edit-password') ? 'menuitem-active' : '' }}'>
+            <a href="{{ route('koperasi.anggota.edit-password', ['id' => auth()->user()->id]) }}"
+                class="side-nav-link">
+                <i class="ri-lock-password-fill"></i>
+                <span>Ubah Password</span>
+            </a>
+        </li>
     @endif
 
     {{-- @if (auth()->user()->role == 'koperasi')

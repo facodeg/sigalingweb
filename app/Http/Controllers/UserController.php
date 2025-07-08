@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Anggota;
+use App\Models\Karyawan;
 
 class UserController extends Controller
 {
@@ -132,9 +133,7 @@ class UserController extends Controller
         // Simpan perubahan
         $user->save();
 
-        return redirect()
-            ->route('users.edit', $user->id)
-            ->with('success', 'User successfully updated');
+        return redirect()->route('users.edit', $user->id)->with('success', 'User successfully updated');
     }
 
     /**
@@ -154,26 +153,20 @@ class UserController extends Controller
 
     public function autoGenerate()
     {
-        // Ambil semua data dari model Anggota
-        $anggotas = Anggota::all();
+        // Ambil semua data dari model Karyawan
+        $karyawans = Karyawan::all();
 
-        foreach ($anggotas as $anggota) {
-            // Cek apakah pengguna dengan email atau no_anggota sudah ada
-            $existingUser = User::where('email', $anggota->no_anggota)->first();
+        foreach ($karyawans as $karyawan) {
+            // Cek apakah pengguna dengan email atau NIP sudah ada
+            $existingUser = User::where('email', $karyawan->nip_nrp_nipppk_nipb)->first();
             if (!$existingUser) {
-                // Buat akun user baru berdasarkan data dari anggota
+                // Buat akun user baru berdasarkan data dari karyawan
                 $user = new User();
-                $user->name = $anggota->nama;
-                $user->email = $anggota->no_anggota;
-                $user->phone = $anggota->no_hp;
-                $user->role = 'anggota';
-                $user->position = 'anggota';
-                $user->password = Hash::make('koperasi123'); // password default
-
-                // Jika ada foto diri, masukkan
-                if ($anggota->upload_foto_diri) {
-                    $user->imageUrl = $anggota->upload_foto_diri;
-                }
+                $user->name = $karyawan->nama;
+                $user->email = $karyawan->nip_nrp_nipppk_nipb;
+                $user->role = 'karyawan';
+                $user->position = $karyawan->jabatan_terakhir ?? 'karyawan';
+                $user->password = Hash::make('rsudl123'); // Password default
 
                 $user->save();
             }

@@ -1,21 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Anggota')
+@section('title', 'Daftar Karyawan')
 
 @section('main')
-    <!--wrapper-->
-
-
-
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex justify-content-between align-items-md-center flex-md-row flex-column">
-                    <h4 class="page-title">Rincian Data Anggota</h4>
+                    <h4 class="page-title">Rincian Data Karyawan</h4>
                     <ol class="m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Rincian</a></li>
-                        <li class="breadcrumb-item active">{{ $anggota->nama }}</li>
+                        <li class="breadcrumb-item active">{{ $karyawan->nama }}</li>
                     </ol>
                 </div>
             </div>
@@ -29,123 +24,101 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <!--end breadcrumb-->
         <div class="row">
             <div class="col-12 ">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center">
-                            <!-- Foto Anggota -->
-                            @if (empty($anggota->upload_foto_diri))
-                                {{-- Use a static number or generate a random number between 1 and 14 --}}
-                                @php
-                                    $avatarIndex = rand(1, 10);
-                                @endphp
-                                <img src="{{ asset('assets/images/users/avatar-' . $avatarIndex . '.jpg') }}"
-                                    alt="user-image" width="150" class="rounded-circle">
-                            @else
-                                <img src="{{ asset('storage/' . $anggota->upload_foto_diri) }}"
-                                    class="shadow rounded-circle" height="150" alt="User Avatar" />
-                            @endif
+                            {{-- Foto Karyawan --}}
+                            @php
+                                $avatarIndex = rand(1, 10);
+                            @endphp
 
+                            <img src="{{ asset('assets/images/users/avatar-' . $avatarIndex . '.jpg') }}" alt="user-image"
+                                width="150" class="rounded-circle">
 
+                            {{-- Nama --}}
+                            <h5 class="my-3">{{ $karyawan->nama }}</h5>
 
-
-                            <!-- Nama Anggota -->
-                            <h5 class="my-3">{{ $anggota->nama }}</h5>
-                            <!-- Tombol Edit -->
-                            <a href="{{ route('anggota.edit', $anggota->no_anggota) }}"
-                                class="mb-3 btn btn-primary">Edit</a>
-
-
+                            {{-- Tombol Edit --}}
+                            <a href="{{ route('karyawan.edit', $karyawan->id) }}" class="mb-3 btn btn-primary">Edit</a>
                         </div>
 
                         <div class="fm-menu">
                             <div class="list-group list-group-flush">
-                                <!-- Unit Kerja -->
+                                {{-- Jabatan --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
-                                    <i class='ri-first-aid-kit-line me-2'></i><span>{{ $anggota->unit_kerja }}</span>
+                                    <i class='ri-user-star-line me-2'></i><span>{{ $karyawan->jabatan_terakhir }}</span>
                                 </a>
-                                <!-- Status Kepegawaian -->
+                                {{-- NIP/NIK --}}
+                                <a href="javascript:;" class="py-1 list-group-item">
+                                    <i class='ri-bank-card-line me-2'></i><span>{{ $karyawan->nip_nrp_nipppk_nipb }}</span>
+                                </a>
+                                {{-- Status Kepegawaian --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
                                     <i
-                                        class='ri-list-settings-line me-2'></i><span>{{ $anggota->status_kepegawaian }}</span>
+                                        class='ri-list-settings-line me-2'></i><span>{{ $karyawan->status_kepegawaian }}</span>
                                 </a>
-                                <!-- Nomor Anggota diubah menjadi Tanggal -->
-                                <a href="javascript:;" class="py-1 list-group-item">
-                                    <i class='ri-calendar-todo-line me-2'></i>
-                                    <span>
-                                        @php
-                                            $noAnggota = $anggota->no_anggota; // Contoh nomor anggota: 04112022-104352
-                                            $tanggal =
-                                                substr($noAnggota, 0, 2) .
-                                                '-' .
-                                                substr($noAnggota, 2, 2) .
-                                                '-' .
-                                                substr($noAnggota, 4, 4); // Mengubah format menjadi 04-11-2022
-                                        @endphp
-                                        {{ $tanggal }}
-                                    </span>
-                                </a>
-                                <!-- Tanggal Lahir -->
+                                {{-- Tanggal Lahir --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
                                     <i class='ri-calendar-2-line me-2'></i>
                                     <span>
                                         @php
-                                            $tanggalLahir = $anggota->tanggal_lahir; // Format YYYY-MM-DD
-                                            $formattedDateLahir = \Carbon\Carbon::parse($tanggalLahir)->format('d-m-Y'); // Mengubah format menjadi 04-11-2022
+                                            $tglLahir = \Carbon\Carbon::parse($karyawan->tgl_lahir)->format('d-m-Y');
                                         @endphp
-                                        {{ $formattedDateLahir }}
+                                        {{ $tglLahir }}
                                     </span>
                                 </a>
-                                <!-- Umur -->
+                                {{-- Umur --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
                                     <i class='ri-calendar-2-line me-2'></i>
                                     <span>
                                         @php
-                                            $tanggalLahir = \Carbon\Carbon::parse($anggota->tanggal_lahir);
-                                            $umur = abs((int) \Carbon\Carbon::now()->diffInYears($tanggalLahir));
+                                            $umur = \Carbon\Carbon::parse($karyawan->tgl_lahir)->age;
                                         @endphp
                                         {{ $umur }} tahun
                                     </span>
                                 </a>
-                                <!-- NIK -->
+                                {{-- NPWP --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
-                                    <i class=' ri-bank-card-line me-2'></i>
-                                    <span>{{ $anggota->nik }}</span>
+                                    <i class='ri-profile-line me-2'></i><span>{{ $karyawan->npwp }}</span>
                                 </a>
-                                <!-- Alamat -->
+                                {{-- Alamat --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
                                     <i class='ri-home-line me-2'></i>
-                                    <span>{{ $anggota->alamat }}</span>
+                                    <span>{{ $karyawan->alamat_ktp }}, {{ $karyawan->desa }}, {{ $karyawan->kecamatan }},
+                                        {{ $karyawan->kabupaten }}</span>
                                 </a>
-                                <!-- Status Pernikahan -->
+                                {{-- Pendidikan --}}
                                 <a href="javascript:;" class="py-1 list-group-item">
-                                    <i class='ri-heart-line me-2'></i>
-                                    <span>{{ $anggota->status_pernikahan }}</span>
+                                    <i class='ri-book-line me-2'></i><span>{{ $karyawan->pendidikan_terakhir }}</span>
+                                </a>
+                                {{-- Ruangan --}}
+                                <a href="javascript:;" class="py-1 list-group-item">
+                                    <i class='ri-building-line me-2'></i><span>{{ $karyawan->ruangan }}</span>
+                                </a>
+                                {{-- Agama --}}
+                                <a href="javascript:;" class="py-1 list-group-item">
+                                    <i class='ri-heart-pulse-line me-2'></i><span>{{ $karyawan->agama }}</span>
+                                </a>
+                                {{-- Status Nakes --}}
+                                <a href="javascript:;" class="py-1 list-group-item">
+                                    <i class='ri-stethoscope-line me-2'></i><span>{{ $karyawan->status_nakes }}</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-        <!--end row-->
+
     </div>
 
-    <!--end page wrapper -->
-    <!--start overlay-->
+    <!-- Overlay dan back to top -->
     <div class="overlay toggle-icon"></div>
-    <!--end overlay-->
-    <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 @endsection
 
 @push('scripts')
-    <!-- Select2 Plugin Js -->
-
-
-    <!-- Input Mask Plugin js -->
-
-    
+    <!-- Tambahan script jika perlu -->
 @endpush
