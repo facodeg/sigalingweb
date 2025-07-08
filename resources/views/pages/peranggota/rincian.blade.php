@@ -181,7 +181,7 @@
 
         <!-- Tabel Riwayat Pendidikan -->
         <div class="card mt-4">
-            <div class="card-header bg-light">
+            <div class="card-header bg-light fw-semibold">
                 <strong>Riwayat Pendidikan</strong>
             </div>
             <div class="card-body p-0">
