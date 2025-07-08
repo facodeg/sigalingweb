@@ -211,6 +211,8 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/pendidikanuser/{id}', [PendidikanUserKaryawanController::class, 'update'])->name('pendidikanuser.update');
     Route::delete('/pendidikanuser/{id}', [PendidikanUserKaryawanController::class, 'destroy'])->name('pendidikanuser.destroy');
     Route::put('/alamat/{id}', [AlamatDomisiliController::class, 'update'])->name('alamat.update');
+
+    Route::post('/user/update-phone', [UserController::class, 'updatePhone'])->name('user.updatePhone');
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi

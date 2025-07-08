@@ -23,6 +23,51 @@
             </div>
         </div>
 
+        @if (auth()->user()->phone == null)
+            <!-- Modal Lengkapi Nomor WhatsApp -->
+            <div class="modal fade" id="modalWhatsapp" tabindex="-1" aria-labelledby="modalWhatsappLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                        <form method="POST" action="{{ route('user.updatePhone') }}">
+                            @csrf
+                            <div class="modal-header bg-info text-white">
+                                <h5 class="modal-title">
+                                    <i class="ri-phone-line me-2"></i>Lengkapi Nomor WhatsApp
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mb-3 text-muted">
+                                    Silakan lengkapi nomor WhatsApp Anda untuk melanjutkan.
+                                </p>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Nomor WhatsApp Aktif</label>
+                                    <input type="text" class="form-control" name="phone" id="phone" required
+                                        placeholder="Contoh: 081234567890">
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-light">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="ri-check-line me-1"></i> Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            @push('scripts')
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        let modal = new bootstrap.Modal(document.getElementById('modalWhatsapp'));
+                        modal.show();
+                    });
+                </script>
+            @endpush
+        @endif
+
+
+
         <!-- Alert -->
         {{-- Alert Sukses --}}
         @if (session('success'))
@@ -174,7 +219,8 @@
                                         <form action="{{ route('alamat.destroy', $alamat->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf @method('DELETE')
-                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus?')">
+                                            <button class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Yakin hapus?')">
                                                 <i class="ri-delete-bin-line"></i>
                                             </button>
                                         </form>
@@ -662,6 +708,7 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             $('.btn-edit-alamat').on('click', function() {

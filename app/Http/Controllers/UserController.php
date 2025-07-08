@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Anggota;
 use App\Models\Karyawan;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -173,5 +174,18 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')->with('success', 'Auto-generate users completed successfully');
+    }
+
+    public function updatePhone(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string|max:20',
+        ]);
+
+        $user = Auth::user();
+        $user->phone = $request->phone;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Nomor WhatsApp berhasil disimpan.');
     }
 }
