@@ -94,15 +94,14 @@
                     <div class="modal-body">
                         <div class="row">
                             <!-- Provinsi -->
-                            <div class="col-md-6 mb-2">
-                                <label>Provinsi</label>
-                                <select name="province_code" id="province" class="form-control select2" required>
-                                    <option value="">-- Pilih Provinsi --</option>
-                                    @foreach (\Indonesia::allProvinces() as $provinsi)
-                                        <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            @php
+                                use App\Models\Province;
+                                $provinsiList = Province::orderBy('name')->get();
+                            @endphp
+
+                            @foreach ($provinsiList as $provinsi)
+                                <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
+                            @endforeach
 
                             <!-- Kabupaten -->
                             <div class="col-md-6 mb-2">
@@ -204,7 +203,7 @@
                     .then(data => {
                         data.forEach(item => {
                             village.append(
-                            `<option value="${item.code}">${item.name}</option>`);
+                                `<option value="${item.code}">${item.name}</option>`);
                         });
                         village.trigger('change.select2');
                     });
