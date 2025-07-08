@@ -2,24 +2,21 @@
 
     <!-- Brand Logo Light -->
     <!-- Brand Logo Light -->
-    <a href="index.html" class="logo logo-light">
-        <span class="logo-lg">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="logo">
-        </span>
-        <span class="logo-sm">
-            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo">
-        </span>
-    </a>
+    <div class="text-center mb-4">
+        <!-- Logo Light (untuk latar gelap) -->
+        <a href="{{ url('/') }}" class="logo d-none dark-logo">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="img-fluid" style="max-height: 90px;">
+        </a>
 
-    <!-- Brand Logo Dark -->
-    <a href="index.html" class="logo logo-dark">
-        <span class="logo-lg">
-            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo">
-        </span>
-        <span class="logo-sm">
-            <img src="{{ asset('assets/images/logo-sm.png') }}" alt="small logo">
-        </span>
-    </a>
+        <!-- Logo Dark (untuk latar terang) -->
+        <a href="{{ url('/') }}" class="logo d-block">
+            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo" class="img-fluid"
+                style="max-height: 90px;">
+        </a>
+
+
+    </div>
+
 
 
     <!-- Sidebar Hover Menu Toggle Button -->
