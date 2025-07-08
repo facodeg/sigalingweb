@@ -16,6 +16,7 @@ class AlamatDomisiliController extends Controller
             'district_code' => 'required',
             'village_code' => 'required',
             'alamat_lengkap' => 'required|string',
+            'keterangan' => 'required|in:KTP,Domisili', // ✅ tambahkan validasi untuk field keterangan
         ]);
 
         AlamatDomisili::create($request->all());

@@ -87,52 +87,114 @@
                 <form action="{{ route('domisili.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
+
                     <div class="modal-header">
-                        <h5 class="modal-title">Tambah Alamat Domisili</h5>
+                        <h5 class="modal-title">Tambah Alamat Domisili / KTP</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+
                     <div class="modal-body">
                         <div class="row">
-                            <!-- Provinsi -->
-                            <div class="col-md-6 mb-2">
-                                <label>Provinsi</label>
-                                <select name="province_code" id="province" class="form-control select2" required>
-                                    <option value="">-- Pilih Provinsi --</option>
-                                    @foreach ($provinsiList as $provinsi)
-                                        <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
-                                    @endforeach
-                                </select>
+
+                            <!-- ✅ Checkbox -->
+                            <div class="col-12 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="samaDenganDomisili" checked>
+                                    <label class="form-check-label" for="samaDenganDomisili">
+                                        Alamat KTP sama dengan alamat domisili
+                                    </label>
+                                </div>
                             </div>
 
-                            <!-- Kabupaten -->
-                            <div class="col-md-6 mb-2">
-                                <label>Kabupaten/Kota</label>
-                                <select name="city_code" id="city" class="form-control select2" required>
-                                    <option value="">-- Pilih Kabupaten/Kota --</option>
-                                </select>
+                            <!-- ✅ Alamat Domisili -->
+                            <div id="formDomisili">
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label>Jenis Alamat</label>
+                                        <select name="keterangan" class="form-control" required>
+                                            <option value="Domisili" selected>Alamat Domisili</option>
+                                        </select>
+                                    </div>
+                                    <!-- ... form domisili yang sudah ada ... -->
+                                    <div class="col-md-6 mb-2">
+                                        <label>Provinsi</label>
+                                        <select name="province_code" id="province" class="form-control select2" required>
+                                            <option value="">-- Pilih Provinsi --</option>
+                                            @foreach ($provinsiList as $provinsi)
+                                                <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kabupaten/Kota</label>
+                                        <select name="city_code" id="city" class="form-control select2" required>
+                                            <option value="">-- Pilih Kabupaten/Kota --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kecamatan</label>
+                                        <select name="district_code" id="district" class="form-control select2"
+                                            required>
+                                            <option value="">-- Pilih Kecamatan --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kelurahan/Desa</label>
+                                        <select name="village_code" id="village" class="form-control select2" required>
+                                            <option value="">-- Pilih Kelurahan/Desa --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label>Alamat Lengkap</label>
+                                        <textarea name="alamat_lengkap" class="form-control" required></textarea>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Kecamatan -->
-                            <div class="col-md-6 mb-2">
-                                <label>Kecamatan</label>
-                                <select name="district_code" id="district" class="form-control select2" required>
-                                    <option value="">-- Pilih Kecamatan --</option>
-                                </select>
+                            <!-- ✅ Alamat KTP (ditampilkan hanya jika checkbox tidak dicentang) -->
+                            <div id="formKTP" style="display: none;">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label>Jenis Alamat</label>
+                                        <select name="keterangan_ktp" class="form-control">
+                                            <option value="KTP">Alamat KTP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Provinsi KTP</label>
+                                        <select name="province_code_ktp" class="form-control select2">
+                                            <option value="">-- Pilih Provinsi --</option>
+                                            @foreach ($provinsiList as $provinsi)
+                                                <option value="{{ $provinsi->code }}">{{ $provinsi->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kabupaten/Kota KTP</label>
+                                        <select name="city_code_ktp" class="form-control select2">
+                                            <option value="">-- Pilih Kabupaten/Kota --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kecamatan KTP</label>
+                                        <select name="district_code_ktp" class="form-control select2">
+                                            <option value="">-- Pilih Kecamatan --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label>Kelurahan/Desa KTP</label>
+                                        <select name="village_code_ktp" class="form-control select2">
+                                            <option value="">-- Pilih Kelurahan/Desa --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label>Alamat Lengkap KTP</label>
+                                        <textarea name="alamat_lengkap_ktp" class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Desa -->
-                            <div class="col-md-6 mb-2">
-                                <label>Kelurahan/Desa</label>
-                                <select name="village_code" id="village" class="form-control select2" required>
-                                    <option value="">-- Pilih Kelurahan/Desa --</option>
-                                </select>
-                            </div>
-
-                            <!-- Alamat Lengkap -->
-                            <div class="col-md-12 mb-2">
-                                <label>Alamat Lengkap</label>
-                                <textarea name="alamat_lengkap" class="form-control" required></textarea>
-                            </div>
                         </div>
                     </div>
 
@@ -144,6 +206,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
@@ -151,11 +214,19 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi Select2 di semua dropdown dalam modal
-            $('.select2').select2({
+            // Inisialisasi semua .select2 dan pastikan dropdown muncul di modal
+            $('#modalDomisili .select2').select2({
                 dropdownParent: $('#modalDomisili')
             });
 
+            // Toggle form KTP berdasarkan checkbox
+            const checkbox = document.getElementById('samaDenganDomisili');
+            const formKTP = document.getElementById('formKTP');
+            checkbox.addEventListener('change', function() {
+                formKTP.style.display = this.checked ? 'none' : 'block';
+            });
+
+            // ===================== DOMISILI =====================
             const province = $('#province');
             const city = $('#city');
             const district = $('#district');
@@ -205,9 +276,66 @@
                     .then(data => {
                         data.forEach(item => {
                             village.append(
-                                `<option value="${item.code}">${item.name}</option>`);
+                            `<option value="${item.code}">${item.name}</option>`);
                         });
                         village.trigger('change.select2');
+                    });
+            });
+
+            // ===================== KTP =====================
+            const provinceKtp = $('[name="province_code_ktp"]');
+            const cityKtp = $('[name="city_code_ktp"]');
+            const districtKtp = $('[name="district_code_ktp"]');
+            const villageKtp = $('[name="village_code_ktp"]');
+
+            provinceKtp.on('change', function() {
+                const code = $(this).val();
+                cityKtp.empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>');
+                districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                if (!code) return;
+                fetch(`/api/indonesia/cities/${code}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            cityKtp.append(
+                            `<option value="${item.code}">${item.name}</option>`);
+                        });
+                        cityKtp.trigger('change.select2');
+                    });
+            });
+
+            cityKtp.on('change', function() {
+                const code = $(this).val();
+                districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                if (!code) return;
+                fetch(`/api/indonesia/districts/${code}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            districtKtp.append(
+                                `<option value="${item.code}">${item.name}</option>`);
+                        });
+                        districtKtp.trigger('change.select2');
+                    });
+            });
+
+            districtKtp.on('change', function() {
+                const code = $(this).val();
+                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                if (!code) return;
+                fetch(`/api/indonesia/villages/${code}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            villageKtp.append(
+                                `<option value="${item.code}">${item.name}</option>`);
+                        });
+                        villageKtp.trigger('change.select2');
                     });
             });
         });
