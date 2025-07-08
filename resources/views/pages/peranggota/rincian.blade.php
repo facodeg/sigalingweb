@@ -151,7 +151,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($alamatList as $alamat)
+                            @forelse ($alamatList as $alamat)
                                 <tr>
                                     <td>{{ $alamat->jenis }}</td>
                                     <td>{{ $alamat->provinsi }}</td>
@@ -172,12 +172,19 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="ri-information-line me-1"></i> Belum ada data alamat yang tersedia.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
 
         <!-- Tabel Riwayat Pendidikan -->
         <div class="card mt-4">
