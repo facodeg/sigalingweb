@@ -8,7 +8,7 @@ class AlamatDomisili extends Model
 {
     protected $table = 'alamat_domisili';
 
-    protected $fillable = ['karyawan_id', 'province_code', 'city_code', 'district_code', 'village_code', 'alamat_lengkap'];
+    protected $fillable = ['karyawan_id', 'province_code', 'city_code', 'district_code', 'village_code', 'alamat_lengkap', 'keterangan'];
 
     public function karyawan()
     {

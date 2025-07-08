@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlamatDomisili;
 use App\Models\Anggota;
 use App\Models\Angsuran;
+use App\Models\City;
+use App\Models\District;
 use App\Models\Karyawan;
 use App\Models\LimitPinjaman;
+use App\Models\PendidikanTb;
 use App\Models\Pinjaman;
 use App\Models\Province;
 use App\Models\SimpananWajib;
+use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Storage;
@@ -32,20 +37,34 @@ class PerAnggotaController extends Controller
         // Kembali ke view dengan data karyawan dan user
         return view('pages.perkaryawan.index', compact('karyawan', 'user'));
     }
-public function rincian()
-{
-    // Ambil user yang sedang login
-    $user = Auth::user();
 
-    // Temukan karyawan berdasarkan nip yang sama dengan email user
-    $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->firstOrFail();
+    public function rincian()
+    {
+        $user = Auth::user();
 
-    // Ambil daftar provinsi
-    $provinsiList = Province::orderBy('name')->get();
+        // Ambil data karyawan berdasarkan NIP/NPP/NIPB = email login
+        $karyawan = Karyawan::where('nip_nrp_nipppk_nipb', $user->email)->firstOrFail();
 
-    // Kirim data ke view rincian karyawan
-    return view('pages.peranggota.rincian', compact('karyawan', 'provinsiList'));
-}
+        // Daftar provinsi untuk select2 form
+        $provinsiList = Province::orderBy('name')->get();
+
+        // Ambil data alamat & konversi code ke nama provinsi/kota/dll
+        $alamatList = AlamatDomisili::where('karyawan_id', $karyawan->id)
+            ->get()
+            ->map(function ($alamat) {
+                $alamat->provinsi = Province::where('code', $alamat->province_code)->value('name');
+                $alamat->kota = City::where('code', $alamat->city_code)->value('name');
+                $alamat->kecamatan = District::where('code', $alamat->district_code)->value('name');
+                $alamat->kelurahan = Village::where('code', $alamat->village_code)->value('name');
+                $alamat->jenis = $alamat->keterangan; // Alias saja
+                return $alamat;
+            });
+
+        // Ambil data pendidikan berdasarkan pegawai_id
+        $pendidikanList = PendidikanTb::where('pegawai_id', $karyawan->id)->get();
+
+        return view('pages.peranggota.rincian', compact('karyawan', 'provinsiList', 'alamatList', 'pendidikanList'));
+    }
 
     public function edit()
     {

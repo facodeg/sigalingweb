@@ -26,6 +26,7 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PendaftaranAnggotaController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PendidikanTbController;
+use App\Http\Controllers\PendidikanUserKaryawanController;
 use App\Http\Controllers\PengajuanPinjamanController;
 use App\Http\Controllers\PerAnggotaController;
 use App\Http\Controllers\PinjamanController;
@@ -199,7 +200,9 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/anggota/{id}/update-password', [AkunAnggotaController::class, 'updatePassword'])->name('koperasi.anggota.update-password');
 
     Route::post('/domisili/store', [AlamatDomisiliController::class, 'store'])->name('domisili.store');
-    Route::post('/pendidikan/store', [PendidikanUserKaryawanController::class, 'store'])->name('pendidikan.store');
+    Route::resource('alamat', AlamatDomisiliController::class)->only(['edit', 'update', 'destroy', 'store']);
+
+    Route::post('/pendidikanuser/store', [PendidikanUserKaryawanController::class, 'store'])->name('pendidikanuser.store');
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi

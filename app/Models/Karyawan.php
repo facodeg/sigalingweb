@@ -38,4 +38,9 @@ class Karyawan extends Model
     {
         return $this->hasMany(PendidikanTb::class, 'pegawai_id', 'id');
     }
+
+    public function alamat()
+    {
+        return $this->hasMany(AlamatDomisili::class, 'karyawan_id');
+    }
 }

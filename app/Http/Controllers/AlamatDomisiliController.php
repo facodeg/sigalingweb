@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AlamatDomisili;
+use App\Models\Province;
 
 class AlamatDomisiliController extends Controller
 {
@@ -16,10 +17,8 @@ class AlamatDomisiliController extends Controller
             'district_code' => 'required',
             'village_code' => 'required',
             'alamat_lengkap' => 'required|string',
-            'alamat_sama' => 'required|in:0,1',
         ]);
 
-        // Simpan alamat domisili
         AlamatDomisili::create([
             'karyawan_id' => $request->karyawan_id,
             'province_code' => $request->province_code,
@@ -30,8 +29,7 @@ class AlamatDomisiliController extends Controller
             'keterangan' => 'Domisili',
         ]);
 
-        // Jika alamat sama, salin data untuk KTP juga
-        if ($request->alamat_sama == '1') {
+        if ($request->is_ktp_juga == '0') {
             AlamatDomisili::create([
                 'karyawan_id' => $request->karyawan_id,
                 'province_code' => $request->province_code,
@@ -42,7 +40,6 @@ class AlamatDomisiliController extends Controller
                 'keterangan' => 'KTP',
             ]);
         } else {
-            // Kalau tidak sama, ambil data dari form KTP
             $request->validate([
                 'province_code_ktp' => 'required',
                 'city_code_ktp' => 'required',
@@ -62,6 +59,43 @@ class AlamatDomisiliController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Alamat domisili dan KTP berhasil disimpan.');
+        return redirect()->back()->with('success', 'Alamat Domisili dan KTP berhasil disimpan.');
+    }
+
+    public function edit($id)
+    {
+        $alamat = AlamatDomisili::findOrFail($id);
+        $provinsiList = Province::orderBy('name')->get();
+        return view('pages.peranggota.edit-alamat', compact('alamat', 'provinsiList'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $alamat = AlamatDomisili::findOrFail($id);
+
+        $request->validate([
+            'province_code' => 'required',
+            'city_code' => 'required',
+            'district_code' => 'required',
+            'village_code' => 'required',
+            'alamat_lengkap' => 'required|string',
+        ]);
+
+        $alamat->update([
+            'province_code' => $request->province_code,
+            'city_code' => $request->city_code,
+            'district_code' => $request->district_code,
+            'village_code' => $request->village_code,
+            'alamat_lengkap' => $request->alamat_lengkap,
+        ]);
+
+        return redirect()->back()->with('success', 'Alamat berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $alamat = AlamatDomisili::findOrFail($id);
+        $alamat->delete();
+        return redirect()->back()->with('success', 'Alamat berhasil dihapus.');
     }
 }
