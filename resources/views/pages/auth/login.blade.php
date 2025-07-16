@@ -51,7 +51,7 @@
 
                         <!-- Logo besar -->
                         <div class="text-center mb-4">
-                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="SIGALING Logo" height="50"
+                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="SIGALING Logo" height="45"
                                 class="img-fluid mb-2">
                             <h5 class="fw-semibold text-primary mt-2">SIGALING</h5>
                         </div>
