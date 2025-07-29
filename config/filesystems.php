@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk
@@ -29,7 +28,6 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -39,7 +37,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -56,6 +54,11 @@ return [
             'throw' => false,
         ],
 
+        'google' => [
+            'driver' => 'google',
+            'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'), // ID folder Google Drive tujuan
+            'service_account_credentials_json' => storage_path('app/google/sigaling-26e28b917b22.json'), // path file JSON kamu
+        ],
     ],
 
     /*
@@ -72,5 +75,4 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
-
 ];

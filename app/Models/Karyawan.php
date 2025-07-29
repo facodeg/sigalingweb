@@ -43,4 +43,9 @@ class Karyawan extends Model
     {
         return $this->hasMany(AlamatDomisili::class, 'karyawan_id');
     }
+
+    public function spkrkk()
+{
+    return $this->hasMany(Spkrkk::class);
+}
 }

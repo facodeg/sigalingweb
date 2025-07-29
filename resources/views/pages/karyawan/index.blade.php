@@ -47,7 +47,7 @@
                             </button>
                         </div>
 
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example2" class="table table-bordered table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>ID</th>

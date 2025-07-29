@@ -31,8 +31,10 @@ use App\Http\Controllers\PengajuanPinjamanController;
 use App\Http\Controllers\PerAnggotaController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RiwayatJabatanController;
 use App\Http\Controllers\SimpananWajibController;
 use App\Http\Controllers\SipController;
+use App\Http\Controllers\SpkrkkController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\StorageLinkController;
 use App\Http\Controllers\StrController;
@@ -44,10 +46,22 @@ use App\Http\Controllers\UserAnggotaController;
 use App\Http\Controllers\WhatsAppController;
 use App\Models\City;
 use App\Models\District;
-use Laravolt\Indonesia\Facade as Indonesia;
 
 use App\Models\Province;
 use App\Models\Village;
+
+Route::get('/preview-pdf/{filename}', function ($filename) {
+    $path = storage_path('app/public/spkrkk/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="' . $filename . '"',
+    ]);
+})->name('preview.pdf');
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -159,14 +173,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Route::resource('pendidikan', PendidikanController::class);
 
     Route::resource('surat_praktek_satu', SuratPraktekSatuController::class);
-    Route::resource('riwayat_jabatan', RiwayatJabatanController::class);
-    Route::resource('riwayat_golongan', RiwayatGolonganController::class);
-    Route::resource('riwayat_sk', RiwayatSKController::class);
-    Route::resource('riwayat_mutasi', RiwayatMutasiController::class);
 
     Route::resource('karyawan', KaryawanController::class);
 
     Route::get('/karyawan/{id}/rincian', [KaryawanController::class, 'rincian'])->name('karyawan.rincian');
+
+    Route::resource('spkrkk', SpkrkkController::class)->only(['store']);
 
     // STR
     Route::post('/str/store', [StrController::class, 'store'])->name('str.store');
@@ -205,7 +217,7 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/anggota/{id}/update-password', [AkunAnggotaController::class, 'updatePassword'])->name('koperasi.anggota.update-password');
 
     Route::post('/domisili/store', [AlamatDomisiliController::class, 'store'])->name('domisili.store');
-    Route::resource('alamat', AlamatDomisiliController::class)->only(['edit', 'update', 'destroy', 'store']);
+    Route::resource('alamat', AlamatDomisiliController::class)->only(['edit', 'destroy', 'store']);
 
     Route::post('/pendidikanuser/store', [PendidikanUserKaryawanController::class, 'store'])->name('pendidikanuser.store');
     Route::put('/pendidikanuser/{id}', [PendidikanUserKaryawanController::class, 'update'])->name('pendidikanuser.update');
@@ -213,6 +225,18 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/alamat/{id}', [AlamatDomisiliController::class, 'update'])->name('alamat.update');
 
     Route::post('/user/update-phone', [UserController::class, 'updatePhone'])->name('user.updatePhone');
+
+    Route::post('/str/store', [StrController::class, 'store'])->name('str.store');
+    Route::get('/str/{id}/edit', [StrController::class, 'edit'])->name('str.edit');
+    Route::put('/str/{id}', [StrController::class, 'update'])->name('str.update');
+    Route::delete('/str/{id}', [StrController::class, 'destroy'])->name('str.destroy');
+
+    // SIP
+    Route::post('/sip/store', [SipController::class, 'store'])->name('sip.store');
+    Route::put('/sip/{id}', [SipController::class, 'update'])->name('sip.update');
+    Route::delete('/sip/{id}', [SipController::class, 'destroy'])->name('sip.destroy');
+
+    Route::resource('spkrkk', SpkrkkController::class)->only(['store', 'update']);
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi

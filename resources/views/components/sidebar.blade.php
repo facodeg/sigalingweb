@@ -253,7 +253,7 @@
                                                 <span>Karyawan</span>
                                             </a>
                                         </li>
-                                        <li class="{{ Request::is('riwayat_jabatan*') ? 'menuitem-active' : '' }}">
+                                        {{-- <li class="{{ Request::is('riwayat_jabatan*') ? 'menuitem-active' : '' }}">
                                             <a href="{{ route('riwayat_jabatan.index') }}">
                                                 <i class="ri-briefcase-line"></i>
                                                 <span>Riwayat Jabatan</span>
@@ -276,7 +276,7 @@
                                                 <i class="ri-exchange-line"></i>
                                                 <span>Riwayat Mutasi</span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li class="side-nav-item">
                                             <a href="{{ route('users.index') }}" class="side-nav-link">
                                                 <i class="ri-user-add-line"></i>

@@ -68,17 +68,6 @@
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'laravolt/indonesia' => 
-  array (
-    'aliases' => 
-    array (
-      'Indonesia' => 'Laravolt\\Indonesia\\Facade',
-    ),
-    'providers' => 
-    array (
-      0 => 'Laravolt\\Indonesia\\ServiceProvider',
-    ),
-  ),
   'nesbot/carbon' => 
   array (
     'providers' => 

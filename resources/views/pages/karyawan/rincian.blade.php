@@ -272,8 +272,7 @@
                                 <a class="nav-link" id="angsuran-tab" data-bs-toggle="tab" href="#angsuran"
                                     role="tab" aria-selected="false">
                                     <div class="d-flex align-items-center">
-                                        <div class="tab-icon"><i class='bx bx-calendar-check font-18 me-1'></i>
-                                        </div>
+                                        <div class="tab-icon"><i class='bx bx-calendar-check font-18 me-1'></i></div>
                                         <div class="tab-title">Data Jabatan</div>
                                     </div>
                                 </a>
@@ -296,7 +295,17 @@
                                     </div>
                                 </a>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="spkrkk-tab" data-bs-toggle="tab" href="#spkrkk" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon"><i class='bx bx-file font-18 me-1'></i></div>
+                                        <div class="tab-title">Data SPKRKK</div>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
+
 
 
                         <!-- Tab Content -->
@@ -633,9 +642,222 @@
 
                                     </table>
                                 </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="spkrkk" role="tabpanel" aria-labelledby="spkrkk-tab">
+                                <div class="mb-3 d-flex align-items-center">
+                                    <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
+                                        data-bs-target="#tambahModalSPKRKK">
+                                        Tambah Data SPKRKK
+                                    </button>
+                                </div>
+
+                                <!-- Form Input SPKRKK -->
+
+
+                                <!-- Tabel Data SPKRKK -->
+
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Ruang Klinis</th>
+                                                <th>Kualifikasi</th>
+                                                <th>Masa Berlaku</th>
+                                                <th>File</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($karyawan->spkrkk ?? [] as $spkrkk)
+                                                <tr>
+                                                    <td>{{ $spkrkk->ruang_klinis }}</td>
+                                                    <td>{{ $spkrkk->kualifikasi }}</td>
+                                                    <td>
+                                                        {{ \Carbon\Carbon::parse($spkrkk->masa_berlaku_dari)->format('d-m-Y') }}
+                                                        s/d
+                                                        {{ \Carbon\Carbon::parse($spkrkk->masa_berlaku_sampai)->format('d-m-Y') }}
+                                                    </td>
+                                                    <td>
+                                                        @php
+                                                            $files = is_array($spkrkk->file_paths)
+                                                                ? $spkrkk->file_paths
+                                                                : json_decode($spkrkk->file_paths, true);
+                                                        @endphp
+
+                                                        @if (!empty($files))
+                                                            @foreach ($files as $file)
+                                                                @php
+                                                                    $filename = basename($file);
+                                                                    $url = route('preview.pdf', [
+                                                                        'filename' => $filename,
+                                                                    ]);
+                                                                @endphp
+
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-primary mb-1"
+                                                                    onclick="showPdfModal('{{ $url }}', '{{ $filename }}')">
+                                                                    {{ $filename }}
+                                                                </button><br>
+                                                            @endforeach
+                                                        @else
+                                                            <span class="text-danger">File tidak ditemukan</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                    <!-- Modal PDF -->
+                                    <div class="modal fade" id="pdfModal" tabindex="-1"
+                                        aria-labelledby="pdfModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="pdfModalLabel">Lihat File PDF</h5>
+                                                    <div class="d-flex gap-2">
+                                                        <a id="downloadPdfBtn" href="#" class="btn btn-primary"
+                                                            download target="_blank">Download PDF</a>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Tutup"></button>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body p-0" style="height: 80vh;">
+                                                    <div id="pdf-viewer" style="height: 100%; width: 100%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                             </div>
+                            @push('scripts')
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.11/pdfobject.min.js"></script>
+                                <script>
+                                    function showPdfModal(pdfUrl, filename) {
+                                        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                                        // Ambil elemen viewer
+                                        const viewer = document.getElementById('pdf-viewer');
+
+                                        if (isMobile) {
+                                            // Fallback untuk perangkat mobile → gunakan Google Docs Viewer
+                                            const googleViewerUrl = "https://docs.google.com/gview?embedded=true&url=" + encodeURIComponent(pdfUrl);
+                                            viewer.innerHTML = `<iframe src="${googleViewerUrl}" style="width:100%;height:100%;border:none;"></iframe>`;
+                                        } else {
+                                            // Desktop → tampilkan dengan PDFObject
+                                            PDFObject.embed(pdfUrl, "#pdf-viewer", {
+                                                height: "100%",
+                                                pdfOpenParams: {
+                                                    view: 'FitH',
+                                                    toolbar: '1',
+                                                    navpanes: '1',
+                                                    statusbar: '1'
+                                                }
+                                            });
+                                        }
+
+                                        // Update tombol download
+                                        document.getElementById('downloadPdfBtn').href = pdfUrl;
+
+                                        // Tampilkan modal
+                                        const modal = new bootstrap.Modal(document.getElementById('pdfModal'));
+                                        modal.show();
+                                    }
+                                </script>
+                            @endpush
+
+
+                            <!-- Modal Tambah SPKRKK -->
+
+
                         </div>
+
+                        <div class="modal fade" id="tambahModalSPKRKK" tabindex="-1"
+                            aria-labelledby="tambahModalSPKRKKLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <form action="{{ route('spkrkk.store') }}" method="POST" enctype="multipart/form-data"
+                                    class="modal-content">
+                                    @csrf
+                                    <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
+
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title" id="tambahModalSPKRKKLabel">Tambah Data SPKRKK</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Tutup"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        {{-- Informasi Umum --}}
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label">Nomor Surat</label>
+                                                <input type="text" class="form-control" name="nomor_surat" required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label">Ruang Klinis</label>
+                                                <input type="text" class="form-control" name="ruang_klinis" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label">Kualifikasi</label>
+                                                <input type="text" class="form-control" name="kualifikasi" required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label">Masa Berlaku Dari</label>
+                                                <input type="date" class="form-control" name="masa_berlaku_dari"
+                                                    required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="form-label">Masa Berlaku Sampai</label>
+                                                <input type="date" class="form-control" name="masa_berlaku_sampai"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-4">
+
+                                        {{-- Upload Dokumen --}}
+                                        <div class="card border">
+                                            <div class="card-header bg-light fw-bold">Upload Dokumen SPKRKK (PDF)</div>
+                                            <div class="card-body">
+                                                @php
+                                                    $documents = [
+                                                        'Surat Penugasan Klinis',
+                                                        'Rincian Kewenangan Klinis',
+                                                        'Uraian Tugas',
+                                                    ];
+                                                @endphp
+
+                                                @foreach ($documents as $doc)
+                                                    <div class="row mb-3 align-items-center">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label mb-0">{{ $doc }}</label>
+                                                            <input type="hidden" name="file_names[]"
+                                                                value="{{ $doc }}">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="file" name="files[]" accept="application/pdf"
+                                                                class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -669,6 +891,7 @@
     <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -716,6 +939,37 @@
                 .appendTo('#example6_wrapper .col-md-6:eq(0)');
         });
     </script>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function addFileInput() {
+            const fileGroup = document.getElementById('file-group');
+            const entry = document.createElement('div');
+            entry.classList.add('row', 'mb-2', 'file-entry');
+            entry.innerHTML = `
+            <div class="col-md-6">
+                <input type="text" name="file_names[]" class="form-control" placeholder="Nama File" required>
+            </div>
+            <div class="col-md-5">
+                <input type="file" name="files[]" class="form-control" required>
+            </div>
+            <div class="col-md-1 d-flex align-items-center">
+                <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.file-entry').remove()">×</button>
+            </div>
+        `;
+            fileGroup.appendChild(entry);
+        }
+    </script>
+
 
 
 
