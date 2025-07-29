@@ -18,17 +18,17 @@ class Karyawan extends Model
     /**
      * Relasi ke STR (Satu ke Banyak)
      */
-    public function str()
+    public function STR()
     {
-        return $this->hasMany(Str::class);
+        return $this->hasMany(STR::class);
     }
 
     /**
      * Relasi ke SIP (Satu ke Banyak)
      */
-    public function sip()
+    public function SIP()
     {
-        return $this->hasMany(Sip::class);
+        return $this->hasMany(SIP::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class Karyawan extends Model
     }
 
     public function spkrkk()
-{
-    return $this->hasMany(Spkrkk::class);
-}
+    {
+        return $this->hasMany(Spkrkk::class);
+    }
 }
