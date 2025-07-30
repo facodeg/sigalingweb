@@ -381,7 +381,7 @@
                         <!-- Tab Content -->
                         <div class="mt-3 tab-content">
                             <!-- Tab: Data Keluarga -->
-                            <div class="tab-pane fade show active" id="simpanan" role="tabpanel"
+                            {{-- <div class="tab-pane fade show active" id="simpanan" role="tabpanel"
                                 aria-labelledby="simpanan-tab">
                                 <div class="mb-3 d-flex align-items-center">
                                     <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
@@ -429,7 +429,7 @@
 
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Tab: Data Pendidikan -->
                             <!-- Tab: Data Pendidikan -->
