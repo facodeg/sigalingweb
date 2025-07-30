@@ -137,8 +137,21 @@ class SpkrkkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+   public function destroy(string $id)
+{
+    $spkrkk = Spkrkk::findOrFail($id);
+
+    // Hapus file jika ada
+    if (is_array($spkrkk->file_paths)) {
+        foreach ($spkrkk->file_paths as $url) {
+            $relativePath = str_replace(asset('storage') . '/', '', $url);
+            Storage::disk('public')->delete($relativePath);
+        }
     }
+
+    $spkrkk->delete();
+
+    return redirect()->back()->with('success', 'Data SPKRKK berhasil dihapus.');
+}
+
 }

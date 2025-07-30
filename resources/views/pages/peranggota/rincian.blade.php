@@ -726,7 +726,7 @@
                                                 <th>Kualifikasi</th>
                                                 <th>Masa Berlaku</th>
                                                 <th>File</th>
-                                                <th>Edit</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -754,7 +754,6 @@
                                                                         'filename' => $filename,
                                                                     ]);
                                                                 @endphp
-
                                                                 <button type="button"
                                                                     class="btn btn-sm btn-outline-primary mb-1"
                                                                     onclick="showPdfModal('{{ $url }}', '{{ $filename }}')">
@@ -765,7 +764,8 @@
                                                             <span class="text-danger">File tidak ditemukan</span>
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="d-flex gap-2">
+                                                        {{-- Tombol Edit --}}
                                                         <button type="button"
                                                             class="btn btn-sm btn-warning btn-edit-spkrkk"
                                                             data-bs-toggle="modal" data-bs-target="#editModalSPKRKK"
@@ -777,12 +777,23 @@
                                                             data-masa_berlaku_sampai="{{ \Carbon\Carbon::parse($spkrkk->masa_berlaku_sampai)->format('Y-m-d') }}">
                                                             <i class="ri-edit-line"></i>
                                                         </button>
-                                                    </td>
 
+                                                        {{-- Tombol Hapus --}}
+                                                        <form action="{{ route('spkrkk.destroy', $spkrkk->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                                <i class="ri-delete-bin-line"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+
 
                                     <!-- Modal PDF -->
                                     <!-- Modal -->
@@ -2031,6 +2042,10 @@
 
             document.body.appendChild(modalEdit);
             const modal = new bootstrap.Modal(document.getElementById('editModalSIP'));
+            modal.show();
+        }
+    </script>
+@endpush
             modal.show();
         }
     </script>
