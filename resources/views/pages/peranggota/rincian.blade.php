@@ -2046,7 +2046,4 @@
         }
     </script>
 @endpush
-            modal.show();
-        }
-    </script>
-@endpush
+@
