@@ -773,8 +773,8 @@
                                                             data-nomor_surat="{{ $spkrkk->nomor_surat }}"
                                                             data-ruang_klinis="{{ $spkrkk->ruang_klinis }}"
                                                             data-kualifikasi="{{ $spkrkk->kualifikasi }}"
-                                                            data-masa_berlaku_dari="{{ $spkrkk->masa_berlaku_dari }}"
-                                                            data-masa_berlaku_sampai="{{ $spkrkk->masa_berlaku_sampai }}">
+                                                            data-masa_berlaku_dari="{{ \Carbon\Carbon::parse($spkrkk->masa_berlaku_dari)->format('Y-m-d') }}"
+                                                            data-masa_berlaku_sampai="{{ \Carbon\Carbon::parse($spkrkk->masa_berlaku_sampai)->format('Y-m-d') }}">
                                                             <i class="ri-edit-line"></i>
                                                         </button>
                                                     </td>
