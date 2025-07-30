@@ -322,7 +322,7 @@
                             </li> --}}
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="pinjaman-tab" data-bs-toggle="tab" href="#pinjaman"
-                                    role="tab" aria-selected="false">
+                                    role="tab" aria-selected="true">
                                     <div class="d-flex align-items-center">
                                         <div class="tab-icon"><i class='bx bx-credit-card font-18 me-1'></i></div>
                                         <div class="tab-title">Data Pendidikan</div>
