@@ -311,7 +311,7 @@
                         <!--end row-->
                         <!-- Tab Navigation -->
                         <ul class="nav nav-tabs nav-primary" role="tablist">
-                            {{-- <li class="nav-item" role="presentation">
+                            <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="simpanan-tab" data-bs-toggle="tab" href="#simpanan"
                                     role="tab" aria-selected="true">
                                     <div class="d-flex align-items-center">
@@ -319,7 +319,7 @@
                                         <div class="tab-title">Data Keluarga</div>
                                     </div>
                                 </a>
-                            </li> --}}
+                            </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="pinjaman-tab" data-bs-toggle="tab" href="#pinjaman"
                                     role="tab" aria-selected="true">
@@ -381,7 +381,7 @@
                         <!-- Tab Content -->
                         <div class="mt-3 tab-content">
                             <!-- Tab: Data Keluarga -->
-                            {{-- <div class="tab-pane fade show active" id="simpanan" role="tabpanel"
+                            <div class="tab-pane fade show active" id="simpanan" role="tabpanel"
                                 aria-labelledby="simpanan-tab">
                                 <div class="mb-3 d-flex align-items-center">
                                     <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
@@ -429,7 +429,7 @@
 
                                     </table>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <!-- Tab: Data Pendidikan -->
                             <!-- Tab: Data Pendidikan -->
