@@ -178,7 +178,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/karyawan/{id}/rincian', [KaryawanController::class, 'rincian'])->name('karyawan.rincian');
 
-    Route::resource('spkrkk', SpkrkkController::class)->only(['store']);
+    Route::resource('spkrkk', SpkrkkController::class)->only(['store', 'update', 'destroy']);
 
     // STR
     Route::post('/str/store', [StrController::class, 'store'])->name('str.store');
@@ -236,7 +236,7 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::put('/sip/{id}', [SipController::class, 'update'])->name('sip.update');
     Route::delete('/sip/{id}', [SipController::class, 'destroy'])->name('sip.destroy');
 
-    Route::resource('spkrkk', SpkrkkController::class)->only(['store', 'update']);
+    Route::resource('spkrkk', SpkrkkController::class)->only(['store', 'update', 'destroy']);
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi
