@@ -1652,287 +1652,287 @@
             </div>
         </div>
     </div>
-@endsection
 
-@push('scripts')
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#modalPendidikan .select2').select2({
-                dropdownParent: $('#modalPendidikan')
-            });
-        });
-    </script>
+    @push('scripts')
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('.btn-edit-alamat').on('click', function() {
-                let id = $(this).data('id');
-                let jenis = $(this).data('jenis');
-                let alamat = $(this).data('alamat_lengkap');
-
-                let provinceCode = $(this).data('provinsi');
-                let cityCode = $(this).data('kota');
-                let districtCode = $(this).data('kecamatan');
-                let villageCode = $(this).data('kelurahan');
-
-                $('#edit-jenis').val(jenis);
-                $('#edit-alamat_lengkap').val(alamat);
-
-                // Atur action
-                let updateUrl = `/alamat/${id}`;
-                $('#formEditAlamat').attr('action', updateUrl);
-
-                // Load provinsi
-                fetch(`/api/indonesia/provinces`)
-                    .then(res => res.json())
-                    .then(data => {
-                        let select = $('#edit-provinsi');
-                        select.empty().append('<option value="">-- Pilih Provinsi --</option>');
-                        data.forEach(item => {
-                            select.append(`<option value="${item.code}">${item.name}</option>`);
-                        });
-                        select.val(provinceCode).trigger('change');
-                    });
-
-                // Load city, district, village secara berantai
-                setTimeout(() => {
-                    fetch(`/api/indonesia/cities/${provinceCode}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            let select = $('#edit-kota');
-                            select.empty().append('<option value="">-- Pilih Kota --</option>');
-                            data.forEach(item => {
-                                select.append(
-                                    `<option value="${item.code}">${item.name}</option>`
-                                );
-                            });
-                            select.val(cityCode).trigger('change');
-                        });
-                }, 300);
-
-                setTimeout(() => {
-                    fetch(`/api/indonesia/districts/${cityCode}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            let select = $('#edit-kecamatan');
-                            select.empty().append(
-                                '<option value="">-- Pilih Kecamatan --</option>');
-                            data.forEach(item => {
-                                select.append(
-                                    `<option value="${item.code}">${item.name}</option>`
-                                );
-                            });
-                            select.val(districtCode).trigger('change');
-                        });
-                }, 600);
-
-                setTimeout(() => {
-                    fetch(`/api/indonesia/villages/${districtCode}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            let select = $('#edit-kelurahan');
-                            select.empty().append(
-                                '<option value="">-- Pilih Kelurahan --</option>');
-                            data.forEach(item => {
-                                select.append(
-                                    `<option value="${item.code}">${item.name}</option>`
-                                );
-                            });
-                            select.val(villageCode).trigger('change');
-                        });
-                }, 900);
-
-                // Select2 init
-                $('#modalEditAlamat .select2').select2({
-                    dropdownParent: $('#modalEditAlamat')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                $('#modalPendidikan .select2').select2({
+                    dropdownParent: $('#modalPendidikan')
                 });
             });
-        });
+        </script>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                $('.btn-edit-alamat').on('click', function() {
+                    let id = $(this).data('id');
+                    let jenis = $(this).data('jenis');
+                    let alamat = $(this).data('alamat_lengkap');
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // === Select2 Initialization ===
-            $('#modalDomisili .select2').select2({
-                dropdownParent: $('#modalDomisili')
-            });
+                    let provinceCode = $(this).data('provinsi');
+                    let cityCode = $(this).data('kota');
+                    let districtCode = $(this).data('kecamatan');
+                    let villageCode = $(this).data('kelurahan');
 
-            // === Checkbox Logic: Alamat Domisili sama dengan KTP ===
-            const checkbox = document.getElementById('samaDenganDomisili');
-            const hiddenInput = document.getElementById('is_ktp_juga');
-            const formKTP = document.getElementById('formKTP');
+                    $('#edit-jenis').val(jenis);
+                    $('#edit-alamat_lengkap').val(alamat);
 
-            function toggleFormKTP() {
-                if (checkbox.checked) {
-                    formKTP.style.display = 'none';
-                    hiddenInput.value = '0'; // berarti KTP sama → tidak tampilkan form
-                } else {
-                    formKTP.style.display = 'block';
-                    hiddenInput.value = '1'; // berarti KTP beda → tampilkan form
-                }
-            }
+                    // Atur action
+                    let updateUrl = `/alamat/${id}`;
+                    $('#formEditAlamat').attr('action', updateUrl);
 
-            checkbox.addEventListener('change', toggleFormKTP);
-            toggleFormKTP(); // Jalankan di awal agar form sesuai kondisi awal checkbox
-
-            // ===================== DOMISILI =====================
-            const province = $('#province');
-            const city = $('#city');
-            const district = $('#district');
-            const village = $('#village');
-
-            province.on('change', function() {
-                const code = $(this).val();
-                city.empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-                district.empty().append('<option value="">-- Pilih Kecamatan --</option>');
-                village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
-
-                if (!code) return;
-                fetch(`/api/indonesia/cities/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            city.append(`<option value="${item.code}">${item.name}</option>`);
+                    // Load provinsi
+                    fetch(`/api/indonesia/provinces`)
+                        .then(res => res.json())
+                        .then(data => {
+                            let select = $('#edit-provinsi');
+                            select.empty().append('<option value="">-- Pilih Provinsi --</option>');
+                            data.forEach(item => {
+                                select.append(`<option value="${item.code}">${item.name}</option>`);
+                            });
+                            select.val(provinceCode).trigger('change');
                         });
-                        city.trigger('change.select2');
+
+                    // Load city, district, village secara berantai
+                    setTimeout(() => {
+                        fetch(`/api/indonesia/cities/${provinceCode}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                let select = $('#edit-kota');
+                                select.empty().append('<option value="">-- Pilih Kota --</option>');
+                                data.forEach(item => {
+                                    select.append(
+                                        `<option value="${item.code}">${item.name}</option>`
+                                    );
+                                });
+                                select.val(cityCode).trigger('change');
+                            });
+                    }, 300);
+
+                    setTimeout(() => {
+                        fetch(`/api/indonesia/districts/${cityCode}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                let select = $('#edit-kecamatan');
+                                select.empty().append(
+                                    '<option value="">-- Pilih Kecamatan --</option>');
+                                data.forEach(item => {
+                                    select.append(
+                                        `<option value="${item.code}">${item.name}</option>`
+                                    );
+                                });
+                                select.val(districtCode).trigger('change');
+                            });
+                    }, 600);
+
+                    setTimeout(() => {
+                        fetch(`/api/indonesia/villages/${districtCode}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                let select = $('#edit-kelurahan');
+                                select.empty().append(
+                                    '<option value="">-- Pilih Kelurahan --</option>');
+                                data.forEach(item => {
+                                    select.append(
+                                        `<option value="${item.code}">${item.name}</option>`
+                                    );
+                                });
+                                select.val(villageCode).trigger('change');
+                            });
+                    }, 900);
+
+                    // Select2 init
+                    $('#modalEditAlamat .select2').select2({
+                        dropdownParent: $('#modalEditAlamat')
                     });
+                });
             });
 
-            city.on('change', function() {
-                const code = $(this).val();
-                district.empty().append('<option value="">-- Pilih Kecamatan --</option>');
-                village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
 
-                if (!code) return;
-                fetch(`/api/indonesia/districts/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            district.append(
-                                `<option value="${item.code}">${item.name}</option>`);
-                        });
-                        district.trigger('change.select2');
-                    });
-            });
+            document.addEventListener('DOMContentLoaded', function() {
+                // === Select2 Initialization ===
+                $('#modalDomisili .select2').select2({
+                    dropdownParent: $('#modalDomisili')
+                });
 
-            district.on('change', function() {
-                const code = $(this).val();
-                village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+                // === Checkbox Logic: Alamat Domisili sama dengan KTP ===
+                const checkbox = document.getElementById('samaDenganDomisili');
+                const hiddenInput = document.getElementById('is_ktp_juga');
+                const formKTP = document.getElementById('formKTP');
 
-                if (!code) return;
-                fetch(`/api/indonesia/villages/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            village.append(
-                                `<option value="${item.code}">${item.name}</option>`);
-                        });
-                        village.trigger('change.select2');
-                    });
-            });
-
-            // ===================== KTP =====================
-            const provinceKtp = $('[name="province_code_ktp"]');
-            const cityKtp = $('[name="city_code_ktp"]');
-            const districtKtp = $('[name="district_code_ktp"]');
-            const villageKtp = $('[name="village_code_ktp"]');
-
-            provinceKtp.on('change', function() {
-                const code = $(this).val();
-                cityKtp.empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-                districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
-                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
-
-                if (!code) return;
-                fetch(`/api/indonesia/cities/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            cityKtp.append(
-                                `<option value="${item.code}">${item.name}</option>`);
-                        });
-                        cityKtp.trigger('change.select2');
-                    });
-            });
-
-            cityKtp.on('change', function() {
-                const code = $(this).val();
-                districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
-                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
-
-                if (!code) return;
-                fetch(`/api/indonesia/districts/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            districtKtp.append(
-                                `<option value="${item.code}">${item.name}</option>`);
-                        });
-                        districtKtp.trigger('change.select2');
-                    });
-            });
-
-            districtKtp.on('change', function() {
-                const code = $(this).val();
-                villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
-
-                if (!code) return;
-                fetch(`/api/indonesia/villages/${code}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            villageKtp.append(
-                                `<option value="${item.code}">${item.name}</option>`);
-                        });
-                        villageKtp.trigger('change.select2');
-                    });
-            });
-        });
-    </script>
-@endpush
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Optional: Reset form setiap kali modal dibuka
-            const modalPendidikan = document.getElementById('modalPendidikan');
-            modalPendidikan.addEventListener('show.bs.modal', function() {
-                const form = modalPendidikan.querySelector('form');
-                form.reset(); // Reset semua field
-            });
-
-            // Optional: Validasi tahun_lulus harus 4 digit
-            const tahunInput = document.querySelector('#modalPendidikan input[name="tahun_lulus"]');
-            if (tahunInput) {
-                tahunInput.addEventListener('input', function() {
-                    if (this.value.length > 4) {
-                        this.value = this.value.slice(0, 4);
+                function toggleFormKTP() {
+                    if (checkbox.checked) {
+                        formKTP.style.display = 'none';
+                        hiddenInput.value = '0'; // berarti KTP sama → tidak tampilkan form
+                    } else {
+                        formKTP.style.display = 'block';
+                        hiddenInput.value = '1'; // berarti KTP beda → tampilkan form
                     }
+                }
+
+                checkbox.addEventListener('change', toggleFormKTP);
+                toggleFormKTP(); // Jalankan di awal agar form sesuai kondisi awal checkbox
+
+                // ===================== DOMISILI =====================
+                const province = $('#province');
+                const city = $('#city');
+                const district = $('#district');
+                const village = $('#village');
+
+                province.on('change', function() {
+                    const code = $(this).val();
+                    city.empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>');
+                    district.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                    village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/cities/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                city.append(`<option value="${item.code}">${item.name}</option>`);
+                            });
+                            city.trigger('change.select2');
+                        });
                 });
-            }
-        });
-    </script>
 
-    <script>
-        document.querySelectorAll('.btn-edit-keluarga').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                document.getElementById('formEditKeluarga').action = `/keluarga/${id}`;
-                document.getElementById('edit-nama').value = this.dataset.nama;
-                document.getElementById('edit-hubungan').value = this.dataset.hubungan;
-                document.getElementById('edit-tgl_lahir').value = this.dataset.tgl_lahir;
-                document.getElementById('edit-pekerjaan').value = this.dataset.pekerjaan;
+                city.on('change', function() {
+                    const code = $(this).val();
+                    district.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                    village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/districts/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                district.append(
+                                    `<option value="${item.code}">${item.name}</option>`);
+                            });
+                            district.trigger('change.select2');
+                        });
+                });
+
+                district.on('change', function() {
+                    const code = $(this).val();
+                    village.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/villages/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                village.append(
+                                    `<option value="${item.code}">${item.name}</option>`);
+                            });
+                            village.trigger('change.select2');
+                        });
+                });
+
+                // ===================== KTP =====================
+                const provinceKtp = $('[name="province_code_ktp"]');
+                const cityKtp = $('[name="city_code_ktp"]');
+                const districtKtp = $('[name="district_code_ktp"]');
+                const villageKtp = $('[name="village_code_ktp"]');
+
+                provinceKtp.on('change', function() {
+                    const code = $(this).val();
+                    cityKtp.empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>');
+                    districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                    villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/cities/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                cityKtp.append(
+                                    `<option value="${item.code}">${item.name}</option>`);
+                            });
+                            cityKtp.trigger('change.select2');
+                        });
+                });
+
+                cityKtp.on('change', function() {
+                    const code = $(this).val();
+                    districtKtp.empty().append('<option value="">-- Pilih Kecamatan --</option>');
+                    villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/districts/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                districtKtp.append(
+                                    `<option value="${item.code}">${item.name}</option>`);
+                            });
+                            districtKtp.trigger('change.select2');
+                        });
+                });
+
+                districtKtp.on('change', function() {
+                    const code = $(this).val();
+                    villageKtp.empty().append('<option value="">-- Pilih Kelurahan/Desa --</option>');
+
+                    if (!code) return;
+                    fetch(`/api/indonesia/villages/${code}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                villageKtp.append(
+                                    `<option value="${item.code}">${item.name}</option>`);
+                            });
+                            villageKtp.trigger('change.select2');
+                        });
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Optional: Reset form setiap kali modal dibuka
+                const modalPendidikan = document.getElementById('modalPendidikan');
+                modalPendidikan.addEventListener('show.bs.modal', function() {
+                    const form = modalPendidikan.querySelector('form');
+                    form.reset(); // Reset semua field
+                });
+
+                // Optional: Validasi tahun_lulus harus 4 digit
+                const tahunInput = document.querySelector('#modalPendidikan input[name="tahun_lulus"]');
+                if (tahunInput) {
+                    tahunInput.addEventListener('input', function() {
+                        if (this.value.length > 4) {
+                            this.value = this.value.slice(0, 4);
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <script>
+            document.querySelectorAll('.btn-edit-keluarga').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    document.getElementById('formEditKeluarga').action = `/keluarga/${id}`;
+                    document.getElementById('edit-nama').value = this.dataset.nama;
+                    document.getElementById('edit-hubungan').value = this.dataset.hubungan;
+                    document.getElementById('edit-tgl_lahir').value = this.dataset.tgl_lahir;
+                    document.getElementById('edit-pekerjaan').value = this.dataset.pekerjaan;
+                });
+            });
+        </script>
 
 
-    <script>
-        // Tambah Data STR Modal
-        const tambahSTRModal = document.createElement('div');
-        tambahSTRModal.innerHTML = `
+        <script>
+            // Tambah Data STR Modal
+            const tambahSTRModal = document.createElement('div');
+            tambahSTRModal.innerHTML = `
     <div class="modal fade" id="tambahModalSTR" tabindex="-1" aria-labelledby="modalLabelSTR" aria-hidden="true">
         <div class="modal-dialog">
             <form method="POST" action="{{ route('str.store') }}" enctype="multipart/form-data">
@@ -1973,11 +1973,11 @@
             </form>
         </div>
     </div>`;
-        document.body.appendChild(tambahSTRModal);
+            document.body.appendChild(tambahSTRModal);
 
-        // Tambah Data SIP Modal
-        const tambahSIPModal = document.createElement('div');
-        tambahSIPModal.innerHTML = `
+            // Tambah Data SIP Modal
+            const tambahSIPModal = document.createElement('div');
+            tambahSIPModal.innerHTML = `
     <div class="modal fade" id="tambahModalSIP" tabindex="-1" aria-labelledby="modalLabelSIP" aria-hidden="true">
         <div class="modal-dialog">
             <form method="POST" action="{{ route('sip.store') }}" enctype="multipart/form-data">
@@ -2018,27 +2018,27 @@
             </form>
         </div>
     </div>`;
-        document.body.appendChild(tambahSIPModal);
-    </script>
+            document.body.appendChild(tambahSIPModal);
+        </script>
 
 
-    <script>
-        function openEditModalSTR(str) {
-            // Hapus modal lama jika ada
-            const existingModal = document.getElementById('editModalSTR');
-            if (existingModal) existingModal.remove();
+        <script>
+            function openEditModalSTR(str) {
+                // Hapus modal lama jika ada
+                const existingModal = document.getElementById('editModalSTR');
+                if (existingModal) existingModal.remove();
 
-            // Fungsi format tanggal YYYY-MM-DD
-            const formatDate = (dateString) => {
-                if (!dateString) return '';
-                const d = new Date(dateString);
-                const month = ('0' + (d.getMonth() + 1)).slice(-2);
-                const day = ('0' + d.getDate()).slice(-2);
-                return `${d.getFullYear()}-${month}-${day}`;
-            };
+                // Fungsi format tanggal YYYY-MM-DD
+                const formatDate = (dateString) => {
+                    if (!dateString) return '';
+                    const d = new Date(dateString);
+                    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+                    const day = ('0' + d.getDate()).slice(-2);
+                    return `${d.getFullYear()}-${month}-${day}`;
+                };
 
-            const modalEdit = document.createElement('div');
-            modalEdit.innerHTML = `
+                const modalEdit = document.createElement('div');
+                modalEdit.innerHTML = `
         <div class="modal fade" id="editModalSTR" tabindex="-1" aria-labelledby="modalEditLabelSTR" aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="/str/${str.id}" enctype="multipart/form-data">
@@ -2081,21 +2081,21 @@
             </div>
         </div>`;
 
-            document.body.appendChild(modalEdit);
-            const modal = new bootstrap.Modal(document.getElementById('editModalSTR'));
-            modal.show();
-        }
-    </script>
+                document.body.appendChild(modalEdit);
+                const modal = new bootstrap.Modal(document.getElementById('editModalSTR'));
+                modal.show();
+            }
+        </script>
 
 
-    <script>
-        function openEditModalSIP(sip) {
-            // Hapus modal lama jika ada
-            const existingModal = document.getElementById('editModalSIP');
-            if (existingModal) existingModal.remove();
+        <script>
+            function openEditModalSIP(sip) {
+                // Hapus modal lama jika ada
+                const existingModal = document.getElementById('editModalSIP');
+                if (existingModal) existingModal.remove();
 
-            const modalEdit = document.createElement('div');
-            modalEdit.innerHTML = `
+                const modalEdit = document.createElement('div');
+                modalEdit.innerHTML = `
         <div class="modal fade" id="editModalSIP" tabindex="-1" aria-labelledby="modalEditLabelSIP" aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="/sip/${sip.id}" enctype="multipart/form-data">
@@ -2137,10 +2137,10 @@
             </div>
         </div>`;
 
-            document.body.appendChild(modalEdit);
-            const modal = new bootstrap.Modal(document.getElementById('editModalSIP'));
-            modal.show();
-        }
-    </script>
-@endpush
+                document.body.appendChild(modalEdit);
+                const modal = new bootstrap.Modal(document.getElementById('editModalSIP'));
+                modal.show();
+            }
+        </script>
+    @endpush
 @endsection
