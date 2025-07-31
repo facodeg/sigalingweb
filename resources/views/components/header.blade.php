@@ -1,8 +1,5 @@
 <!--start header -->
 
-
-
-
 <div class="navbar-custom">
     <div class="topbar container-fluid">
         <div class="gap-1 d-flex align-items-center gap-lg-2">

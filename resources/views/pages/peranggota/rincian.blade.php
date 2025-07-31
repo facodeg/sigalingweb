@@ -383,21 +383,17 @@
                             <!-- Tab: Data Keluarga -->
                             <div class="tab-pane fade show active" id="simpanan" role="tabpanel"
                                 aria-labelledby="simpanan-tab">
-                                <div class="mb-3 d-flex align-items-center">
-                                    <button type="button" class="btn btn-success me-3" data-bs-toggle="modal"
-                                        data-bs-target="#tambahModalKeluarga">
-                                        Tambah Data Keluarga
+                                <div class="d-flex justify-content-end my-3">
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalTambahKeluarga">
+                                        <i class="ri-add-line"></i> Tambah Data Keluarga
                                     </button>
-                                    <div class="ms-auto">
-                                        <a href="javascript:;" class="btn btn-sm btn-outline-secondary">View all</a>
-                                    </div>
                                 </div>
 
-                                <div class="table-responsive">
-                                    <table id="example2" class="table mb-0 table-striped table-hover table-sm">
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
                                                 <th>Nama</th>
                                                 <th>Hubungan</th>
                                                 <th>Tanggal Lahir</th>
@@ -406,30 +402,122 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($karyawan->keluarga ?? [] as $index => $keluarga)
+                                            @forelse ($karyawan->dataKeluarga as $item)
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $keluarga->nama }}</td>
-                                                    <td>{{ $keluarga->hubungan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($keluarga->tgl_lahir)->format('d-m-Y') }}
-                                                    </td>
-                                                    <td>{{ $keluarga->pekerjaan }}</td>
+                                                    <td>{{ $item->nama }}</td>
+                                                    <td>{{ $item->hubungan }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</td>
+                                                    <td>{{ $item->pekerjaan }}</td>
                                                     <td>
-                                                        <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                                        <button class="btn btn-sm btn-warning btn-edit-keluarga"
+                                                            data-id="{{ $item->id }}"
+                                                            data-nama="{{ $item->nama }}"
+                                                            data-hubungan="{{ $item->hubungan }}"
+                                                            data-tgl_lahir="{{ $item->tgl_lahir }}"
+                                                            data-pekerjaan="{{ $item->pekerjaan }}"
+                                                            data-bs-toggle="modal" data-bs-target="#modalEditKeluarga">
+                                                            <i class="ri-edit-line"></i>
+                                                        </button>
+
+                                                        <form action="{{ route('keluarga.destroy', $item->id) }}"
+                                                            method="POST" style="display:inline;"
+                                                            onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-danger"><i
+                                                                    class="ri-delete-bin-line"></i></button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="6" class="text-center text-muted">Belum ada data
-                                                        keluarga</td>
+                                                    <td colspan="5" class="text-center">Belum ada data keluarga.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
-
                                     </table>
                                 </div>
+
+
                             </div>
+
+                            <div class="modal fade" id="modalTambahKeluarga" tabindex="-1"
+                                aria-labelledby="modalTambahKeluargaLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <form action="{{ route('keluarga.store') }}" method="POST" class="modal-content">
+                                        @csrf
+                                        <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
+                                        <div class="modal-header bg-primary text-white">
+                                            <h5 class="modal-title">Tambah Data Keluarga</h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nama</label>
+                                                <input type="text" name="nama" class="form-control" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Hubungan</label>
+                                                <input type="text" name="hubungan" class="form-control" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Tanggal Lahir</label>
+                                                <input type="date" name="tgl_lahir" class="form-control" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Pekerjaan</label>
+                                                <input type="text" name="pekerjaan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="modalEditKeluarga" tabindex="-1"
+                                aria-labelledby="modalEditKeluargaLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <form method="POST" id="formEditKeluarga" class="modal-content">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-header bg-warning text-white">
+                                            <h5 class="modal-title">Edit Data Keluarga</h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nama</label>
+                                                <input type="text" name="nama" id="edit-nama" class="form-control"
+                                                    required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Hubungan</label>
+                                                <input type="text" name="hubungan" id="edit-hubungan"
+                                                    class="form-control" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Tanggal Lahir</label>
+                                                <input type="date" name="tgl_lahir" id="edit-tgl_lahir"
+                                                    class="form-control" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Pekerjaan</label>
+                                                <input type="text" name="pekerjaan" id="edit-pekerjaan"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-warning">Simpan Perubahan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
 
                             <!-- Tab: Data Pendidikan -->
                             <!-- Tab: Data Pendidikan -->
@@ -1564,11 +1652,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 @endsection
 
 @push('scripts')
@@ -1833,6 +1916,20 @@
     </script>
 
     <script>
+        document.querySelectorAll('.btn-edit-keluarga').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.id;
+                document.getElementById('formEditKeluarga').action = `/keluarga/${id}`;
+                document.getElementById('edit-nama').value = this.dataset.nama;
+                document.getElementById('edit-hubungan').value = this.dataset.hubungan;
+                document.getElementById('edit-tgl_lahir').value = this.dataset.tgl_lahir;
+                document.getElementById('edit-pekerjaan').value = this.dataset.pekerjaan;
+            });
+        });
+    </script>
+
+
+    <script>
         // Tambah Data STR Modal
         const tambahSTRModal = document.createElement('div');
         tambahSTRModal.innerHTML = `
@@ -2046,4 +2143,4 @@
         }
     </script>
 @endpush
-@
+@endsection

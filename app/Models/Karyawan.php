@@ -48,4 +48,8 @@ class Karyawan extends Model
     {
         return $this->hasMany(Spkrkk::class);
     }
+    public function dataKeluarga()
+    {
+        return $this->hasMany(\App\Models\DataKeluarga::class, 'karyawan_id');
+    }
 }

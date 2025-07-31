@@ -12,6 +12,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardKoperasiController;
+use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\KaryawanController;
@@ -237,6 +238,7 @@ Route::middleware(['auth', 'anggota'])->group(function () {
     Route::delete('/sip/{id}', [SipController::class, 'destroy'])->name('sip.destroy');
 
     Route::resource('spkrkk', SpkrkkController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('keluarga', DataKeluargaController::class)->only(['store', 'update', 'destroy']);
 });
 Route::middleware(['auth', 'koperasi'])->group(function () {
     // Halaman utama koperasi
