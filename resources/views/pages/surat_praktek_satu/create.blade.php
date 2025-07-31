@@ -33,14 +33,14 @@
         @php
             use App\Models\Karyawan;
 
-            $dataPendidikan = Karyawan::select(
+            $dataKaryawan = Karyawan::select(
                 'nama',
-                'jabatan_terakhir as jabatan',
                 'nip_nrp_nipppk_nipb as nip',
+                'jabatan_terakhir as profesi',
+                'ruangan as unit',
                 'tmt_kerja_di_rsud as tmt',
             )->get();
         @endphp
-
 
         <div class="card">
             <div class="card-body">
@@ -79,7 +79,7 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label">TMT</label>
                             <input type="text" name="tmt[]" class="form-control tmt"
-                                placeholder="Contoh: 01 Januari 2023">
+                                placeholder="Contoh: 01 Januari 2020" id="tmt-section">
                         </div>
                     </div>
 
@@ -216,11 +216,14 @@
 @endsection
 @push('scripts')
     <datalist id="list-nama">
-        @foreach ($dataPendidikan as $p)
-            <option value="{{ $p->nama }}" data-jabatan="{{ $p->jabatan }}" data-nip="{{ $p->nip }}">
+        @foreach ($dataKaryawan as $k)
+            <option value="{{ $k->nama }}" data-nip="{{ $k->nip }}" data-profesi="{{ $k->profesi }}"
+                data-unit="{{ $k->unit }}"
+                data-tmt="{{ \Carbon\Carbon::parse($k->tmt)->translatedFormat('d F Y') }}">
             </option>
         @endforeach
     </datalist>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -250,8 +253,9 @@
 
             function bindAutoFill(container) {
                 const inputNama = container.querySelector('.praktikan-nama');
-                const inputProfesi = container.querySelector('.profesi');
                 const inputNip = container.querySelector('.nip');
+                const inputProfesi = container.querySelector('.profesi');
+                const inputUnit = container.querySelector('.unit');
                 const inputTmt = container.querySelector('.tmt');
                 const datalist = document.getElementById('list-nama');
 
@@ -259,14 +263,16 @@
                     const val = inputNama.value;
                     const options = datalist.options;
 
-                    inputProfesi.value = '';
                     inputNip.value = '';
+                    inputProfesi.value = '';
+                    inputUnit.value = '';
                     inputTmt.value = '';
 
                     for (let i = 0; i < options.length; i++) {
                         if (options[i].value === val) {
-                            inputProfesi.value = options[i].dataset.jabatan || '';
                             inputNip.value = options[i].dataset.nip || '';
+                            inputProfesi.value = options[i].dataset.profesi || '';
+                            inputUnit.value = options[i].dataset.unit || '';
                             inputTmt.value = options[i].dataset.tmt || '';
                             break;
                         }
