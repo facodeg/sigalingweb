@@ -18,10 +18,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
@@ -29,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Set Carbon ke Bahasa Indonesia
-       
+        Carbon::setLocale('id');
         setlocale(LC_TIME, 'id_ID.UTF-8');
 
         // Tambahkan disk "google" untuk Google Drive
