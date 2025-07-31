@@ -31,8 +31,16 @@
         @endif
 
         @php
-            $dataPendidikan = \App\Models\Pendidikan::select('nama', 'jabatan', 'nip')->get();
+            use App\Models\Karyawan;
+
+            $dataPendidikan = Karyawan::select(
+                'nama',
+                'jabatan_terakhir as jabatan',
+                'nip_nrp_nipppk_nipb as nip',
+                'tmt_kerja_di_rsud as tmt',
+            )->get();
         @endphp
+
 
         <div class="card">
             <div class="card-body">
@@ -68,10 +76,10 @@
                                 placeholder="Contoh: Untuk keperluan pengajuan KPR">
                         </div>
 
-                        <div class="mb-3 col-md-6 d-none" id="tmt-section">
-                            <label for="tmt" class="form-label">TMT</label>
-                            <input type="text" name="tmt" id="tmt" class="form-control"
-                                placeholder="Contoh: 01 Januari 2020">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">TMT</label>
+                            <input type="text" name="tmt[]" class="form-control tmt"
+                                placeholder="Contoh: 01 Januari 2023">
                         </div>
                     </div>
 
@@ -244,22 +252,28 @@
                 const inputNama = container.querySelector('.praktikan-nama');
                 const inputProfesi = container.querySelector('.profesi');
                 const inputNip = container.querySelector('.nip');
+                const inputTmt = container.querySelector('.tmt');
                 const datalist = document.getElementById('list-nama');
 
                 inputNama.addEventListener('input', function() {
                     const val = inputNama.value;
                     const options = datalist.options;
+
                     inputProfesi.value = '';
                     inputNip.value = '';
+                    inputTmt.value = '';
+
                     for (let i = 0; i < options.length; i++) {
                         if (options[i].value === val) {
                             inputProfesi.value = options[i].dataset.jabatan || '';
                             inputNip.value = options[i].dataset.nip || '';
+                            inputTmt.value = options[i].dataset.tmt || '';
                             break;
                         }
                     }
                 });
             }
+
 
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
