@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\SuratPraktekSatu;
 use Illuminate\Http\Request;
+use App\Models\Karyawan;
+use Carbon\Carbon;
 
 class SuratPraktekSatuController extends Controller
 {
@@ -15,9 +17,29 @@ class SuratPraktekSatuController extends Controller
 
     public function create()
     {
-        return view('pages.surat_praktek_satu.create');
-    }
+        // Ambil data karyawan dari database
+        $dataKaryawan = Karyawan::select('nama', 'nip_nrp_nipppk_nipb as nip', 'jabatan_terakhir as profesi', 'ruangan as unit', 'tmt_kerja_di_rsud as tmt')->get();
 
+        // Siapkan JSON untuk JavaScript
+        $dataKaryawanJson = $dataKaryawan
+            ->map(function ($k) {
+                return [
+                    'nama' => $k->nama,
+                    'nip' => $k->nip,
+                    'profesi' => $k->profesi,
+                    'unit' => $k->unit,
+                    'tmt' => Carbon::parse($k->tmt)->translatedFormat('d F Y'),
+                ];
+            })
+            ->values()
+            ->toJson();
+
+        // Kirim ke view
+        return view('pages.surat_praktek_satu.create', [
+            'dataKaryawan' => $dataKaryawan,
+            'dataKaryawanJson' => $dataKaryawanJson,
+        ]);
+    }
     public function store(Request $request)
     {
         $request->validate([

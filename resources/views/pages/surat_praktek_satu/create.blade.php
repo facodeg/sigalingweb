@@ -40,7 +40,25 @@
                 'ruangan as unit',
                 'tmt_kerja_di_rsud as tmt',
             )->get();
+
+            foreach ($dataKaryawan as $k) {
+                $k->tmt_formatted = \Carbon\Carbon::parse($k->tmt)->translatedFormat('d F Y');
+            }
+
+            $dataKaryawanJson = json_encode(
+                $dataKaryawan->map(function ($k) {
+                    return [
+                        'nama' => $k->nama,
+                        'nip' => $k->nip,
+                        'profesi' => $k->profesi,
+                        'unit' => $k->unit,
+                        'tmt' => $k->tmt_formatted,
+                    ];
+                }),
+            );
         @endphp
+
+
 
         <div class="card">
             <div class="card-body">
@@ -76,11 +94,7 @@
                                 placeholder="Contoh: Untuk keperluan pengajuan KPR">
                         </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">TMT</label>
-                            <input type="text" name="tmt[]" class="form-control tmt"
-                                placeholder="Contoh: 01 Januari 2020" id="tmt-section">
-                        </div>
+
                     </div>
 
                     {{-- Praktikan --}}
@@ -92,20 +106,29 @@
                                     <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama"
                                         required>
                                 </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">NIP</label>
                                     <input type="text" name="nip[]" class="form-control nip" readonly>
                                 </div>
                             </div>
                             <div class="row">
+
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Profesi</label>
                                     <input type="text" name="profesi[]" class="form-control profesi" readonly>
                                 </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Unit</label>
-                                    <input type="text" name="unit[]" class="form-control">
+                                    <input type="text" name="unit[]" class="form-control unit" readonly>
                                 </div>
+                                <div class="mb-3 col-md-6" id="tmt-section">
+                                    <label class="form-label">TMT</label>
+                                    <input type="text" name="tmt[]" class="form-control tmt"
+                                        placeholder="Contoh: 01 Januari 2020" readonly>
+                                </div>
+
                             </div>
                             <hr>
                         </div>
@@ -215,15 +238,15 @@
     </div>
 @endsection
 @push('scripts')
+    {{-- Datalist untuk Nama Praktikan --}}
     <datalist id="list-nama">
         @foreach ($dataKaryawan as $k)
-            <option value="{{ $k->nama }}" data-nip="{{ $k->nip }}" data-profesi="{{ $k->profesi }}"
-                data-unit="{{ $k->unit }}"
-                data-tmt="{{ \Carbon\Carbon::parse($k->tmt)->translatedFormat('d F Y') }}">
-            </option>
+            <option value="{{ $k->nama }}"></option>
         @endforeach
     </datalist>
-
+    <script>
+        const dataKaryawan = {!! $dataKaryawanJson !!};
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -257,29 +280,23 @@
                 const inputProfesi = container.querySelector('.profesi');
                 const inputUnit = container.querySelector('.unit');
                 const inputTmt = container.querySelector('.tmt');
-                const datalist = document.getElementById('list-nama');
 
                 inputNama.addEventListener('input', function() {
-                    const val = inputNama.value;
-                    const options = datalist.options;
+                    const selected = dataKaryawan.find(k => k.nama === inputNama.value);
 
-                    inputNip.value = '';
-                    inputProfesi.value = '';
-                    inputUnit.value = '';
-                    inputTmt.value = '';
-
-                    for (let i = 0; i < options.length; i++) {
-                        if (options[i].value === val) {
-                            inputNip.value = options[i].dataset.nip || '';
-                            inputProfesi.value = options[i].dataset.profesi || '';
-                            inputUnit.value = options[i].dataset.unit || '';
-                            inputTmt.value = options[i].dataset.tmt || '';
-                            break;
-                        }
+                    if (selected) {
+                        inputNip.value = selected.nip || '';
+                        inputProfesi.value = selected.profesi || '';
+                        inputUnit.value = selected.unit || '';
+                        inputTmt.value = selected.tmt || '';
+                    } else {
+                        inputNip.value = '';
+                        inputProfesi.value = '';
+                        inputUnit.value = '';
+                        inputTmt.value = '';
                     }
                 });
             }
-
 
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
