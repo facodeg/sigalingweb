@@ -133,12 +133,12 @@
                                     <span>{{ $karyawan->status_kepegawaian }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="d-flex align-items-center bg-light p-2 rounded">
                                     <i class="ri-calendar-event-line text-info fs-5 me-2"></i>
                                     <span>{{ \Carbon\Carbon::parse($karyawan->tgl_lahir)->format('d-m-Y') }}</span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="d-flex align-items-center bg-light p-2 rounded">
                                     <i class="ri-user-2-line text-warning fs-5 me-2"></i>
