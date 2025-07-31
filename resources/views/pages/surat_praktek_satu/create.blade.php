@@ -79,9 +79,9 @@
 
                         <div class="mb-3 col-md-6">
                             <label for="tanggal_dikeluarkan" class="form-label">Tanggal Dikeluarkan</label>
-                            <input type="date" name="tanggal_dikeluarkan" id="tanggal_dikeluarkan" class="form-control">
+                            <input type="date" name="tanggal_dikeluarkan" id="tanggal_dikeluarkan" class="form-control"
+                                value="{{ old('tanggal_dikeluarkan', date('Y-m-d')) }}">
                         </div>
-
                         <div class="mb-3 col-md-6">
                             <label for="no_surat" class="form-label">Nomor Surat</label>
                             <input type="text" name="no_surat" id="no_surat" class="form-control"
