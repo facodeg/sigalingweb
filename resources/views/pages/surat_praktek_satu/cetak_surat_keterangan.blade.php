@@ -126,7 +126,7 @@
             <td>d.</td>
             <td>TMT</td>
             <td>:</td>
-            <td>{{ $surat->tmt ?? '' }}</td>
+            <td>{{ $surat->tmt ? \Carbon\Carbon::parse($surat->tmt)->translatedFormat('d F Y') : '' }}</td>
         </tr>
         <tr>
             <td>e.</td>
