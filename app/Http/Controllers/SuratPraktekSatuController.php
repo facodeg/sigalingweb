@@ -92,7 +92,7 @@ class SuratPraktekSatuController extends Controller
                 'penanda_tangan_nip' => $request->penanda_tangan_nip,
                 'penanda_tangan_pangkat' => $request->penanda_tangan_pangkat,
                 'penanda_tangan_jabatan' => $request->penanda_tangan_jabatan,
-                'tmt' => $request->tmt,
+                'tmt' => isset($request->tmt[$i]) ? Carbon::parse($request->tmt[$i])->format('Y-m-d') : null,
                 'maksud' => $request->maksud,
                 'status_surat' => 'proses',
             ]);
