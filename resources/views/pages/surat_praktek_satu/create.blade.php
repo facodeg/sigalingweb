@@ -250,6 +250,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const maksudInput = document.getElementById('maksud');
+
+            // Cek apakah ada data sebelumnya di localStorage
+            const cachedMaksud = localStorage.getItem('cached_maksud');
+            if (cachedMaksud && maksudInput) {
+                maksudInput.value = cachedMaksud;
+            }
+
+            // Simpan ke localStorage setiap kali diubah
+            if (maksudInput) {
+                maksudInput.addEventListener('input', function() {
+                    localStorage.setItem('cached_maksud', maksudInput.value);
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const suratSelect = document.getElementById('nama_surat');
             const jadwalSection = document.getElementById('jadwal-praktek');
             const tambahBtnWrapper = document.getElementById('tambah-btn-wrapper');
