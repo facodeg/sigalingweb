@@ -35,4 +35,9 @@ class SuratPraktekSatu extends Model
         'tmt',
         'maksud',
     ];
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'nip', 'nip_nrp_nipppk_nipb');
+    }
 }

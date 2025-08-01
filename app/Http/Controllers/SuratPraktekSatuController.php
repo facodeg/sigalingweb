@@ -205,7 +205,7 @@ class SuratPraktekSatuController extends Controller
 
     public function cetakKeterangan($id)
     {
-        $surat = SuratPraktekSatu::findOrFail($id);
+        $surat = SuratPraktekSatu::with('karyawan')->findOrFail($id);
         return view('pages.surat_praktek_satu.cetak_surat_keterangan', compact('surat'));
     }
 }
