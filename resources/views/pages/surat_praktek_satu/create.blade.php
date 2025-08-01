@@ -126,7 +126,7 @@
                                 <div class="mb-3 col-md-6" id="tmt-section">
                                     <label class="form-label">TMT</label>
                                     <input type="text" name="tmt[]" class="form-control tmt"
-                                        placeholder="Contoh: 01 Januari 2020" readonly>
+                                        placeholder="Contoh: 01 Januari 2020">
                                 </div>
 
                             </div>
