@@ -35,6 +35,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RiwayatJabatanController;
 use App\Http\Controllers\SimpananWajibController;
 use App\Http\Controllers\SipController;
+use App\Http\Controllers\SkkRequestController;
 use App\Http\Controllers\SpkrkkController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\StorageLinkController;
@@ -63,6 +64,10 @@ Route::get('/preview-pdf/{filename}', function ($filename) {
         'Content-Disposition' => 'inline; filename="' . $filename . '"',
     ]);
 })->name('preview.pdf');
+
+// Halaman cetak surat permohonan (contoh berdasarkan ID)
+Route::get('/skk-requests/{id}/cetak', [SkkRequestController::class, 'cetak'])->name('skk.cetak');
+
 
 Route::get('/', function () {
     if (Auth::check()) {

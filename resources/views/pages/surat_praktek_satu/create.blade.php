@@ -58,8 +58,6 @@
             );
         @endphp
 
-
-
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('surat_praktek_satu.store') }}" method="POST">
@@ -71,8 +69,7 @@
                                 <option value="" disabled selected>Pilih Jenis Surat</option>
                                 <option value="SURAT KETERANGAN">SURAT KETERANGAN</option>
                                 <option value="SURAT IZIN ATASAN">SURAT IZIN ATASAN</option>
-                                <option value="SURAT KETERANGAN HARI DAN JAM PRAKTEK">SURAT KETERANGAN HARI DAN JAM PRAKTEK
-                                </option>
+                                <option value="SURAT KETERANGAN HARI DAN JAM PRAKTEK">SURAT KETERANGAN HARI DAN JAM PRAKTEK</option>
                                 <option value="SURAT KETERANGAN KERJA">SURAT KETERANGAN KERJA</option>
                             </select>
                         </div>
@@ -82,6 +79,7 @@
                             <input type="date" name="tanggal_dikeluarkan" id="tanggal_dikeluarkan" class="form-control"
                                 value="{{ old('tanggal_dikeluarkan', date('Y-m-d')) }}">
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="no_surat" class="form-label">Nomor Surat</label>
                             <input type="text" name="no_surat" id="no_surat" class="form-control"
@@ -93,8 +91,6 @@
                             <input type="text" name="maksud" id="maksud" class="form-control"
                                 placeholder="Contoh: Untuk keperluan pengajuan KPR">
                         </div>
-
-
                     </div>
 
                     {{-- Praktikan --}}
@@ -103,73 +99,60 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Nama Praktikan</label>
-                                    <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama"
-                                        required>
+                                    <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama" required>
                                 </div>
-
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">NIP</label>
                                     <input type="text" name="nip[]" class="form-control nip" readonly>
                                 </div>
                             </div>
                             <div class="row">
-
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Profesi</label>
                                     <input type="text" name="profesi[]" class="form-control profesi" readonly>
                                 </div>
-
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Unit</label>
                                     <input type="text" name="unit[]" class="form-control unit" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6" id="tmt-section">
                                     <label class="form-label">TMT</label>
-                                    <input type="text" name="tmt[]" class="form-control tmt"
-                                        placeholder="Contoh: 01 Januari 2020">
+                                    <input type="text" name="tmt[]" class="form-control tmt" placeholder="Contoh: 01 Januari 2020">
                                 </div>
-
                             </div>
                             <hr>
                         </div>
                     </div>
 
                     <div class="col-12 mb-3" id="tambah-btn-wrapper">
-                        <button type="button" class="btn btn-sm btn-secondary" id="tambah-praktikan">+ Tambah
-                            Praktikan</button>
+                        <button type="button" class="btn btn-sm btn-secondary" id="tambah-praktikan">+ Tambah Praktikan</button>
                     </div>
 
                     {{-- Jadwal Praktek --}}
                     <div id="jadwal-praktek">
                         <div class="row">
-
                             <div class="mb-3 col-md-6">
                                 <label for="hari_praktek" class="form-label">Hari Praktek</label>
-                                <input type="text" name="hari_praktek" id="hari_praktek" class="form-control"
-                                    value="Senin s.d Minggu">
+                                <input type="text" name="hari_praktek" id="hari_praktek" class="form-control" value="Senin s.d Minggu">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="jam_efektif_mingguan" class="form-label">Jam Efektif / Minggu</label>
-                                <input type="number" name="jam_efektif_mingguan" id="jam_efektif_mingguan"
-                                    class="form-control" value="37.5" step="0.1">
+                                <input type="number" name="jam_efektif_mingguan" id="jam_efektif_mingguan" class="form-control" value="37.5" step="0.1">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_pagi" class="form-label">Shift Pagi</label>
-                                <input type="text" name="shift_pagi" id="shift_pagi" class="form-control"
-                                    value="07.30 s.d 14.30 WIB">
+                                <input type="text" name="shift_pagi" id="shift_pagi" class="form-control" value="07.30 s.d 14.30 WIB">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_sore" class="form-label">Shift Sore</label>
-                                <input type="text" name="shift_sore" id="shift_sore" class="form-control"
-                                    value="14.00 s.d 21.00 WIB">
+                                <input type="text" name="shift_sore" id="shift_sore" class="form-control" value="14.00 s.d 21.00 WIB">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_malam" class="form-label">Shift Malam</label>
-                                <input type="text" name="shift_malam" id="shift_malam" class="form-control"
-                                    value="21.00 s.d 07.30 WIB">
+                                <input type="text" name="shift_malam" id="shift_malam" class="form-control" value="21.00 s.d 07.30 WIB">
                             </div>
                         </div>
                     </div>
@@ -177,23 +160,19 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
-                            <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
-                                value="RSUD Leuwiliang">
+                            <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control" value="RSUD Leuwiliang">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="alamat_lengkap_praktek" class="form-label">Alamat Lengkap Praktek</label>
-                            <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek"
-                                class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
+                            <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek" class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
                         </div>
                     </div>
-
 
                     {{-- Penandatangan --}}
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="tempat_dikeluarkan" class="form-label">Tempat Dikeluarkan</label>
-                            <input type="text" name="tempat_dikeluarkan" id="tempat_dikeluarkan" class="form-control"
-                                value="Leuwiliang">
+                            <input type="text" name="tempat_dikeluarkan" id="tempat_dikeluarkan" class="form-control" value="Leuwiliang">
                         </div>
 
                         <div class="mb-3 col-md-6">
@@ -201,6 +180,7 @@
                             <select name="penanda_tangan_nama" id="penanda_tangan_nama" class="form-select">
                                 <option value="dr. Vitrie Winastri, S.H., MARS">dr. Vitrie Winastri, S.H., MARS</option>
                                 <option value="dr. Ridwan">dr. Ridwan</option>
+                                <option value="dr. Nining Sunengsih, MARS">dr. Nining Sunengsih, MARS</option> {{-- NEW --}}
                             </select>
                         </div>
 
@@ -209,6 +189,7 @@
                             <select name="penanda_tangan_nip" id="penanda_tangan_nip" class="form-select">
                                 <option value="196710192002122002">196710192002122002</option>
                                 <option value="197606232010011008">197606232010011008</option>
+                                <option value="97809102008012009">97809102008012009</option> {{-- NEW --}}
                             </select>
                         </div>
 
@@ -217,6 +198,7 @@
                             <select name="penanda_tangan_pangkat" id="penanda_tangan_pangkat" class="form-select">
                                 <option value="Pembina Utama Muda, IV/c">Pembina Utama Muda, IV/c</option>
                                 <option value="Pembina, IV/a">Pembina, IV/a</option>
+                                <option value="Pembina, IV/b">Pembina, IV/b</option> {{-- NEW --}}
                             </select>
                         </div>
 
@@ -225,10 +207,10 @@
                             <select name="penanda_tangan_jabatan" id="penanda_tangan_jabatan" class="form-select">
                                 <option value="Direktur RSUD Leuwiliang">Direktur RSUD Leuwiliang</option>
                                 <option value="Kepala Sub Bagian Kepegawaian">Kepala Sub Bagian Kepegawaian</option>
+                                <option value="Kepala Bagian Tata Usaha">Kepala Bagian Tata Usaha</option> {{-- NEW --}}
                             </select>
                         </div>
                     </div>
-
 
                     <button type="submit" class="mt-3 btn btn-primary">Simpan</button>
                     <a href="{{ route('surat_praktek_satu.index') }}" class="mt-3 btn btn-secondary">Kembali</a>
@@ -237,6 +219,7 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     {{-- Datalist untuk Nama Praktikan --}}
     <datalist id="list-nama">
@@ -248,28 +231,87 @@
         const dataKaryawan = {!! $dataKaryawanJson !!};
     </script>
 
+    {{-- Cache "Maksud" ke localStorage --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const maksudInput = document.getElementById('maksud');
-
-            // Cek apakah ada data sebelumnya di localStorage
             const cachedMaksud = localStorage.getItem('cached_maksud');
             if (cachedMaksud && maksudInput) {
                 maksudInput.value = cachedMaksud;
             }
-
-            // Simpan ke localStorage setiap kali diubah
             if (maksudInput) {
-                maksudInput.addEventListener('input', function() {
+                maksudInput.addEventListener('input', function () {
                     localStorage.setItem('cached_maksud', maksudInput.value);
                 });
             }
         });
     </script>
 
-
+    {{-- Mapping penandatangan & sinkronisasi otomatis --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Mapping nama -> detail (NIP, Pangkat, Jabatan)
+        const PENANDATANGAN = {
+            'dr. Vitrie Winastri, S.H., MARS': {
+                nip: '196710192002122002',
+                pangkat: 'Pembina Utama Muda, IV/c',
+                jabatan: 'Direktur RSUD Leuwiliang',
+            },
+            'dr. Ridwan': {
+                nip: '197606232010011008',
+                pangkat: 'Pembina, IV/a',
+                jabatan: 'Kepala Sub Bagian Kepegawaian',
+            },
+            'dr. Nining Sunengsih, MARS': {
+                nip: '197809102008012009',
+                pangkat: 'Pembina, IV/b',
+                jabatan: 'Kepala Bagian Tata Usaha',
+            },
+        };
+
+        function ensureOptionExists(selectEl, value) {
+            if (!selectEl) return;
+            const exists = Array.from(selectEl.options).some(o => o.value === value);
+            if (!exists) {
+                const opt = document.createElement('option');
+                opt.value = value;
+                opt.textContent = value;
+                selectEl.appendChild(opt);
+            }
+        }
+
+        function setPenandatanganByName(nama) {
+            const namaPenandatangan = document.getElementById('penanda_tangan_nama');
+            const nipPenandatangan = document.getElementById('penanda_tangan_nip');
+            const pangkatPenandatangan = document.getElementById('penanda_tangan_pangkat');
+            const jabatanPenandatangan = document.getElementById('penanda_tangan_jabatan');
+
+            const data = PENANDATANGAN[nama];
+            if (!data) return;
+
+            ensureOptionExists(namaPenandatangan, nama);
+            ensureOptionExists(nipPenandatangan, data.nip);
+            ensureOptionExists(pangkatPenandatangan, data.pangkat);
+            ensureOptionExists(jabatanPenandatangan, data.jabatan);
+
+            namaPenandatangan.value = nama;
+            nipPenandatangan.value = data.nip;
+            pangkatPenandatangan.value = data.pangkat;
+            jabatanPenandatangan.value = data.jabatan;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const namaPenandatangan = document.getElementById('penanda_tangan_nama');
+            if (namaPenandatangan) {
+                namaPenandatangan.addEventListener('change', function () {
+                    setPenandatanganByName(this.value);
+                });
+            }
+        });
+    </script>
+
+    {{-- Logic utama form (autofill praktikan, toggle field, default berdasarkan jenis surat) --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
             const suratSelect = document.getElementById('nama_surat');
             const jadwalSection = document.getElementById('jadwal-praktek');
             const tambahBtnWrapper = document.getElementById('tambah-btn-wrapper');
@@ -301,9 +343,8 @@
                 const inputUnit = container.querySelector('.unit');
                 const inputTmt = container.querySelector('.tmt');
 
-                inputNama.addEventListener('input', function() {
+                inputNama.addEventListener('input', function () {
                     const selected = dataKaryawan.find(k => k.nama === inputNama.value);
-
                     if (selected) {
                         inputNip.value = selected.nip || '';
                         inputProfesi.value = selected.profesi || '';
@@ -320,7 +361,7 @@
 
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
-            document.getElementById('tambah-praktikan').addEventListener('click', function() {
+            document.getElementById('tambah-praktikan').addEventListener('click', function () {
                 const wrapper = document.getElementById('praktikan-wrapper');
                 const entry = wrapper.querySelector('.praktikan-entry');
                 const clone = entry.cloneNode(true);
@@ -336,7 +377,7 @@
                 }
             }
 
-            suratSelect.addEventListener('change', function() {
+            suratSelect.addEventListener('change', function () {
                 const value = this.value;
                 const isIzinAtasan = value === 'SURAT IZIN ATASAN';
                 const isKeterangan = value === 'SURAT KETERANGAN';
@@ -356,7 +397,7 @@
                 } else if (alamatLengkapWrapper && alamatPraktekWrapper) {
                     alamatLengkapWrapper.classList.add('d-none');
                     alamatPraktekWrapper.classList.remove('d-none');
-                    alamatLengkapField.value = '';
+                    if (alamatLengkapField) alamatLengkapField.value = '';
                 }
 
                 // Sembunyikan beberapa field untuk keterangan
@@ -375,12 +416,9 @@
                     });
                 }
 
-                // Default nilai penandatangan
+                // Default nilai penandatangan (pakai fungsi sinkron)
                 if (isKeterangan) {
-                    namaPenandatangan.value = 'dr. Ridwan';
-                    nipPenandatangan.value = '197606232010011008';
-                    pangkatPenandatangan.value = 'Pembina, IV/a';
-                    jabatanPenandatangan.value = 'Kepala Sub Bagian Kepegawaian';
+                    setPenandatanganByName('dr. Ridwan');
 
                     // Kosongkan jadwal
                     document.getElementById('hari_praktek').value = '';
@@ -389,10 +427,7 @@
                     document.getElementById('shift_sore').value = '';
                     document.getElementById('shift_malam').value = '';
                 } else {
-                    namaPenandatangan.value = 'dr. Vitrie Winastri, S.H., MARS';
-                    nipPenandatangan.value = '196710192002122002';
-                    pangkatPenandatangan.value = 'Pembina Utama Muda, IV/c';
-                    jabatanPenandatangan.value = 'Direktur RSUD Leuwiliang';
+                    setPenandatanganByName('dr. Vitrie Winastri, S.H., MARS');
 
                     document.getElementById('hari_praktek').value = 'Senin s.d Minggu';
                     document.getElementById('jam_efektif_mingguan').value = '37.5';
