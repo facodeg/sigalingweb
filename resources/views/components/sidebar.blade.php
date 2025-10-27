@@ -80,110 +80,7 @@
                 </li>
 
 
-                {{-- <li
-                    class="side-nav-item {{ Request::is('dashboard-koperasi') || Request::is('simpanan_wajib*') || Request::is('angsuran*') || Request::is('whatsapp*') || Request::is('pinjaman*') || Request::is('anggotas*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#koperasi" aria-expanded="false" aria-controls="sidebarPages"
-                        class="side-nav-link">
-                        <i class="ri-layout-fill"></i>
-                        <span>Koperasi</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                </li> --}}
 
-
-
-                {{-- <div class="collapse {{ Request::is('dashboard-koperasi') || Request::is('limitpinjaman*') || Request::is('simpanan_wajib*') || Request::is('whatsapp*') || Request::is('angsuran*') || Request::is('pinjaman*') || Request::is('anggotas*') || Request::is('apiwhatsapp*') ? 'show' : '' }}"
-                    id="koperasi">
-
-                    <li class="mt-1 side-nav-title"> Dashboard</li>
-
-                    <li class='{{ Request::is('dashboard.koperasi') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('dashboard.koperasi') }}" class="side-nav-link">
-                            <i class="ri-building-line"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="mt-1 side-nav-title"> Data Anggota</li>
-
-                    <li class='{{ Request::is('anggotas*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('anggotas.index') }}" class="side-nav-link">
-                            <i class="ri-group-fill"></i>
-                            <span>Anggota</span>
-                        </a>
-                    </li>
-
-
-
-
-                    <li class='{{ Request::is('konfirmasi*') ? 'menuitem-active' : '' }} side-nav-item'>
-                        <a href="{{ route('konfirmasi.index') }}" class="side-nav-link">
-                            <i class="ri-user-add-fill"></i>
-                            <span>Pendaftaran</span>
-
-                            @if (Request::is('konfirmasi') || Request::is('admin/home'))
-                                <span class="badge bg-success ms-2">{{ $totalProses }}</span>
-                            @endif
-
-                            <!-- Menampilkan jumlah total anggota 'Proses' -->
-                        </a>
-                    </li>
-
-                    <li class="mt-1 side-nav-title"> Transaksi</li>
-
-                    <li class='{{ Request::is('limitpinjaman*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('limitpinjaman.index') }}" class="side-nav-link">
-                            <i class="ri-bank-card-line"></i>
-                            <span>Limit Pinjaman</span>
-
-                        </a>
-                    </li>
-
-                    <li class='{{ Request::is('pinjaman*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('pinjaman.index') }}" class="side-nav-link">
-                            <i class="ri-money-dollar-circle-line"></i>
-                            <span>Pinjaman</span>
-
-                            @if (Request::is('konfirmasi') || Request::is('admin/home') || Request::is('pinjaman'))
-                                <span class="badge bg-success ms-2">{{ $totalajuanpinjaman }}</span>
-                            @endif
-
-                        </a>
-                    </li>
-
-                    <li class='{{ Request::is('angsuran*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('angsuran.index') }}" class="side-nav-link">
-                            <i class="ri-exchange-funds-line"></i>
-                            <span>Angsuran</span>
-                        </a>
-                    </li>
-
-                    <li class='{{ Request::is('simpanan_wajib*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('simpanan_wajib.index') }}" class="side-nav-link">
-                            <i class="ri-save-line"></i>
-                            <span>Simpanan</span>
-                        </a>
-                    </li>
-
-                    <li class="mt-1 side-nav-title"> WhatsApp</li>
-
-                    <li class='{{ Request::is('whatsapp*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('whatsapp.index') }}" class="side-nav-link">
-                            <i class="ri-whatsapp-line"></i>
-                            <span>WhatsApp</span>
-                        </a>
-                    </li>
-
-                    <li class="mt-1 side-nav-title"> API WhatsApp</li>
-
-                    <li class='{{ Request::is('apiwhatsapp*') ? 'menuitem-active' : '' }}' class="side-nav-item">
-                        <a href="{{ route('apiwhatsapp.index') }}" class="side-nav-link">
-                            <i class="ri-whatsapp-line"></i>
-                            <span>API WhatsApp</span>
-                        </a>
-                    </li>
-
-                </div> --}}
 
                 <li
                     class="side-nav-item
@@ -220,16 +117,30 @@
                                     <span>Pembuatan Surat</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('pegawai*') ? 'menuitem-active' : '' }}">
-                                <a href="{{ route('pegawai.index') }}">
+                            <li class="{{ Request::is('permintaan-skk*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('skk.index') }}">
                                     <i class="ri-user-3-line"></i>
-                                    <span>Pegawai</span>
+                                    <span>Permintaan SKK</span>
+                                </a>
+                            </li>
+
+
+                            <li class="{{ Request::is('karyawan*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('karyawan.index') }}">
+                                    <i class="ri-user-star-line"></i>
+                                    <span>Karyawan</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('users*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('users.index') }}">
+                                    <i class="ri-user-add-line"></i>
+                                    <span>Akun Pegawai</span>
                                 </a>
                             </li>
 
                             <!-- Submenu Kepegawaian -->
                             <li
-                                class="side-nav-item
+                                class="
                 {{ Request::is('karyawan*') ||
                 Request::is('riwayat_jabatan*') ||
                 Request::is('riwayat_golongan*') ||
@@ -238,21 +149,16 @@
                 Request::is('pendidikan_db*')
                     ? 'menuitem-active'
                     : '' }}">
-                                <a data-bs-toggle="collapse" href="#menuKepegawaian" class="side-nav-link"
+                                {{-- <a data-bs-toggle="collapse" href="#menuKepegawaian"
                                     aria-expanded="{{ Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'true' : 'false' }}">
                                     <i class="ri-parent-fill"></i>
                                     <span>Kepegawaian</span>
                                     <span class="menu-arrow"></span>
-                                </a>
+                                </a> --}}
                                 <div class="collapse {{ Request::is('karyawan*') || Request::is('riwayat_jabatan*') || Request::is('riwayat_golongan*') || Request::is('riwayat_sk*') || Request::is('riwayat_mutasi*') || Request::is('pendidikan_db*') ? 'show' : '' }}"
                                     id="menuKepegawaian">
                                     <ul class="side-nav-second-level">
-                                        <li class="{{ Request::is('karyawan*') ? 'menuitem-active' : '' }}">
-                                            <a href="{{ route('karyawan.index') }}">
-                                                <i class="ri-user-star-line"></i>
-                                                <span>Karyawan</span>
-                                            </a>
-                                        </li>
+
                                         {{-- <li class="{{ Request::is('riwayat_jabatan*') ? 'menuitem-active' : '' }}">
                                             <a href="{{ route('riwayat_jabatan.index') }}">
                                                 <i class="ri-briefcase-line"></i>
@@ -277,12 +183,7 @@
                                                 <span>Riwayat Mutasi</span>
                                             </a>
                                         </li> --}}
-                                        <li class="side-nav-item">
-                                            <a href="{{ route('users.index') }}" class="side-nav-link">
-                                                <i class="ri-user-add-line"></i>
-                                                <span>Akun Pegawai</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </li>

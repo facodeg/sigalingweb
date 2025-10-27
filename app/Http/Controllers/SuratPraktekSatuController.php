@@ -6,6 +6,9 @@ use App\Models\SuratPraktekSatu;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use App\Services\SuratNumberGenerator;
+use Illuminate\Support\Facades\Log;
 
 class SuratPraktekSatuController extends Controller
 {
@@ -13,6 +16,39 @@ class SuratPraktekSatuController extends Controller
     {
         $data = SuratPraktekSatu::orderBy('created_at', 'desc')->get();
         return view('pages.surat_praktek_satu.index', compact('data'));
+    }
+
+    public function generateNomorSurat(Request $request): JsonResponse
+    {
+        try {
+            $generator = new SuratNumberGenerator();
+
+            // Ambil data nama dari input form
+            // Karena nama field adalah praktikan_nama[], maka hasilnya array
+            $praktikanNamaList = $request->input('praktikan_nama', []);
+
+            // Jika hanya satu nama, bisa ambil index pertama
+            $nama = $praktikanNamaList[0] ?? 'Tanpa Nama';
+
+            // Panggil service generator
+            $surat = $generator->createSurat($nama);
+
+            return response()->json([
+                'success' => true,
+                'no_surat' => $surat['no_surat'],
+                'nosurata' => $surat['nosurata'],
+                'tahun' => $surat['tahun'],
+            ]);
+        } catch (\Throwable $e) {
+            \Log::error('Gagal generate nomor surat praktek satu: ' . $e->getMessage());
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Gagal generate nomor surat: ' . $e->getMessage(),
+                ],
+                500,
+            );
+        }
     }
 
     public function create()

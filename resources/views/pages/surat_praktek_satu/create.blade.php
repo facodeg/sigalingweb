@@ -69,7 +69,8 @@
                                 <option value="" disabled selected>Pilih Jenis Surat</option>
                                 <option value="SURAT KETERANGAN">SURAT KETERANGAN</option>
                                 <option value="SURAT IZIN ATASAN">SURAT IZIN ATASAN</option>
-                                <option value="SURAT KETERANGAN HARI DAN JAM PRAKTEK">SURAT KETERANGAN HARI DAN JAM PRAKTEK</option>
+                                <option value="SURAT KETERANGAN HARI DAN JAM PRAKTEK">SURAT KETERANGAN HARI DAN JAM PRAKTEK
+                                </option>
                                 <option value="SURAT KETERANGAN KERJA">SURAT KETERANGAN KERJA</option>
                             </select>
                         </div>
@@ -81,10 +82,15 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="no_surat" class="form-label">Nomor Surat</label>
-                            <input type="text" name="no_surat" id="no_surat" class="form-control"
-                                placeholder="Contoh: 445.1/PK-RSUD/{{ date('Y') }}">
+                            <label for="no_surat" class="form-label d-flex justify-content-between align-items-center">
+                                <span>Nomor Surat</span>
+                                <button type="button" id="generate-no-surat" class="btn btn-sm btn-outline-primary">
+                                    Buat Nomor Otomatis
+                                </button>
+                            </label>
+                            <input type="text" name="no_surat" id="no_surat" class="form-control" readonly>
                         </div>
+
 
                         <div class="mb-3 col-md-6 d-none" id="maksud-section">
                             <label for="maksud" class="form-label">Keperluan / Maksud</label>
@@ -99,7 +105,8 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Nama Praktikan</label>
-                                    <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama" required>
+                                    <input list="list-nama" name="praktikan_nama[]" class="form-control praktikan-nama"
+                                        required>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">NIP</label>
@@ -117,7 +124,8 @@
                                 </div>
                                 <div class="mb-3 col-md-6" id="tmt-section">
                                     <label class="form-label">TMT</label>
-                                    <input type="text" name="tmt[]" class="form-control tmt" placeholder="Contoh: 01 Januari 2020">
+                                    <input type="text" name="tmt[]" class="form-control tmt"
+                                        placeholder="Contoh: 01 Januari 2020">
                                 </div>
                             </div>
                             <hr>
@@ -125,7 +133,8 @@
                     </div>
 
                     <div class="col-12 mb-3" id="tambah-btn-wrapper">
-                        <button type="button" class="btn btn-sm btn-secondary" id="tambah-praktikan">+ Tambah Praktikan</button>
+                        <button type="button" class="btn btn-sm btn-secondary" id="tambah-praktikan">+ Tambah
+                            Praktikan</button>
                     </div>
 
                     {{-- Jadwal Praktek --}}
@@ -133,26 +142,31 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="hari_praktek" class="form-label">Hari Praktek</label>
-                                <input type="text" name="hari_praktek" id="hari_praktek" class="form-control" value="Senin s.d Minggu">
+                                <input type="text" name="hari_praktek" id="hari_praktek" class="form-control"
+                                    value="Senin s.d Minggu">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="jam_efektif_mingguan" class="form-label">Jam Efektif / Minggu</label>
-                                <input type="number" name="jam_efektif_mingguan" id="jam_efektif_mingguan" class="form-control" value="37.5" step="0.1">
+                                <input type="number" name="jam_efektif_mingguan" id="jam_efektif_mingguan"
+                                    class="form-control" value="37.5" step="0.1">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_pagi" class="form-label">Shift Pagi</label>
-                                <input type="text" name="shift_pagi" id="shift_pagi" class="form-control" value="07.30 s.d 14.30 WIB">
+                                <input type="text" name="shift_pagi" id="shift_pagi" class="form-control"
+                                    value="07.30 s.d 14.30 WIB">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_sore" class="form-label">Shift Sore</label>
-                                <input type="text" name="shift_sore" id="shift_sore" class="form-control" value="14.00 s.d 21.00 WIB">
+                                <input type="text" name="shift_sore" id="shift_sore" class="form-control"
+                                    value="14.00 s.d 21.00 WIB">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="shift_malam" class="form-label">Shift Malam</label>
-                                <input type="text" name="shift_malam" id="shift_malam" class="form-control" value="21.00 s.d 07.30 WIB">
+                                <input type="text" name="shift_malam" id="shift_malam" class="form-control"
+                                    value="21.00 s.d 07.30 WIB">
                             </div>
                         </div>
                     </div>
@@ -160,11 +174,13 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="alamat_praktek" class="form-label">Alamat Praktek</label>
-                            <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control" value="RSUD Leuwiliang">
+                            <input type="text" name="alamat_praktek" id="alamat_praktek" class="form-control"
+                                value="RSUD Leuwiliang">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="alamat_lengkap_praktek" class="form-label">Alamat Lengkap Praktek</label>
-                            <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek" class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
+                            <input type="text" name="alamat_lengkap_praktek" id="alamat_lengkap_praktek"
+                                class="form-control" placeholder="Contoh: Jl. Raya Cibeber – Leuwiliang Bogor">
                         </div>
                     </div>
 
@@ -172,7 +188,8 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="tempat_dikeluarkan" class="form-label">Tempat Dikeluarkan</label>
-                            <input type="text" name="tempat_dikeluarkan" id="tempat_dikeluarkan" class="form-control" value="Leuwiliang">
+                            <input type="text" name="tempat_dikeluarkan" id="tempat_dikeluarkan" class="form-control"
+                                value="Leuwiliang">
                         </div>
 
                         <div class="mb-3 col-md-6">
@@ -180,7 +197,8 @@
                             <select name="penanda_tangan_nama" id="penanda_tangan_nama" class="form-select">
                                 <option value="dr. Vitrie Winastri, S.H., MARS">dr. Vitrie Winastri, S.H., MARS</option>
                                 <option value="dr. Ridwan">dr. Ridwan</option>
-                                <option value="dr. Nining Sunengsih, MARS">dr. Nining Sunengsih, MARS</option> {{-- NEW --}}
+                                <option value="dr. Nining Sunengsih, MARS">dr. Nining Sunengsih, MARS</option>
+                                {{-- NEW --}}
                             </select>
                         </div>
 
@@ -207,7 +225,8 @@
                             <select name="penanda_tangan_jabatan" id="penanda_tangan_jabatan" class="form-select">
                                 <option value="Direktur RSUD Leuwiliang">Direktur RSUD Leuwiliang</option>
                                 <option value="Kepala Sub Bagian Kepegawaian">Kepala Sub Bagian Kepegawaian</option>
-                                <option value="Kepala Bagian Tata Usaha">Kepala Bagian Tata Usaha</option> {{-- NEW --}}
+                                <option value="Kepala Bagian Tata Usaha">Kepala Bagian Tata Usaha</option>
+                                {{-- NEW --}}
                             </select>
                         </div>
                     </div>
@@ -233,14 +252,14 @@
 
     {{-- Cache "Maksud" ke localStorage --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const maksudInput = document.getElementById('maksud');
             const cachedMaksud = localStorage.getItem('cached_maksud');
             if (cachedMaksud && maksudInput) {
                 maksudInput.value = cachedMaksud;
             }
             if (maksudInput) {
-                maksudInput.addEventListener('input', function () {
+                maksudInput.addEventListener('input', function() {
                     localStorage.setItem('cached_maksud', maksudInput.value);
                 });
             }
@@ -299,10 +318,10 @@
             jabatanPenandatangan.value = data.jabatan;
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const namaPenandatangan = document.getElementById('penanda_tangan_nama');
             if (namaPenandatangan) {
-                namaPenandatangan.addEventListener('change', function () {
+                namaPenandatangan.addEventListener('change', function() {
                     setPenandatanganByName(this.value);
                 });
             }
@@ -311,7 +330,7 @@
 
     {{-- Logic utama form (autofill praktikan, toggle field, default berdasarkan jenis surat) --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const suratSelect = document.getElementById('nama_surat');
             const jadwalSection = document.getElementById('jadwal-praktek');
             const tambahBtnWrapper = document.getElementById('tambah-btn-wrapper');
@@ -343,7 +362,7 @@
                 const inputUnit = container.querySelector('.unit');
                 const inputTmt = container.querySelector('.tmt');
 
-                inputNama.addEventListener('input', function () {
+                inputNama.addEventListener('input', function() {
                     const selected = dataKaryawan.find(k => k.nama === inputNama.value);
                     if (selected) {
                         inputNip.value = selected.nip || '';
@@ -361,7 +380,7 @@
 
             document.querySelectorAll('.praktikan-entry').forEach(bindAutoFill);
 
-            document.getElementById('tambah-praktikan').addEventListener('click', function () {
+            document.getElementById('tambah-praktikan').addEventListener('click', function() {
                 const wrapper = document.getElementById('praktikan-wrapper');
                 const entry = wrapper.querySelector('.praktikan-entry');
                 const clone = entry.cloneNode(true);
@@ -377,7 +396,7 @@
                 }
             }
 
-            suratSelect.addEventListener('change', function () {
+            suratSelect.addEventListener('change', function() {
                 const value = this.value;
                 const isIzinAtasan = value === 'SURAT IZIN ATASAN';
                 const isKeterangan = value === 'SURAT KETERANGAN';
@@ -441,4 +460,52 @@
             suratSelect.dispatchEvent(new Event('change'));
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('generate-no-surat');
+            const inputNoSurat = document.getElementById('no_surat');
+            const namaInputs = document.querySelectorAll('input[name="praktikan_nama[]"]');
+
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    btn.disabled = true;
+                    btn.textContent = 'Memproses...';
+
+                    // Ambil semua nama praktikan dari input (bisa lebih dari satu)
+                    const praktikanNama = Array.from(namaInputs)
+                        .map(i => i.value)
+                        .filter(v => v.trim() !== '');
+
+                    // Kirim ke backend via POST
+                    fetch('{{ route('surat_praktek_satu.generate.nomor') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                            body: JSON.stringify({
+                                praktikan_nama: praktikanNama
+                            }),
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                inputNoSurat.value = data.no_surat;
+                                alert('Nomor surat berhasil dibuat: ' + data.no_surat);
+                            } else {
+                                alert(data.message || 'Gagal generate nomor surat.');
+                            }
+                        })
+                        .catch(() => alert('Terjadi kesalahan saat menghubungi server.'))
+                        .finally(() => {
+                            btn.disabled = false;
+                            btn.textContent = 'Buat Nomor Otomatis';
+                        });
+                });
+            }
+        });
+    </script>
+
+
 @endpush

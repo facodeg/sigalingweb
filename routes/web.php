@@ -68,7 +68,6 @@ Route::get('/preview-pdf/{filename}', function ($filename) {
 // Halaman cetak surat permohonan (contoh berdasarkan ID)
 Route::get('/skk-requests/{id}/cetak', [SkkRequestController::class, 'cetak'])->name('skk.cetak');
 
-
 Route::get('/', function () {
     if (Auth::check()) {
         // Jika pengguna sudah login, redirect ke halaman utama
@@ -111,6 +110,16 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     // Halaman utama admin
     Route::post('/simpananwajib/baru', [SimpananWajibController::class, 'baru'])->name('simpananwajib.baru');
+
+    Route::post('/surat-praktek-satu/generate-nomor', [SuratPraktekSatuController::class, 'generateNomorSurat'])->name('surat_praktek_satu.generate.nomor');
+
+    Route::get('/permintaan-skk', [SkkRequestController::class, 'index'])->name('skk.index');
+    Route::post('/skk/{id}/generate-surat', [SkkRequestController::class, 'generateSurat'])->name('skk.generateSurat');
+    Route::get('/skk/{id}/generate-nomor', [SkkRequestController::class, 'generateNomorSurat'])->name('skk.generate.nomor');
+    Route::get('/permintaan-skk/create', [SkkRequestController::class, 'create'])->name('skk.create');
+    Route::get('/permintaan-skk/{id}', [SkkRequestController::class, 'show'])->name('skk.show');
+    Route::get('/permintaan-skk/{id}/cetak', [SkkRequestController::class, 'cetak'])->name('skk.cetak');
+    Route::delete('/permintaan-skk/{id}', [SkkRequestController::class, 'destroy'])->name('skk.destroy');
 
     Route::post('/simpanan-wajib/kirim-pesan-semua', [SimpananWajibController::class, 'kirimPesanSemua'])->name('simpanan_wajib.kirimPesanSemua');
 
