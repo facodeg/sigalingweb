@@ -88,7 +88,7 @@
                                     Buat Nomor Otomatis
                                 </button>
                             </label>
-                            <input type="text" name="no_surat" id="no_surat" class="form-control" readonly>
+                            <input type="text" name="no_surat" id="no_surat" class="form-control">
                         </div>
 
 

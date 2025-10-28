@@ -18,6 +18,43 @@ class SuratPraktekSatuController extends Controller
         return view('pages.surat_praktek_satu.index', compact('data'));
     }
 
+    private function parseTanggalId(?string $value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        // Coba format umum angka dulu
+        foreach (['Y-m-d', 'd-m-Y', 'd/m/Y', 'd.m.Y'] as $fmt) {
+            try {
+                return Carbon::createFromFormat($fmt, $value)->format('Y-m-d');
+            } catch (\Throwable $e) {
+            }
+        }
+
+        // Coba format lokal Indonesia: "01 Agustus 2025" / "01 Agt 2025"
+        try {
+            return Carbon::createFromLocaleFormat('d F Y', 'id', $value)->format('Y-m-d');
+        } catch (\Throwable $e) {
+        }
+
+        try {
+            return Carbon::createFromLocaleFormat('d M Y', 'id', $value)->format('Y-m-d');
+        } catch (\Throwable $e) {
+        }
+
+        // Terakhir, fallback strtotime (bisa untuk bhs Inggris)
+        try {
+            return Carbon::parse($value)->format('Y-m-d');
+        } catch (\Throwable $e) {
+        }
+
+        // Kalau benar-benar gagal, kembalikan null (atau lempar exception sesuai kebutuhan)
+        return null;
+    }
+
     public function generateNomorSurat(Request $request): JsonResponse
     {
         try {
@@ -123,12 +160,12 @@ class SuratPraktekSatuController extends Controller
                 'shift_sore' => $count == 1 ? $request->shift_sore : null,
                 'shift_malam' => $count == 1 ? $request->shift_malam : null,
                 'tempat_dikeluarkan' => $request->tempat_dikeluarkan,
-                'tanggal_dikeluarkan' => $request->tanggal_dikeluarkan,
+                'tanggal_dikeluarkan' => $this->parseTanggalId($request->tanggal_dikeluarkan),
                 'penanda_tangan_nama' => $request->penanda_tangan_nama,
                 'penanda_tangan_nip' => $request->penanda_tangan_nip,
                 'penanda_tangan_pangkat' => $request->penanda_tangan_pangkat,
                 'penanda_tangan_jabatan' => $request->penanda_tangan_jabatan,
-                'tmt' => isset($request->tmt[$i]) ? Carbon::parse($request->tmt[$i])->format('Y-m-d') : null,
+                'tmt' => isset($request->tmt[$i]) ? $this->parseTanggalId($request->tmt[$i]) : null,
                 'maksud' => $request->maksud,
                 'status_surat' => 'proses',
             ]);

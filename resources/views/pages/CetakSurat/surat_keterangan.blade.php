@@ -4,46 +4,52 @@
     <meta charset="UTF-8">
     <title>Permohonan Surat Keterangan Kerja</title>
     <style>
-        /* Ukuran A4 + margin default printer */
-        @page { size: A4 portrait; margin: 2.54cm; }
+    @page { size: A4 portrait; margin: 2cm; }
 
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12pt;
-            line-height: 1.6;
-            color: #000;
-            margin: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 11.5pt;
+        line-height: 1.5;      /* sedikit lebih renggang */
+        color: #000;
+        margin: 0;
+    }
 
-        .right     { text-align: right; }
-        .center    { text-align: center; }
-        .bold      { font-weight: bold; }
-        .justify   { text-align: justify; text-justify: inter-word; }
-        .mt-8      { margin-top: 8px; }
-        .mt-12     { margin-top: 12px; }
-        .mt-16     { margin-top: 16px; }
-        .mt-24     { margin-top: 24px; }
-        .mt-32     { margin-top: 32px; }
-        .mt-48     { margin-top: 48px; }
-        .indent    { text-indent: 2.5em; }
-        .row       { display: flex; }
-        .row > div { padding: 0; }
-        .w-20      { width: 20%; }
-        .w-2       { width: 2%; }
-        .w-78      { width: 78%; }
-        .signature-area { margin-top: 48px; display: flex; justify-content: space-between; }
-        .sig-col   { width: 48%; text-align: center; }
-        .u         { text-decoration: underline; }
+    .right   { text-align: right; }
+    .center  { text-align: center; }
+    .bold    { font-weight: bold; }
+    .justify { text-align: justify; text-justify: inter-word; }
+    .u       { text-decoration: underline; }
+    .indent  { text-indent: 2em; }
 
-        /* KOP SURAT */
-        .kop-wrap { margin-bottom: 8px; }
-        .kop-table { width: 100%; border-collapse: collapse; }
-        .kop-logo { width: 90px; }
-        .kop-title { line-height: 1.3; }
-        .hr-tipis { border: none; border-top: 1px solid #000; margin: 0; }
-        .hr-tebal { border: none; border-top: 3px solid #000; margin-top: 2px; }
-        .content { padding-top: 12px; }
-    </style>
+    /* spacing disesuaikan (lebih alami) */
+    .mt-4  { margin-top: 4px; }
+    .mt-8  { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-20 { margin-top: 20px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-28 { margin-top: 28px; }
+
+    /* kop surat */
+    .kop-wrap { margin-bottom: 8px; }
+    .kop-table { width: 100%; border-collapse: collapse; }
+    .kop-logo  { width: 80px; }
+    .kop-title { line-height: 1.25; }
+    .hr-tipis  { border: none; border-top: 1px solid #000; margin: 0; }
+    .hr-tebal  { border: none; border-top: 2px solid #000; margin-top: 1px; }
+    .content   { padding-top: 8px; }
+
+    /* tabel data & tanda tangan */
+    table { border-collapse: collapse; width: 100%; }
+    .tbl-no-border td { border: none; padding: 3px 0; vertical-align: top; }
+    .col-label { width: 22%; }
+    .col-sep   { width: 3%; }
+    .col-val   { width: 75%; }
+
+    /* tanda tangan */
+    .sign-table td { text-align: center; }
+    .sign-title td { padding-bottom: 40px; } /* jarak nama ke judul tanda tangan */
+</style>
 </head>
 <body>
 
@@ -112,7 +118,7 @@
             <div class="row">
                 <div class="w-20">Jabatan</div>
                 <div class="w-2">:</div>
-                <div class="w-78">{{ $surat->profesi ?? $surat->jabatan ?? '................................' }}</div>
+                <div class="w-78">{{ $surat->profesi ?? $surat->karyawan)->jabatan_terakhir ?? '................................' }}</div>
             </div>
         </div>
 
@@ -128,19 +134,28 @@
         </div>
 
         {{-- Area Tanda Tangan --}}
-        <div class="signature-area">
-            <div class="sig-col">
+        <table class="tbl-no-border sign-table mt-20">
+        <tr class="sign-title">
+            <td style="width:50%; text-align:center;">
                 Mengetahui,<br>
-                Kepala Ruangan<br><br><br><br><br>
-                <span class="u">{{ $surat->kepala_ruangan ?? '................................' }}</span><br>
-            </div>
-
-            <div class="sig-col">
-                Hormat saya,<br><br><br><br><br>
-                <span class="u">{{ $surat->praktikan_nama ?? $surat->nama ?? '................................' }}</span><br>
-                NIP/NIPB: {{ $surat->nip ?? $surat->karyawan_nip ?? '........................' }}
-            </div>
-        </div>
+                Kepala Ruangan
+            </td>
+            <td style="width:50%; text-align:center;">
+                Hormat saya,
+            </td>
+        </tr>
+        <tr>
+            <td style="height:35px;"></td> <!-- jarak antar judul dan nama (proporsional) -->
+            <td style="height:35px;"></td>
+        </tr>
+        <tr>
+            <td class="u">{{ $kepalaRuang }}</td>
+            <td>
+                <span class="u">{{ $namaPemohon }}</span><br>
+                NIP/NIPB: {{ $nipPemohon }}
+            </td>
+        </tr>
+    </table>
     </div>
 
     <script>

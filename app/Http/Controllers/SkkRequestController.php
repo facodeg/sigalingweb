@@ -7,6 +7,7 @@ use App\Models\SkkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\SuratNumberGenerator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SkkRequestController extends Controller
 {
@@ -48,6 +49,24 @@ class SkkRequestController extends Controller
     {
         $surat = SkkRequest::with('karyawan')->findOrFail($id); // relasi opsional
         return view('pages.cetaksurat.surat_keterangan_kerja', compact('surat'));
+    }
+
+    public function cetakajuan($id)
+    {
+        $surat = SkkRequest::with('karyawan')->findOrFail($id);
+
+        $logoKiri = base64_encode(file_get_contents(public_path('assets/images/logo-kiri.png')));
+        $logoKanan = base64_encode(file_get_contents(public_path('assets/images/logo-kanan.png')));
+
+        $pdf = Pdf::loadView('pages.cetaksurat.surat_keterangan', compact('surat', 'logoKiri', 'logoKanan'))
+            ->setPaper('A4', 'portrait')
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+                'isRemoteEnabled' => true, // jaga-jaga
+            ]);
+
+        return $pdf->download('Permohonan_SKK_' . ($surat->nama ?? 'Pegawai') . '.pdf');
     }
 
     public function create()
