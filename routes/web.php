@@ -52,6 +52,8 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Village;
 
+Route::get('/skk/{id}/download', [SkkRequestController::class, 'download'])->name('skk.download');
+
 Route::get('/preview-pdf/{filename}', function ($filename) {
     $path = storage_path('app/public/spkrkk/' . $filename);
 
@@ -77,6 +79,8 @@ Route::get('/', function () {
     // Jika pengguna belum login, tampilkan halaman login
     return view('pages.auth.login');
 });
+
+Route::get('/skk-requests/{id}/cetakajuan', [SkkRequestController::class, 'cetakajuan'])->name('skk-requests.cetakajuan');
 
 Route::get('/api/indonesia/provinces', function () {
     return response()->json(Province::all());
@@ -108,8 +112,14 @@ Route::middleware(['auth'])->group(function () {
 
 // Rute untuk admin
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::post('/skk-requests/{id}/send-wa', [SkkRequestController::class, 'sendWa'])->name('skk.sendWa');
+
+    Route::get('skk-requests/{id}/surat/preview', [SkkRequestController::class, 'previewSurat'])->name('skk.preview.surat');
     // Halaman utama admin
     Route::post('/simpananwajib/baru', [SimpananWajibController::class, 'baru'])->name('simpananwajib.baru');
+
+    // endpoint statis untuk upload
+    Route::post('skk-requests/upload-skk', [SkkRequestController::class, 'uploadSurat'])->name('skk.upload');
 
     Route::post('/surat-praktek-satu/generate-nomor', [SuratPraktekSatuController::class, 'generateNomorSurat'])->name('surat_praktek_satu.generate.nomor');
 
