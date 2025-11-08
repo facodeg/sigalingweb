@@ -3,9 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+use App\Http\Controllers\Api\SipIssueApiController;
+
+Route::post('/sip/issue', [SipIssueApiController::class, 'issue'])->name('api.sip.issue');
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+
+
 
 //login
 Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);

@@ -48,9 +48,16 @@ use App\Http\Controllers\UserAnggotaController;
 use App\Http\Controllers\WhatsAppController;
 use App\Models\City;
 use App\Models\District;
+use App\Http\Controllers\SipPengajuanController;
 
 use App\Models\Province;
 use App\Models\Village;
+
+
+
+// routes/web.php  (untuk form publik)
+Route::get ('/sip/f/{token}', [SipPengajuanController::class, 'showForm'])->name('sip.form');
+Route::post('/sip/f/{token}', [SipPengajuanController::class, 'submitForm'])->name('sip.submit');
 
 Route::get('/skk/{id}/download', [SkkRequestController::class, 'download'])->name('skk.download');
 
