@@ -258,16 +258,15 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <label>Lulusan</label>
-                    <div><input name="lulusan" value="{{ old('lulusan') }}" required></div>
-                </div>
+
 
                 <div class="row">
                     <label>Tahun Lulus</label>
                     <div><input name="tahun_lulus" value="{{ old('tahun_lulus') }}" required inputmode="numeric"
                             maxlength="4"></div>
                 </div>
+
+                <input type="hidden" name="lulusan" value="{{ old('lulusan', $sip->lulusan) }}">
 
                 <div class="actions">
                     <button class="btn primary" type="submit">Kirim Pengajuan</button>

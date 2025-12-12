@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -31,4 +30,7 @@ return [
         ],
     ],
 
+    'wa' => [
+        'skip_ssl_verify' => env('WA_SKIP_SSL_VERIFY', false),
+    ],
 ];

@@ -52,4 +52,9 @@ class Karyawan extends Model
     {
         return $this->hasMany(\App\Models\DataKeluarga::class, 'karyawan_id');
     }
+
+    public function sipRequests()
+    {
+        return $this->hasMany(\App\Models\SipRequest::class, 'karyawan_nip', 'nip_nrp_nipppk_nipb');
+    }
 }

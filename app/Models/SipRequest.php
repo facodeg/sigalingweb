@@ -21,4 +21,13 @@ class SipRequest extends Model
     {
         return $this->hasMany(SipLink::class, 'sip_id', 'id');
     }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(\App\Models\Karyawan::class, 'karyawan_nip', 'nip_nrp_nipppk_nipb')->withDefault([
+            'nama' => null,
+            'jabatan_terakhir' => null,
+            'ruangan' => null,
+        ]);
+    }
 }

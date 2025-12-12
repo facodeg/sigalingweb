@@ -124,6 +124,21 @@
                                 </a>
                             </li>
 
+                            <li class="{{ Request::is('permintaan-sip*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('sip.index') }}">
+                                    <i class="ri-stethoscope-line"></i>
+                                    <span>Permintaan SIP</span>
+                                </a>
+                            </li>
+
+                            <li class="{{ Request::is('data-sip*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('data.sip.index') }}">
+                                    <i class="ri-database-2-line"></i>
+                                    <span>Data SIP</span>
+                                </a>
+                            </li>
+
+
 
                             <li class="{{ Request::is('karyawan*') ? 'menuitem-active' : '' }}">
                                 <a href="{{ route('karyawan.index') }}">

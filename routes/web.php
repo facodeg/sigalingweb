@@ -49,14 +49,14 @@ use App\Http\Controllers\WhatsAppController;
 use App\Models\City;
 use App\Models\District;
 use App\Http\Controllers\SipPengajuanController;
+use App\Http\Controllers\SipPengajuanAdminController;
+use App\Http\Controllers\DataSipController;
 
 use App\Models\Province;
 use App\Models\Village;
 
-
-
 // routes/web.php  (untuk form publik)
-Route::get ('/sip/f/{token}', [SipPengajuanController::class, 'showForm'])->name('sip.form');
+Route::get('/sip/f/{token}', [SipPengajuanController::class, 'showForm'])->name('sip.form');
 Route::post('/sip/f/{token}', [SipPengajuanController::class, 'submitForm'])->name('sip.submit');
 
 Route::get('/skk/{id}/download', [SkkRequestController::class, 'download'])->name('skk.download');
@@ -117,9 +117,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
+Route::post('/pengajuan-sip/{sip}/kirim-berkas-wa', [SipPengajuanAdminController::class, 'sendSipSignedToWa'])->name('sip.sendSignedWa');
+
+Route::get('pengajuansip/{id}/cetak-keabsahan', [SipPengajuanController::class, 'cetakKeabsahan'])->name('pengajuansip.cetak-keabsahan');
+Route::get('pengajuansip/{id}/cetak-pdf', [SipPengajuanController::class, 'cetakPdf'])->name('pengajuansip.cetak-pdf');
+
+Route::get('pengajuansip/{id}/cetak-praktek', [SipPengajuanController::class, 'cetakPraktek'])->name('pengajuansip.cetak-praktek');
 // Rute untuk admin
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::post('/sip/{id}/generate-nomor', [SipPengajuanAdminController::class, 'generateNomorSurat'])->name('sip.generate.nomor');
+
+    Route::post('/sip/{id}/upload-signed', [SipPengajuanAdminController::class, 'uploadSigned'])->name('sip.upload.signed');
+
+    Route::post('/datasip/{sip}/send-wa', [\App\Http\Controllers\SipPengajuanAdminController::class, 'sendWa'])->name('datasip.sendWa');
+
     Route::post('/skk-requests/{id}/send-wa', [SkkRequestController::class, 'sendWa'])->name('skk.sendWa');
+
+    Route::resource('permintaan-sip', SipPengajuanAdminController::class)->names([
+        'index' => 'sip.index',
+        'create' => 'sip.create',
+        'store' => 'sip.store',
+        'show' => 'sip.show',
+        'destroy' => 'sip.destroy',
+    ]);
+
+    Route::get('/data-sip', [DataSipController::class, 'index'])->name('data.sip.index');
 
     Route::get('skk-requests/{id}/surat/preview', [SkkRequestController::class, 'previewSurat'])->name('skk.preview.surat');
     // Halaman utama admin

@@ -224,11 +224,11 @@
 
 
         {{-- Isi Permohonan --}}
-        <div class="mt-24 indent justify">
-            Dengan ini mengajukan permohonan <span class="bold">Surat Keterangan Kerja</span> guna melengkapi
-            administrasi
-            pengajuan KPR{{ isset($surat->maksud_tambahan) ? ' - ' . $surat->maksud_tambahan : '' }}.
-        </div>
+     <div class="mt-24 indent justify">
+    Dengan ini mengajukan permohonan <span class="bold">Surat Keterangan Kerja</span>
+    guna {{ $surat->keperluan ?? 'melengkapi administrasi pengajuan KPR' }}{{ isset($surat->maksud_tambahan) ? ' - ' . $surat->maksud_tambahan : '' }}.
+</div>
+
 
         {{-- Penutup --}}
         <div class="mt-24 indent justify">
